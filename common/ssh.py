@@ -128,8 +128,18 @@ if __name__ == "__main__":
 		print 'success'
 	else:
 		print 'fail'
+	print '### exec sudo ###'
+	if cmd('sudo uname'):
+		print 'success'
+	else:
+		print 'fail'
 	print '### upload ###'
 	if upload('./1.txt', '/tmp/1.txt'):
+		print 'success'
+	else:
+		print 'fail'
+	print '### upload sudo ###'
+	if upload('./1.txt', '/tmp/1.txt') and cmd('sudo cp /tmp/1.txt /usr/local/1.txt'):
 		print 'success'
 	else:
 		print 'fail'
