@@ -23,6 +23,7 @@ transports = []
 sftps = {}
 
 def init():
+	print 'Beginning initialize'
 	global boot
 	sections = cfg.sections()
 	for s in sections:
@@ -57,6 +58,7 @@ def init():
 		sftp = paramiko.SFTPClient.from_transport(t)
 		sftps[host] = sftp
 	boot = True
+	print 'Initialize success'
 	return 1
 
 def close():
@@ -75,6 +77,7 @@ def cmd(cmd, all_ = True, *hosts):
 		return 0
 	if all_:
 		for (host, client) in clients.items():
+			print '[%s][%s] Execute \'%s\'' % (datetime.datetime.now(), host, cmd)
 			stdin, stdout, stderr = client.exec_command(cmd)
 			out_ = stdout.read()
 			if (out_ is not None) and (out_ <> ''):
