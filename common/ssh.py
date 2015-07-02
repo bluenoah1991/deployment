@@ -61,7 +61,7 @@ def init():
 		hosts.append(host)
 	boot = True
 	print 'Initialize success'
-	return hostnames
+	return hosts
 
 def close():
 	if not boot:
