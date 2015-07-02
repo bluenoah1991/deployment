@@ -3,7 +3,7 @@
 import sys
 sys.path.append('..')
 
-from . import io
+import io
 
 import paramiko
 import os
@@ -23,14 +23,17 @@ transports = []
 sftps = {}
 
 def init():
+	global boot
 	sections = cfg.sections()
 	for s in sections:
 		host = cfg.get(s, 'host')
-		port = cfg.get(s, 'port')
-		if (port is None) or (port == '')):
-			port = 22
-		else:
-			port = int(port) 
+		port = 22
+		if cfg.has_option(s, 'port'):
+			port = cfg.get(s, 'port')
+			if (port is None) or (port == ''):
+				port = 22
+			else:
+				port = int(port) 
 		user = cfg.get(s, 'user')
 		pwd = cfg.get(s, 'pwd')
 		
@@ -39,14 +42,14 @@ def init():
 		try:
 			client.connect(hostname = host, port = port, username = user, password = pwd)
 		except BadHostKeyException, e:
-			print('BadHostKeyException[%s]: %s' % (host, e)
-			return -1
+			print 'BadHostKeyException[%s]: %s' % (host, e)
+			return 0
 		except AutenticationException, e:
-			print('AutenticationException[%s]: %s' % (host, e)
-			return -1
+			print 'AutenticationException[%s]: %s' % (host, e)
+			return 0
 		except SSHException, e:
-			print('SSHException[%s]: %s' % (host, e)
-			return -1
+			print 'SSHException[%s]: %s' % (host, e)
+			return 0
 		clients[host] = client
 		t = paramiko.Transport((host, port))
 		t.connect(username = user, password = pwd)
@@ -54,24 +57,24 @@ def init():
 		sftp = paramiko.SFTPClient.from_transport(t)
 		sftps[host] = sftp
 	boot = True
-	return 0
+	return 1
 
 def close():
 	if not boot:
-		print('Please initialize first')
-		return -1
-	for host, client in clients:
+		print 'Please initialize first'
+		return 0
+	for (host, client) in clients.items():
 		client.close()
 	for t in transports:
 		t.close()
-	return 0
+	return 1
 
-def exec(cmd, all_ = True, *hosts):
+def cmd(cmd, all_ = True, *hosts):
 	if not boot:
-		print('Please initialize first')
-		return -1
+		print 'Please initialize first'
+		return 0
 	if all_:
-		for host, client in clients:
+		for (host, client) in clients.items():
 			stdin, stdout, stderr = client.exec_command(cmd)
 			out_ = stdout.read()
 			if (out_ is not None) and (out_ <> ''):
@@ -91,15 +94,15 @@ def exec(cmd, all_ = True, *hosts):
 			err_ = stderr.read()
 			if (err_ is not None) and (err_ <> ''):
 				io.stderr(host, err_)
-	return 0
+	return 1
 			
 
 def upload(localFile, remoteFile, all_ = True, *hosts):
 	if not boot:
-		print('Please initialize first')
-		return -1
+		print 'Please initialize first'
+		return 0
 	if all_:
-		for host, sftp in sftps:
+		for (host, sftp) in sftps.items():
 			print '[%s][%s] Beginning to upload file %s' % (datetime.datetime.now(), host, localFile)
 			sftp.put(localFile, remoteFile)
 			print '[%s][%s] Upload file success %s' % (datetime.datetime.now(), host, localFile)
@@ -111,15 +114,21 @@ def upload(localFile, remoteFile, all_ = True, *hosts):
 			print '[%s][%s] Beginning to upload file %s' % (datetime.datetime.now(), host, localFile)
 			sftp.put(localFile, remoteFile)
 			print '[%s][%s] Upload file success %s' % (datetime.datetime.now(), host, localFile)
-	return 0
+	return 1
 
 if __name__ == "__main__":
 	print 'Beginning to test'
-	print '### exec ###'
-	if exec('uname'):
+	print '### init ###'
+	if init():
 		print 'success'
 	else:
 		print 'fail'
+	print '### exec ###'
+	if cmd('uname'):
+		print 'success'
+	else:
+		print 'fail'
+	print '### upload ###'
 	if upload('./1.txt', '/tmp/1.txt'):
 		print 'success'
 	else:
