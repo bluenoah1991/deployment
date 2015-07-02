@@ -92,6 +92,7 @@ def cmd(cmd, all_ = True, *hosts):
 			if host not in clients:
 				continue
 			client = clients[host]
+			print '[%s][%s] Execute \'%s\'' % (datetime.datetime.now(), host, cmd)
 			stdin, stdout, stderr = client.exec_command(cmd)
 			out_ = stdout.read()
 			if (out_ is not None) and (out_ <> ''):
