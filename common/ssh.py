@@ -25,6 +25,7 @@ sftps = {}
 def init():
 	print 'Beginning initialize'
 	global boot
+	hosts = []
 	sections = cfg.sections()
 	for s in sections:
 		host = cfg.get(s, 'host')
@@ -44,22 +45,23 @@ def init():
 			client.connect(hostname = host, port = port, username = user, password = pwd)
 		except BadHostKeyException, e:
 			print 'BadHostKeyException[%s]: %s' % (host, e)
-			return 0
+			return None
 		except AutenticationException, e:
 			print 'AutenticationException[%s]: %s' % (host, e)
-			return 0
+			return None
 		except SSHException, e:
 			print 'SSHException[%s]: %s' % (host, e)
-			return 0
+			return None
 		clients[host] = client
 		t = paramiko.Transport((host, port))
 		t.connect(username = user, password = pwd)
 		transports.append(t)
 		sftp = paramiko.SFTPClient.from_transport(t)
 		sftps[host] = sftp
+		hosts.append(host)
 	boot = True
 	print 'Initialize success'
-	return 1
+	return hostnames
 
 def close():
 	if not boot:
