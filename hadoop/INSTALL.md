@@ -1,1 +1,1 @@
-> Please copy jdk-*.tar.gz and hadoop-*.tar.gz to current dir
+> Please copy jdk-\*.tar.gz and hadoop-\*.tar.gz to current dir
