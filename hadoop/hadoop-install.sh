@@ -51,6 +51,9 @@ ln -s /usr/local/$hadoopdir /usr/local/hadoop
 
 cfg=/usr/local/hadoop/etc/hadoop
 
+sed -i "1iJAVA_HOME=/usr/local/jdk" ${cfg}/hadoop-env.sh
+sed -i "1aHADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop" ${cfg}/hadoop-env.sh
+
 l=`grep -n '<configuration>' ${cfg}/core-site.xml | head -1 | cut -d : -f1`
 sed -i "${l}a\\
 \\t<property>\\
