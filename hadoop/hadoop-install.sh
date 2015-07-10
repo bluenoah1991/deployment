@@ -5,7 +5,7 @@
 # s : slave hostname array (comma separated)
 # t : type (master = 0 and slave = 1)
 
-while getopts 'h:t:' OPT; do
+while getopts 'm:s:t:' OPT; do
 	case $OPT in
 		m)
 			m=$OPTARG;;
@@ -99,7 +99,7 @@ if [[ $t == '0' ]]; then
 	echo '' > /usr/local/hadoop/etc/hadoop/slaves
 	for _ in ${ss[@]}
 	do
-		echo _ >> /usr/local/hadoop/etc/hadoop/slaves
+		echo ${_} >> /usr/local/hadoop/etc/hadoop/slaves
 	done
 
 fi

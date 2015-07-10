@@ -34,5 +34,11 @@ def main():
 	ssh.cmd('sudo /tmp/hadoop-install.sh -m %s -s %s -t 0' % (m_, s_), False, *master)
 	ssh.cmd('sudo /tmp/hadoop-install.sh -m %s -s %s -t 1' % (m_, s_), False, *slave)
 
+	ssh.cmd('sudo /usr/local/hadoop/bin/hdfs namenode -format hadoop', False, *master)
+	ssh.cmd('sudo /usr/local/hadoop/sbin/hadoop-daemon.sh --config /usr/local/hadoop/etc/hadoop --script hdfs start namenode', False, *master)
+	ssh.cmd('sudo /usr/local/hadoop/sbin/hadoop-daemon.sh --config /usr/local/hadoop/etc/hadoop --script hdfs start datanode', False, *slave)
+	ssh.cmd('sudo /usr/local/hadoop/sbin/yarn-daemon.sh --config /usr/local/hadoop/etc/hadoop start resourcemanager', False, *master)
+	ssh.cmd('sudo /usr/local/hadoop/sbin/yarn-daemon.sh --config /usr/local/hadoop/etc/hadoop start nodemanager', False, *slave)
+
 if __name__ == '__main__':
 	main()
