@@ -1,19 +1,25 @@
 #!/bin/bash
 
 # parameters
-# h : ipaddr and hostname array (comma separated)
+# h : hostname 
+# s : ipaddr and hostname array (comma separated)
 
-while getopts 's:' OPT; do
+while getopts 'h:s:' OPT; do
 	case $OPT in
+		h)
+			h=$OPTARG;;
 		s)
 			s=$OPTARG;;
 	esac
 done
 
-if [ ! $s ]; then
+if [ ! $h ] || [ ! $s ]; then
 	echo 'parameters not found'
 	exit -1
 fi
+
+echo $h > /etc/hostname
+hostname $h
 
 if [ -f /etc/hosts.x ]; then
 	echo 'repeat configuration'

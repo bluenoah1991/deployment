@@ -3,7 +3,7 @@
 import sys
 sys.path.append('..')
 
-import io
+import tool
 
 import paramiko
 import os
@@ -11,24 +11,33 @@ import datetime
 
 from ConfigParser import ConfigParser
 
-# Load configuration
-
-cfile = '../cfg.ini'
-cfg = ConfigParser()
-cfg.read(cfile)
-
-boot = False
-clients = {}
-transports = []
-sftps = {}
-hosts = []
-
 def init():
-	if boot:
-		return hosts
-	print 'Beginning initialize'
+
+	# Load configuration
+	
+	global cfile
+	global cfg
 	global boot
+	global clients
+	global transports
+	global sftps
 	global hosts 
+
+	if globals().has_key('boot') and boot:
+		return hosts
+
+	print 'Beginning initialize'
+
+	cfile = 'cfg.ini'
+	cfg = ConfigParser()
+	cfg.read(cfile)
+	
+	boot = False
+	clients = {}
+	transports = []
+	sftps = {}
+	hosts = []
+
 	sections = cfg.sections()
 	for s in sections:
 		host = cfg.get(s, 'hostname')
@@ -45,12 +54,12 @@ def init():
 		keys_ = cfg.get(s, 'keys')
 		if keys_ is None:
 			keys_ = ''
-		keys = type_.split(',')
+		keys = keys_.split(',')
 		
 		client = paramiko.SSHClient()
 		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		try:
-			client.connect(hostname = host, port = port, username = user, password = pwd)
+			client.connect(hostname = ipaddr, port = port, username = user, password = pwd)
 		except BadHostKeyException, e:
 			print 'BadHostKeyException[%s]: %s' % (host, e)
 			return None
@@ -61,7 +70,7 @@ def init():
 			print 'SSHException[%s]: %s' % (host, e)
 			return None
 		clients[host] = client
-		t = paramiko.Transport((host, port))
+		t = paramiko.Transport((ipaddr, port))
 		t.connect(username = user, password = pwd)
 		transports.append(t)
 		sftp = paramiko.SFTPClient.from_transport(t)
@@ -105,10 +114,10 @@ def cmd(cmd, all_ = True, *hosts):
 			stdin, stdout, stderr = client.exec_command(cmd)
 			out_ = stdout.read()
 			if (out_ is not None) and (out_ <> ''):
-				io.stdout(host, out_)
+				tool.stdout(host, out_)
 			err_ = stderr.read()
 			if (err_ is not None) and (err_ <> ''):
-				io.stderr(host, err_)
+				tool.stderr(host, err_)
 	else:
 		for host in hosts:
 			if host not in clients:
@@ -118,10 +127,10 @@ def cmd(cmd, all_ = True, *hosts):
 			stdin, stdout, stderr = client.exec_command(cmd)
 			out_ = stdout.read()
 			if (out_ is not None) and (out_ <> ''):
-				io.stdout(host, out_)
+				tool.stdout(host, out_)
 			err_ = stderr.read()
 			if (err_ is not None) and (err_ <> ''):
-				io.stderr(host, err_)
+				tool.stderr(host, err_)
 	return 1
 			
 

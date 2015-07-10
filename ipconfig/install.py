@@ -3,7 +3,7 @@
 import sys
 sys.path.append('..')
 
-from common import ssh
+from common import ssh, tool
 
 def main():
 	hosts = ssh.init()
@@ -12,9 +12,11 @@ def main():
 		maps.append(host.get('ipaddr', ''))
 		maps.append(host.get('hostname', ''))
 	s_ = ",".join(maps)
-	ssh.upload('ipconfig-install.sh', '/tmp/ipconfig-install.sh')
+	ssh.upload(tool.join(__file__, 'ipconfig-install.sh'), '/tmp/ipconfig-install.sh')
 	ssh.cmd('sudo chmod u+x /tmp/ipconfig-install.sh')
-	ssh.cmd('sudo /tmp/ipconfig-install.sh -s %s' % s_)
+	for host in hosts:
+		h_ = host.get('hostname', '')
+		ssh.cmd('sudo /tmp/ipconfig-install.sh -h %s -s %s' % (h_, s_), False, h_)
 
 
 if __name__ == '__main__':
