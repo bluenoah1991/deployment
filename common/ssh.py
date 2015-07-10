@@ -21,14 +21,15 @@ boot = False
 clients = {}
 transports = []
 sftps = {}
+hosts = []
 
 def init():
 	print 'Beginning initialize'
 	global boot
-	hosts = []
+	global hosts 
 	sections = cfg.sections()
 	for s in sections:
-		host = cfg.get(s, 'host')
+		host = cfg.get(s, 'hostname')
 		port = 22
 		if cfg.has_option(s, 'port'):
 			port = cfg.get(s, 'port')
@@ -36,8 +37,12 @@ def init():
 				port = 22
 			else:
 				port = int(port) 
-		user = cfg.get(s, 'user')
-		pwd = cfg.get(s, 'pwd')
+		user = cfg.get(s, 'username')
+		pwd = cfg.get(s, 'password')
+		keys_ = cfg.get(s, 'keys')
+		if keys_ is None:
+			keys_ = ''
+		keys = type_.split(',')
 		
 		client = paramiko.SSHClient()
 		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -58,7 +63,7 @@ def init():
 		transports.append(t)
 		sftp = paramiko.SFTPClient.from_transport(t)
 		sftps[host] = sftp
-		hosts.append(host)
+		hosts.append({'name': s, 'hostname': host, 'port': port, 'username': user, 'password': pwd, 'keys': keys})
 	boot = True
 	print 'Initialize success'
 	return hosts
