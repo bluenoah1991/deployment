@@ -24,6 +24,8 @@ sftps = {}
 hosts = []
 
 def init():
+	if boot:
+		return hosts
 	print 'Beginning initialize'
 	global boot
 	global hosts 
@@ -37,6 +39,7 @@ def init():
 				port = 22
 			else:
 				port = int(port) 
+		ipaddr = cfg.get(s, 'ipaddr')
 		user = cfg.get(s, 'username')
 		pwd = cfg.get(s, 'password')
 		keys_ = cfg.get(s, 'keys')
@@ -63,9 +66,9 @@ def init():
 		transports.append(t)
 		sftp = paramiko.SFTPClient.from_transport(t)
 		sftps[host] = sftp
-		hosts.append({'name': s, 'hostname': host, 'port': port, 'username': user, 'password': pwd, 'keys': keys})
-	boot = True
+		hosts.append({'name': s, 'hostname': host, 'port': port, 'ipaddr': ipaddr, 'username': user, 'password': pwd, 'keys': keys})
 	print 'Initialize success'
+	boot = True
 	return hosts
 
 def close():
