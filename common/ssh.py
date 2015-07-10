@@ -71,6 +71,20 @@ def init():
 	boot = True
 	return hosts
 
+def filter(key):
+	hs_ = []
+	for host in hosts:
+		if key in host.get('keys', []):
+			hs_.append(host)
+	return hs_
+
+def filterName(key, name):
+	hs_ = []
+	for host in hosts:
+		if key in host.get('keys', []):
+			hs_.append(host.get(name))
+	return hs_
+
 def close():
 	if not boot:
 		print 'Please initialize first'
