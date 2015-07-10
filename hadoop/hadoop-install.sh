@@ -1,19 +1,22 @@
 #!/bin/bash
 
 # parameters
-# h : hostname array (comma separated)
+# m : master hostname
+# s : slave hostname array (comma separated)
 # t : type (master = 0 and slave = 1)
 
 while getopts 'h:t:' OPT; do
 	case $OPT in
-		h)
-			h=$OPTARG;;
+		m)
+			m=$OPTARG;;
+		s)
+			s=$OPTARG;;
 		t)
 			t=$OPTARG;;
 	esac
 done
 
-if [ ! $h ] || [ ! $t ]; then
+if [ ! $m ] || [ ! $s ] || [ ! $t ]; then
 	echo 'parameters not found'
 	exit -1
 fi
@@ -26,25 +29,7 @@ fi
 # done
 # echo ${x[1]}
 
-num=1
-
-# echo $h
-# echo `echo $h | cut -d , -f2`
-# if [[ -n `echo $h | cut -d , -f2` ]]; then
-# 	echo "ok"
-# fi
-
-if [[ `echo $h | cut -d , -f1` == `echo $h | cut -d , -f2` ]]; then
-	echo 'parameters exception'
-	exit -1
-fi
-
-while [[ -n `echo $h | cut -d , -f$num` ]]; do
-	hosts[`expr $num - 1`]=`echo $h | cut -d , -f$num`
-	num=`expr $num + 1`
-done
-
-num=`expr $num - 1`
+ss=(${s//,/ })
 
 javadir=`ls -l /usr/local | grep jdk[^-] | rev | cut -d ' ' -f1 | rev`
 ln -s /usr/local/$javadir /usr/local/jdk
@@ -70,7 +55,7 @@ l=`grep -n '<configuration>' ${cfg}/core-site.xml | head -1 | cut -d : -f1`
 sed -i "${l}a\\
 \\t<property>\\
 \\t\\t<name>fs.defaultFS</name>\\
-\\t\\t<value>${hosts[0]}</value>\\
+\\t\\t<value>${m}</value>\\
 \\t</property>" ${cfg}/core-site.xml
 
 l=`grep -n '<configuration>' ${cfg}/hdfs-site.xml | head -1 | cut -d : -f1`
@@ -100,7 +85,7 @@ l=`grep -n '<configuration>' ${cfg}/yarn-site.xml | head -1 | cut -d : -f1`
 sed -i "${l}a\\
 \\t<property>\\
 \\t\\t<name>yarn.resourcemanager.hostname</name>\\
-\\t\\t<value>${hosts[0]}</value>\\
+\\t\\t<value>${m}</value>\\
 \\t</property>" ${cfg}/yarn-site.xml
 
 if [[ $t == '0' ]]; then
@@ -111,7 +96,14 @@ if [[ $t == '0' ]]; then
 \\t\\t<value>/usr/local/hadoop/etc/hadoop/slaves</value>\\
 \\t</property>" ${cfg}/yarn-site.xml
 
+	echo '' > /usr/local/hadoop/etc/hadoop/slaves
+	for _ in ${ss[@]}
+	do
+		echo _ >> /usr/local/hadoop/etc/hadoop/slaves
+	done
+
 fi
+
 
 
 
