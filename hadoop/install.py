@@ -50,6 +50,7 @@ def main():
 	ssh.cmd('sudo chmod u+x /tmp/spark-install.sh', False, *spark_client)
 	ssh.cmd('sudo /tmp/spark-install.sh', False, *spark_client)
 
+	ssh.close()
 
 if __name__ == '__main__':
 	main()

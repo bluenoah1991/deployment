@@ -95,17 +95,20 @@ def filterName(key, name):
 	return hs_
 
 def close():
-	if not boot:
+	global boot
+
+	if globals().has_key('boot') and not boot:
 		print 'Please initialize first'
 		return 0
 	for (host, client) in clients.items():
 		client.close()
 	for t in transports:
 		t.close()
+	boot = False
 	return 1
 
 def cmd(cmd, all_ = True, *hosts):
-	if not boot:
+	if globals().has_key('boot') and not boot:
 		print 'Please initialize first'
 		return 0
 	if all_:
@@ -135,7 +138,7 @@ def cmd(cmd, all_ = True, *hosts):
 			
 
 def upload(localFile, remoteFile, all_ = True, *hosts):
-	if not boot:
+	if globals().has_key('boot') and not boot:
 		print 'Please initialize first'
 		return 0
 	if all_:
@@ -177,6 +180,11 @@ if __name__ == "__main__":
 		print 'fail'
 	print '### upload sudo ###'
 	if upload('./1.txt', '/tmp/1.txt') and cmd('sudo cp /tmp/1.txt /usr/local/1.txt'):
+		print 'success'
+	else:
+		print 'fail'
+	print '### close ###'
+	if close():
 		print 'success'
 	else:
 		print 'fail'
