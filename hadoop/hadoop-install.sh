@@ -89,6 +89,10 @@ sed -i "${l}a\\
 \\t<property>\\
 \\t\\t<name>yarn.resourcemanager.hostname</name>\\
 \\t\\t<value>${m}</value>\\
+\\t</property>\\
+\\t<property>\\
+\\t\\t<name>yarn.nodemanager.vmem-check-enabled</name>\\
+\\t\\t<value>false</value>\\
 \\t</property>" ${cfg}/yarn-site.xml
 
 if [[ $t == '0' ]]; then

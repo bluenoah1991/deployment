@@ -13,6 +13,8 @@ def main():
 	jdk_tmp_path = "/tmp/jdk-8u45-linux-x64.tar.gz"
 	hadoop_local_path = tool.join(__file__, "hadoop-2.6.0.tar.gz")
 	hadoop_tmp_path = "/tmp/hadoop-2.6.0.tar.gz"
+	spark_local_path = tool.join(__file__, "spark-1.3.0-bin-hadoop2.4.tgz")
+	hadoop_tmp_path = "/tmp/spark-1.3.0-bin-hadoop2.4.tgz"
 
 	hosts = ssh.init()
 	hostnames = []
@@ -39,6 +41,15 @@ def main():
 	ssh.cmd('sudo /usr/local/hadoop/sbin/hadoop-daemon.sh --config /usr/local/hadoop/etc/hadoop --script hdfs start datanode', False, *slave)
 	ssh.cmd('sudo /usr/local/hadoop/sbin/yarn-daemon.sh --config /usr/local/hadoop/etc/hadoop start resourcemanager', False, *master)
 	ssh.cmd('sudo /usr/local/hadoop/sbin/yarn-daemon.sh --config /usr/local/hadoop/etc/hadoop start nodemanager', False, *slave)
+
+	spark_client = ssh.filterName('spark_client', 'hostname')
+
+	ssh.upload(spark_local_path, spark_tmp_path)
+	ssh.cmd('sudo tar zxvf %s -C /usr/local' % hadoop_tmp_path)
+	ssh.upload(tool.join(__file__, 'spark-install.sh'), '/tmp/spark-install.sh')
+	ssh.cmd('sudo chmod u+x /tmp/spark-install.sh', False, spark_client)
+	ssh.cmd('sudo /tmp/spark-install.sh', False, spark_client)
+
 
 if __name__ == '__main__':
 	main()
