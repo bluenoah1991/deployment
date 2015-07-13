@@ -121,7 +121,7 @@ def pick(buffstr, recv):
 def proc(cmd):
 	args = parse(cmd)
 	# print args
-	refcall(args)	
+	refcall(args) # Stdout redirect
 
 if __name__ == '__main__':
 	create()
