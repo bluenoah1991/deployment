@@ -7,6 +7,15 @@ startFlag = '<$'
 endFlag = '$>'
 sockFile = '/tmp/d2'
 
+class Unbuffered(object):
+	def __init__(self, stream):
+		self.stream = stream
+	def write(self, data):
+		self.stream.write(data)
+		self.stream.flush()
+	def __getattr__(self, attr):
+		return getattr(self.stream, attr)
+
 def create():
 	try:
 		if os.fork() > 0:
@@ -18,9 +27,9 @@ def create():
 	fsock = open('/var/log/deploy.log', 'w')
 	fsock2 = open('/dev/null', 'r')
 	fsock3 = open('/var/log/deploy.err', 'w')
-	sys.stdout = fsock
+	sys.stdout = Unbuffered(fsock)
 	sys.stdin = fsock2
-	sys.stderr = fsock3
+	sys.stderr = Unbuffered(fsock3)
 	os.chdir('/')
 	os.setsid()
 	os.umask(0)
@@ -77,7 +86,6 @@ def pick(buffstr, recv):
 def proc(cmdstr):
 	cmd = parse(cmdstr)
 	print cmd # TODO
-	sys.stdout.flush()
 		
 
 if __name__ == '__main__':
@@ -97,10 +105,6 @@ if __name__ == '__main__':
 			buffstr = pick(buffstr + data, proc)
 		os.unlink(sockFile)
 		conn.close()
-
-
-
-
 
 
 
