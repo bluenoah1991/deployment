@@ -86,7 +86,7 @@ if __name__ == '__main__':
 	if os.path.exists(sockFile):
 		os.unlink(sockFile)
 		sock.bind(sockFile)
-		sock.listen(1)
+		sock.listen(1) # TODO Multi Client
 		buffstr = ''
 		while True:
 			conn, address = sock.accept()
