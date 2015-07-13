@@ -4,7 +4,7 @@ import sys
 sys.path.append('..')
 
 from common import ssh, tool
-import ipconfig
+import ipconfig.install
 
 def main():
 	ipconfig.install.main()
