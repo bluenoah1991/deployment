@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import os, sys, socket
-import pdb
+# import pdb
 
 startFlag = '<$'
 endFlag = '$>'
@@ -17,9 +17,10 @@ def create():
 
 	fsock = open('/var/log/deploy.log', 'w')
 	fsock2 = open('/dev/null', 'r')
+	fsock3 = open('/var/log/deploy.err', 'w')
 	sys.stdout = fsock
-	sys.stderr = fsock
 	sys.stdin = fsock2
+	sys.stderr = fsock3
 	os.chdir('/')
 	os.setsid()
 	os.umask(0)
@@ -76,10 +77,11 @@ def pick(buffstr, recv):
 def proc(cmdstr):
 	cmd = parse(cmdstr)
 	print cmd # TODO
+	sys.stdout.flush()
 		
 
 if __name__ == '__main__':
-	# create()
+	create()
 	sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	if not os.path.exists(sockFile):
 		os.mknod(sockFile)
@@ -91,7 +93,7 @@ if __name__ == '__main__':
 		while True:
 			conn, address = sock.accept()
 			data = conn.recv(1024) # Stick package
-			pdb.set_trace()
+			#pdb.set_trace()
 			buffstr = pick(buffstr + data, proc)
 		os.unlink(sockFile)
 		conn.close()
