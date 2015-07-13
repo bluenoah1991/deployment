@@ -16,6 +16,41 @@ class Unbuffered(object):
 	def __getattr__(self, attr):
 		return getattr(self.stream, attr)
 
+def refcall(args):
+	if args is None or len(args) == 0:
+		return -1
+	ns = []
+	fullpath = ''
+	path = ''
+	for i, ch in enumerate(args[0]):
+		if ch == '.':
+			ns.append((path, fullpath))
+			path = ''
+		else:
+			path = path + ch
+		fullpath = fullpath + ch
+	ns.append((path, fullpath))
+	root = globals().get(ns[0][0])
+	if root is None:
+		try:
+			root = __import__(ns[0][0]) # Import Error
+		except ImportError, e:
+			return -1
+	current = root
+	for _ in ns[1:]:
+		if _[0] not in dir(current):
+			try:
+				__import__(_[1]) # Import Error
+			except ImportError, e:
+				return -1
+		current = getattr(current, _[0])
+	if not callable(current):
+		return -1
+	try:
+		current(*args[1:]) # Call Failure
+	except TypeError, e:
+		return -1
+
 def create():
 	try:
 		if os.fork() > 0:
@@ -83,10 +118,10 @@ def pick(buffstr, recv):
 		recv(sub)
 	return buffstr[endIndex + len(endFlag):]
 
-def proc(cmdstr):
-	cmd = parse(cmdstr)
-	print cmd # TODO
-		
+def proc(cmd):
+	args = parse(cmd)
+	# print args
+	refcall(args)	
 
 if __name__ == '__main__':
 	create()

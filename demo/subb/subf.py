@@ -2,5 +2,5 @@
 
 import sys
 
-def pp(data):
-	sys.stdout.write('demo.sub.subf.pp: ' + data)
+def pp(arg1, arg2):
+	sys.stdout.write('demo.sub.subf.pp: ' + arg1 + arg2 + '\r\n')
