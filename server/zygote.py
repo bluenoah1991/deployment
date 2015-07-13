@@ -79,7 +79,7 @@ def pick(buffstr, recv):
 		return buffstr
 	sub = buffstr[0: endIndex + len(endFlag)]
 	sub = sub[len(startFlag): len(sub) - len(endFlag)]
-	if recv is not None:
+	if recv is not None and callable(recv):
 		recv(sub)
 	return buffstr[endIndex + len(endFlag):]
 
