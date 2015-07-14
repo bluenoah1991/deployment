@@ -44,9 +44,9 @@ def main():
 
 	spark_client = ssh.filterName('spark_client', 'hostname')
 
-	ssh.upload(spark_local_path, spark_tmp_path)
-	ssh.cmd('sudo tar zxvf %s -C /usr/local' % spark_tmp_path)
-	ssh.upload(tool.join(__file__, 'spark-install.sh'), '/tmp/spark-install.sh')
+	ssh.upload(spark_local_path, spark_tmp_path, False, *spark_client)
+	ssh.cmd('sudo tar zxvf %s -C /usr/local' % spark_tmp_path, False, *spark_client)
+	ssh.upload(tool.join(__file__, 'spark-install.sh'), '/tmp/spark-install.sh', False, *spark_client)
 	ssh.cmd('sudo chmod u+x /tmp/spark-install.sh', False, *spark_client)
 	ssh.cmd('sudo /tmp/spark-install.sh', False, *spark_client)
 

@@ -58,7 +58,7 @@ l=`grep -n '<configuration>' ${cfg}/core-site.xml | head -1 | cut -d : -f1`
 sed -i "${l}a\\
 \\t<property>\\
 \\t\\t<name>fs.defaultFS</name>\\
-\\t\\t<value>${m}</value>\\
+\\t\\t<value>hdfs://${m}:40000</value>\\
 \\t</property>" ${cfg}/core-site.xml
 
 l=`grep -n '<configuration>' ${cfg}/hdfs-site.xml | head -1 | cut -d : -f1`
