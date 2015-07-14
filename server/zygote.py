@@ -120,7 +120,7 @@ def pick(buffstr, recv):
 
 def proc(cmd):
 	args = parse(cmd)
-	# print args
+	print 'exec: "%s"' % cmd
 	refcall(args) # Stdout redirect
 
 if __name__ == '__main__':

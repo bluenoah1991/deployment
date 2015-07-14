@@ -12,7 +12,7 @@ libdpycli.so : libdpycli.c libdpycli.h
 	gcc $(CXXFLAGS) -shared -fPIC -fvisibility=hidden -o $@ libdpycli.c
 
 test : test.c libdpycli.so libdpycli.h
-	gcc $(CXXFLAGS) -o $@ test.c -L. -ldpycli
+	gcc $(CXXFLAGS) -o $@ test.c -L. -ldpycli -Wl,-rpath,/lib,-rpath,/usr/lib,-rpath,.
 
 .PHONY : clean
 clean :
