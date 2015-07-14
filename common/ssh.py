@@ -10,13 +10,79 @@ import os
 import datetime
 
 from ConfigParser import ConfigParser
+from xml.dom import minidom, Node
+
+def getNodeValue(node, tagName):
+	if node.nodeType <> Node.ELEMENT_NODE:
+		return ''
+	childs = node.getElementsByTagName(tagName)
+	if childs == None or childs.length == 0:
+		return ''
+	textNode = childs[0].firstChild
+	if textNode == None or textNode.nodeType <> Node.TEXT_NODE:
+		return ''
+	return textNode.nodeValue
+
+def init2(cfile):
+	
+	# Load configuration
+	
+	global boot
+	global clients
+	global transports
+	global sftps
+	global hosts
+
+	if globals().has_key('boot') and boot:
+		return hosts
+
+	print 'Beginning initialize'
+
+	dom = minidom.parseString(cfile)
+	hostNodes = dom.getElementsByTagName('host')
+	for node in hostNodes:
+		if node.nodeType == Node.ELEMENT_NODE and node.hasAttribute('name'):
+			name = node.getAttribute('name')
+			hostname = getNodeValue(node, 'hostname')
+			port = 22
+			port_ = getNodeValue(node, 'port')
+			if port_ is not None and port_ <> '':
+				port = int(port_)
+			ipaddr = getNodeValue(node, 'ipaddr')
+			username = getNodeValue(node, 'username')
+			password = getNodeValue(node, 'password')
+			keys_ = getNodeValue(node, 'keys')
+			keys = keys_.split(',')
+			
+			client = paramiko.SSHClient()
+			client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+			try:
+				client.connect(hostname = ipaddr, port = port, username = username, password = password)
+			except BadHostKeyException, e:
+				print 'BadHostKeyException[%s]: %s' % (host, e)
+				return None
+			except AutenticationException, e:
+				print 'AutenticationException[%s]: %s' % (host, e)
+				return None
+			except SSHException, e:
+				print 'SSHException[%s]: %s' % (host, e)
+				return None
+			clients[hostname] = client
+			t = paramiko.Transport((ipaddr, port))
+			t.connect(username = username, password = password)
+			transports.append(t)
+			sftp = paramiko.SFTPClient.from_transport(t)
+			sftps[hostname] = sftp
+			hosts.append({'name': name, 'hostname': hostname, 'port': port, 'ipaddr': ipaddr, 'username': username, 'password': password, 'keys': keys})
+	print 'Initialize success'
+	boot = True
+	return hosts
+
 
 def init():
 
 	# Load configuration
 	
-	global cfile
-	global cfg
 	global boot
 	global clients
 	global transports
@@ -40,7 +106,7 @@ def init():
 
 	sections = cfg.sections()
 	for s in sections:
-		host = cfg.get(s, 'hostname')
+		hostname = cfg.get(s, 'hostname')
 		port = 22
 		if cfg.has_option(s, 'port'):
 			port = cfg.get(s, 'port')
@@ -49,8 +115,8 @@ def init():
 			else:
 				port = int(port) 
 		ipaddr = cfg.get(s, 'ipaddr')
-		user = cfg.get(s, 'username')
-		pwd = cfg.get(s, 'password')
+		username = cfg.get(s, 'username')
+		password = cfg.get(s, 'password')
 		keys_ = cfg.get(s, 'keys')
 		if keys_ is None:
 			keys_ = ''
@@ -59,23 +125,23 @@ def init():
 		client = paramiko.SSHClient()
 		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		try:
-			client.connect(hostname = ipaddr, port = port, username = user, password = pwd)
+			client.connect(hostname = ipaddr, port = port, username = username, password = password)
 		except BadHostKeyException, e:
-			print 'BadHostKeyException[%s]: %s' % (host, e)
+			print 'BadHostKeyException[%s]: %s' % (hostname, e)
 			return None
 		except AutenticationException, e:
-			print 'AutenticationException[%s]: %s' % (host, e)
+			print 'AutenticationException[%s]: %s' % (hostname, e)
 			return None
 		except SSHException, e:
-			print 'SSHException[%s]: %s' % (host, e)
+			print 'SSHException[%s]: %s' % (hostname, e)
 			return None
-		clients[host] = client
+		clients[hostname] = client
 		t = paramiko.Transport((ipaddr, port))
-		t.connect(username = user, password = pwd)
+		t.connect(username = username, password = password)
 		transports.append(t)
 		sftp = paramiko.SFTPClient.from_transport(t)
-		sftps[host] = sftp
-		hosts.append({'name': s, 'hostname': host, 'port': port, 'ipaddr': ipaddr, 'username': user, 'password': pwd, 'keys': keys})
+		sftps[hostname] = sftp
+		hosts.append({'name': s, 'hostname': hostname, 'port': port, 'ipaddr': ipaddr, 'username': username, 'password': password, 'keys': keys})
 	print 'Initialize success'
 	boot = True
 	return hosts
@@ -163,6 +229,15 @@ if __name__ == "__main__":
 		print 'success'
 	else:
 		print 'fail'
+	global boot
+	boot = False
+	print '### init2(xml) ###'
+	f = open('1.xml', 'r')
+	if init2(f.read()):
+		print 'success'
+	else:
+		print 'fail'
+	f.close()
 	print '### exec ###'
 	if cmd('uname'):
 		print 'success'
