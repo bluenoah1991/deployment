@@ -38,6 +38,12 @@ def init2(cfile):
 
 	print 'Beginning initialize'
 
+	boot = False
+	clients = {}
+	transports = []
+	sftps = {}
+	hosts = []
+
 	dom = minidom.parseString(cfile)
 	hostNodes = dom.getElementsByTagName('host')
 	for node in hostNodes:

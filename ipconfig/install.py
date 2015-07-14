@@ -5,7 +5,11 @@ sys.path.append('..')
 
 from common import ssh, tool
 
-def main():
+def main(cfg = None):
+
+	if cfg is not None:
+		ssh.init2(cfg)
+
 	hosts = ssh.init()
 	maps = []
 	for host in hosts:

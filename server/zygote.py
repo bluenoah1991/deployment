@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
-import os, sys, socket
+import sys
+sys.path.append('..')
+
+import os, socket
 # import pdb
 
 startFlag = '<$'
@@ -123,8 +126,20 @@ def proc(cmd):
 	print 'exec: "%s"' % cmd
 	refcall(args) # Stdout redirect
 
+def acceptEvent(conn):
+	buffstr = ''
+	while True:
+		data = conn.recv(1024) # Stick package
+		#pdb.set_trace()
+		if not len(data) : break
+		buffstr = pick(buffstr + data, proc)
+	conn.close()
+
 if __name__ == '__main__':
-	create()
+
+	if '-d' in sys.argv:
+		create()
+
 	sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	if not os.path.exists(sockFile):
 		os.mknod(sockFile)
@@ -132,12 +147,9 @@ if __name__ == '__main__':
 		os.unlink(sockFile)
 		sock.bind(sockFile)
 		sock.listen(1) # TODO Multi Client
-		buffstr = ''
 		while True:
 			conn, address = sock.accept()
-			data = conn.recv(1024) # Stick package
-			#pdb.set_trace()
-			buffstr = pick(buffstr + data, proc)
+			acceptEvent(conn)
 		os.unlink(sockFile)
 		conn.close()
 

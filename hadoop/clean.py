@@ -5,7 +5,10 @@ sys.path.append('..')
 
 from common import ssh
 
-def main():
+def main(cfg = None):
+
+	if cfg is not None:
+		ssh.init2(cfg)
 
 	hosts = ssh.init()
 

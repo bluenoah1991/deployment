@@ -6,8 +6,12 @@ sys.path.append('..')
 from common import ssh, tool
 import ipconfig.install
 
-def main():
-	ipconfig.install.main()
+def main(cfg = None):
+
+	if cfg is not None:
+		ssh.init2(cfg)
+
+	ipconfig.install.main(cfg)
 
 	jdk_local_path = tool.join(__file__, "jdk-8u45-linux-x64.tar.gz")
 	jdk_tmp_path = "/tmp/jdk-8u45-linux-x64.tar.gz"
