@@ -13,3 +13,7 @@ libdpycli.so : libdpycli.c libdpycli.h
 
 test : test.c libdpycli.so libdpycli.h
 	gcc $(CXXFLAGS) -o $@ test.c -L. -ldpycli
+
+.PHONY : clean
+clean :
+	rm -f libdpycli.so test
