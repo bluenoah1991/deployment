@@ -25,7 +25,7 @@
   margin-right: 10px;
 }
 .magic-mirror {
-  min-height: 40px;
+  min-height: 24px;
   background: #f9f9f9;
   padding: 15px;
   clear: both;
@@ -244,4 +244,21 @@
   padding-left: 20px;
   padding-right: 20px;
   color: #46959d;
+}
+.button {
+  text-decoration: none;
+  display: inline-block;
+  min-width: 40px;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  background: #46959d;
+  border: solid 1px #cccccc;
+}
+.button:hover {
+  background: #82c1c7;
 }
