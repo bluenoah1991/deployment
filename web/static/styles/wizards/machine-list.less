@@ -1,0 +1,20 @@
+﻿@import "../global.less";
+
+.magic-mirror {
+    .machine-list {
+        border-collapse: collapse;
+        margin-bottom: 10px;
+
+        &, & td, & th {
+            border: @border;
+            padding: 5px;
+            text-align: center;
+        }
+
+        input[type=text] {
+            width: 70px;
+            border: none;
+            background: @gray2;
+        }
+    }
+}

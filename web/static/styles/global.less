@@ -1,0 +1,45 @@
+﻿@import "preboot.less";
+
+@grid-columns: 12;
+@grid-column-padding: 0px;
+@grid-float-breakpoint: 768px;
+
+@blue: #438eb9;
+@blue2: #d9edf7;
+@green: #46959d;
+@green2: #dff0d8;
+@green3: #d6e9c6;
+@orange: #ffb752;
+@red: #d15b47;
+@gray: #f5f5f5;
+@gray2: #f9f9f9;
+@black: #555555;
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+    font-family: Arial;
+}
+
+@border: solid 1px #cccccc;
+@border-dotted: dotted 1px #cccccc;
+
+.border-layer-all() {
+    border-right: @border;
+    border-bottom: @border;
+    margin-right: -1px;
+}
+
+.border-layer-bottom() {
+    border-bottom: @border;
+}
+
+.border-layer-bottom(@border) {
+    border-bottom: @border;
+}
+
+.border-layer-right() {
+    border-right: @border;
+    margin-right: -1px;
+}
