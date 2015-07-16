@@ -1,0 +1,133 @@
+﻿<!-- Machine List Start-->
+<div class="magic-name" id="magic-name-machine-list">
+    <i class="icon-check-empty icon-large"></i>Configuration your machine
+</div>
+<div class="magic-mirror" id="magic-mirror-machine-list">
+    <table class="machine-list">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>IpAddress</th>
+                <th>HostName</th>
+                <th>UserName</th>
+                <th>Password</th>
+                <th>Master</th>
+                <th>Spark Client</th>
+            </tr>
+            <tr class="machine" id="template-machine" style="display:none;">
+                <td><input class="cell-name" type="text" /></td>
+                <td><input class="cell-ipaddr" type="text" /></td>
+                <td><input class="cell-hostname" type="text" /></td>
+                <td><input class="cell-username" type="text" /></td>
+                <td><input class="cell-passwd" type="text" /></td>
+                <td><input class="cell-is-master" type="checkbox" /></td>
+                <td><input class="cell-is-spark-client" type="checkbox" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <input id="machine-list-enter" type="button" value="Enter" />
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        var template_machine = document.getElementById('template-machine');
+        var machine = template_machine.cloneNode(true);
+        var machine_list_container = template_machine.parentNode;
+        machine.style.display = 'table-row';
+        var ms = [];
+        var getValue = function (machine, className) {
+            var element = machine.getElementsByClassName(className)[0];
+            if (!element) {
+                return null;
+            }
+            else if (element.type == 'checkbox') {
+                return !!element.checked;
+            }
+            return element.value;
+        }
+        var getData = function () {
+            var data = '<?xml version="1.0" encoding="UTF-8"?>';
+            data = data + '<hosts>';
+            for (var _ in ms) {
+                var name = getValue(ms[_], 'cell-name');
+                if (!name || name == '') {
+                    return null;
+                }
+                data = data + '<host name="' + name + '">';
+                var ipaddr = getValue(ms[_], 'cell-ipaddr');
+                if (!ipaddr || ipaddr == '') {
+                    return null;
+                }
+                data = data + '<ipaddr>' + ipaddr + '</ipaddr>';
+                var hostname = getValue(ms[_], 'cell-hostname');
+                if (!hostname || hostname == '') {
+                    return null;
+                }
+                data = data + '<hostname>' + hostname + '</hostname>';
+                var username = getValue(ms[_], 'cell-username');
+                if (!username || username == '') {
+                    return null;
+                }
+                data = data + '<username>' + username + '</username>';
+                var passwd = getValue(ms[_], 'cell-passwd');
+                if (!passwd || passwd == '') {
+                    return null;
+                }
+                data = data + '<password>' + passwd + '</password>';
+                data = data + '<keys>';
+                var is_master = getValue(ms[_], 'cell-is-master');
+                if (!!is_master) {
+                    data = data + 'hadoop_master';
+                }
+                else {
+                    data = data + 'hadoop_slave';
+                }
+                var is_spark_client = getValue(ms[_], 'cell-is-spark-client');
+                if (!!is_spark_client) {
+                    data = data + ',spark_client';
+                }
+                data = data + '</keys>';
+                data = data + '</host>';
+            }
+            data = data + '</hosts>';
+            return data;
+        }
+        var current_mana = 0;
+        var m = new Magic('configuration-your-machine', '{{wizardName}}', ___index___, function (magic, mana) {
+            if (current_mana > mana) {
+                for (var i = 0; i < current_mana - mana; i++) {
+                    _ = ms.pop();
+                    machine_list_container.removeChild(_);
+                }
+            }
+            else if (mana > current_mana) {
+                for (var i = 0; i < mana - current_mana; i++) {
+                    var _ = machine.cloneNode(true);
+                    machine_list_container.appendChild(_);
+                    ms.push(_);
+                }
+            }
+            current_mana = mana;
+            var data = getData();
+            if (!data) {
+                magic.ready = false;
+                var i = document.getElementById('magic-name-machine-list').getElementsByTagName('i')[0];
+                i.classList.remove('icon-check');
+                i.classList.add('icon-check-empty');
+            }
+            else {
+                magic.ready = true;// If configured correctly
+                var i = document.getElementById('magic-name-machine-list').getElementsByTagName('i')[0];
+                i.classList.remove('icon-check-empty');
+                i.classList.add('icon-check');
+            }
+            return data;
+        });
+        Magician.practice(m);
+        // retry fire when you modify some values
+        var machine_list_enter = document.getElementById('machine-list-enter');
+        machine_list_enter.addEventListener('click', function () {
+            Magician.fire('{{wizardName}}', null);
+        });
+    });
+</script>
+<!-- Machine List End-->

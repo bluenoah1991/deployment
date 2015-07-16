@@ -4,6 +4,7 @@ import sys
 sys.path.append('..')
 
 import os, socket
+from common import tool
 from server import zygote
 
 import tornado.ioloop
@@ -28,6 +29,19 @@ class AjaxHandler(tornado.web.RequestHandler):
 			sock.send(zygote.pack(message))
 			sock.close()
 
+__PARTS__ = {}
+
+class PartsHandler(tornado.web.RequestHandler):
+	def get(self, partName):
+		if partName in __PARTS__:
+			self.write(__PARTS__.get(partName))
+		else:
+			f = open(tool.join(__file__, 'parts/%s.html' % partName), 'r')
+			content = f.read()
+			__PARTS__[partName] = content
+			f.close()
+			self.write(content)
+
 settings = {
 	"static_path": os.path.join(os.path.dirname(__file__), "static"),
 }
@@ -35,6 +49,7 @@ settings = {
 application = tornado.web.Application([
 	(r"/", MainHandler),
 	(r"/ajax-handler", AjaxHandler),
+	(r"/parts/(\S+)", PartsHandler),
 ], **settings)
 
 if __name__ == "__main__":

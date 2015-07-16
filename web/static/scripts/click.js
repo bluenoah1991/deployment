@@ -1,7 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Toolkits, _;
+var Toolkits, _, __IFRAME_REGISTER_FUNCTION__, iframe_push;
 
-Toolkits = (function() {
+String.prototype.replaceAll = function(s1, s2) {
+  return this.replace(new RegExp(s1, "gm"), s2);
+};
+
+window.Toolkits = Toolkits = (function() {
   function Toolkits() {}
 
   Toolkits.hasClass = function(element, className) {
@@ -24,9 +28,150 @@ Toolkits = (function() {
     }
   };
 
+  Toolkits.post = function(url, headers, data, mime) {
+    var k, v, xmlhttp;
+    xmlhttp = null;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest;
+    } else {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("POST", url, false);
+    for (k in headers) {
+      v = headers[k];
+      xmlhttp.setRequestHeader(k, v);
+    }
+    xmlhttp.setRequestHeader("Content-type", mime);
+    xmlhttp.send(data);
+    return xmlhttp.responseText;
+  };
+
+  Toolkits.async_post = function(url, headers, data, mime, callback, err) {
+    var k, v, xmlhttp;
+    xmlhttp = null;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest;
+    } else {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        if (!!callback) {
+          return callback(xmlhttp, xmlhttp.responseText);
+        }
+      } else {
+        if (!!err) {
+          return err(xmlhttp);
+        }
+      }
+    };
+    xmlhttp.open("POST", url, false);
+    for (k in headers) {
+      v = headers[k];
+      xmlhttp.setRequestHeader(k, v);
+    }
+    xmlhttp.setRequestHeader("Content-type", mime);
+    xmlhttp.send(data);
+    return xmlhttp.responseText;
+  };
+
+  Toolkits.get = function(url, headers) {
+    var k, v, xmlhttp;
+    xmlhttp = null;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest;
+    } else {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("GET", url, false);
+    if (!!headers) {
+      for (k in headers) {
+        v = headers[k];
+        xmlhttp.setRequestHeader(k, v);
+      }
+    }
+    xmlhttp.send();
+    return xmlhttp.responseText;
+  };
+
+  Toolkits.async_get = function(url, headers, callback, err) {
+    var k, v, xmlhttp;
+    xmlhttp = null;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest;
+    } else {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        if (!!callback) {
+          return callback(xmlhttp, xmlhttp.responseText);
+        }
+      } else {
+        if (!!err) {
+          return err(xmlhttp);
+        }
+      }
+    };
+    xmlhttp.open("GET", url, false);
+    if (!!headers) {
+      for (k in headers) {
+        v = headers[k];
+        xmlhttp.setRequestHeader(k, v);
+      }
+    }
+    xmlhttp.send();
+    return xmlhttp.responseText;
+  };
+
   return Toolkits;
 
 })();
+
+window.__IFRAME__ = null;
+
+__IFRAME_REGISTER_FUNCTION__ = [];
+
+iframe_push = function(url, d) {
+  if (!window.__IFRAME__) {
+    return null;
+  }
+  return Toolkits.async_get(url, null, function(xmlhttp, data) {
+    var k, v;
+    for (k in d) {
+      v = d[k];
+      data = data.replaceAll("{{" + k + "}}", v);
+      data = data.replaceAll("___" + k + "___", v);
+    }
+    return jQuery(window.__IFRAME__).append(data);
+  });
+};
+
+window.iframe_register = function(f) {
+  return __IFRAME_REGISTER_FUNCTION__.push(f);
+};
+
+window.iframe_pushs = function(d) {
+  var _, j, l, len, len1, results;
+  for (j = 0, len = d.length; j < len; j++) {
+    _ = d[j];
+    iframe_push(_.url, _.d);
+  }
+  results = [];
+  for (l = 0, len1 = __IFRAME_REGISTER_FUNCTION__.length; l < len1; l++) {
+    _ = __IFRAME_REGISTER_FUNCTION__[l];
+    results.push(_());
+  }
+  return results;
+};
+
+window.iframe_clear = function() {
+  if (!window.__IFRAME__) {
+    return null;
+  }
+  window.__IFRAME__.innerHTML = '';
+  return __IFRAME_REGISTER_FUNCTION__ = [];
+};
 
 window.crumbs = function(d) {
   var body, i, item, j, len, seg;
@@ -79,9 +224,9 @@ window.clickfocus = function(elements) {
   for (j = 0, len = elements.length; j < len; j++) {
     ele = elements[j];
     results.push(ele.addEventListener('click', function(e) {
-      var _, k, len1;
-      for (k = 0, len1 = elements.length; k < len1; k++) {
-        _ = elements[k];
+      var _, l, len1;
+      for (l = 0, len1 = elements.length; l < len1; l++) {
+        _ = elements[l];
         Toolkits.removeClass(_, 'focus');
       }
       return Toolkits.addClass(e.srcElement, 'focus');

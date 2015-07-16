@@ -10,15 +10,10 @@
   font-size: 10pt;
   font-family: Arial;
 }
-.magic-mirror .machine-number-box {
+.magic-mirror .commit-box {
   height: 40px;
   line-height: 40px;
   vertical-align: middle;
-}
-.magic-mirror .machine-number-box input[type=number] {
-  width: 60px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 .magic-mirror .machine-list {
   border-collapse: collapse;
@@ -35,4 +30,14 @@
   width: 70px;
   border: none;
   background: #f9f9f9;
+}
+.magic-mirror .machine-number-box {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.magic-mirror .machine-number-box input[type=number] {
+  width: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
 }

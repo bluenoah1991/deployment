@@ -1,0 +1,31 @@
+﻿<!-- Machine Number Start-->
+<div class="magic-name" id="magic-name-machine-number">
+    <i class="icon-check-empty icon-large"></i>Select machine number
+</div>
+<div class="magic-mirror" id="magic-mirror-machine-number">
+    <div class="machine-number-box">
+        <span>Machine Number </span>
+        <input type="number" id="input-machine-number" value="0" />
+        <input type="button" id="input-machine-number-enter" value="Enter" />
+    </div>
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        var input_machine_number = document.getElementById('input-machine-number');
+        var input_machine_number_enter = document.getElementById('input-machine-number-enter');
+
+        var m = new Magic('select-machine-number', '{{wizardName}}', ___index___, function (magic, mana) {
+            return input_machine_number.value;
+        });
+        Magician.practice(m);
+
+        input_machine_number_enter.addEventListener('click', function (e) {
+            m.ready = true; // if not zero
+            var i = document.getElementById('magic-name-machine-number').getElementsByTagName('i')[0];
+            i.classList.remove('icon-check-empty');
+            i.classList.add('icon-check');
+            Magician.fire('{{wizardName}}', null);
+        });
+    });
+</script>
+<!-- Machine Number End-->
