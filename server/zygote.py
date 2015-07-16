@@ -54,7 +54,7 @@ def refcall(args):
 	except TypeError, e:
 		return -1
 
-def create():
+def create(chdir = False):
 	try:
 		if os.fork() > 0:
 			os._exit(0)
@@ -68,7 +68,8 @@ def create():
 	sys.stdout = Unbuffered(fsock)
 	sys.stdin = fsock2
 	sys.stderr = Unbuffered(fsock3)
-	os.chdir('/')
+	if chdir:
+		os.chdir('/')
 	os.setsid()
 	os.umask(0)
 

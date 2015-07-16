@@ -38,6 +38,10 @@ application = tornado.web.Application([
 ], **settings)
 
 if __name__ == "__main__":
+
+	if '-d' in sys.argv:
+		zygote.create()
+
 	application.listen(80)
 	tornado.ioloop.IOLoop.instance().start()
 
