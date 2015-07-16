@@ -122,6 +122,20 @@ window.crumbs = (d) ->
             body += '<i class="icon-angle-right"></i>'
     return body
 
+board_boot = false
+
+window.iframe_switch = (maintitle, subtitle, d) ->
+    if !board_boot
+        board_boot = true
+        main_board = document.getElementById('board-main')
+        main_board.style.display = 'block'
+    main_node = document.getElementById('board-main-title')
+    sub_node = document.getElementById('board-sub-title')
+    main_node.innerText = maintitle
+    sub_node.innerText = subtitle
+    iframe_clear()
+    iframe_pushs(d)
+
 window.clickgo = (elements) ->
     for ele in elements
         ele.addEventListener 'click', (e) ->

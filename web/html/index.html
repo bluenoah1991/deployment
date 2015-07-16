@@ -22,12 +22,38 @@
                         document.getElementById('_01_'));
             clickfocus(document.getElementsByClassName('_focus_'));
             __IFRAME__ = document.getElementById('iframe_just_me');
-            iframe_clear();
-            iframe_pushs([
-                { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
-                { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
-                { url: 'parts/commit', d: { 'wizardName': 'hadoop-install', 'index': '2', 'arg0': 'hadoop.install.main' } },
-            ]);
+            window.switch_ = function (flag) {
+                switch (flag) {
+                    case 'install':
+                        iframe_switch('Install Hadoop', '>> This operation needs to provide server login credentials', [
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-install', 'index': '2', 'arg0': 'hadoop.install.main' } },
+                        ]);
+                        break;
+                    case 'clean':
+                        iframe_switch('Clean Hadoop', '>> This operation needs to provide server login credentials', [
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-clean', 'index': '2', 'arg0': 'hadoop.clean.main' } },
+                        ]);
+                        break;
+                    case 'start':
+                        iframe_switch('Start Hadoop', '>> This operation needs to provide server login credentials', [
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-start', 'index': '2', 'arg0': 'hadoop.start.main' } },
+                        ]);
+                        break;
+                    case 'stop':
+                        iframe_switch('Stop Hadoop', '>> This operation needs to provide server login credentials', [
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-stop', 'index': '2', 'arg0': 'hadoop.stop.main' } },
+                        ]);
+                        break;
+                }
+            }
         });
     </script>
 </head>
@@ -50,10 +76,10 @@
                 <li>
                     <a id="_01" focus="1" href="javascript:void(0);"><i class="icon-book icon-large"></i>Hadoop</a>
                     <ul id="_01_">
-                        <li><a class="_focus_" href="javascript:void(0);">Install</a></li>
-                        <li><a class="_focus_" href="javascript:void(0);">Clean</a></li>
-                        <li><a class="_focus_" href="javascript:void(0);">Start</a></li>
-                        <li><a class="_focus_" href="javascript:void(0);">Stop</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('install');">Install</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('clean');">Clean</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('start');">Start</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('stop');">Stop</a></li>
                     </ul>
                 </li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
@@ -62,10 +88,10 @@
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-file icon-large"></i>Other Pages</a></li>
             </ul>
         </div>
-        <div class="column-board">
+        <div class="column-board" id="board-main" style="display:none;">
             <div class="title">
-                <span class="maintitle">Install Hadoop</span>
-                <span class="subtitle">&gt;&gt; This operation needs to provide server login credentials</span>
+                <span class="maintitle" id="board-main-title"></span>
+                <span class="subtitle" id="board-sub-title"></span>
             </div>
             <div class="alert">
                 <i class="icon-ok"></i> Welcome to use <b>ClickCloud</b> Deployment Service, the rapid deployment plan
