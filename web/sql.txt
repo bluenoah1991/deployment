@@ -1,0 +1,8 @@
+u_user id name uname passwd 
+u_machine id uid name in_ipaddr ex_ipaddr hostname os uname passwd roles
+u_cluster id uid name type machines
+u_tasks id uid status command date logfile
+
+s_role id name cluster_type
+s_cluster_type id name
+s_os id name 
