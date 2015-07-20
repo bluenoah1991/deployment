@@ -22,6 +22,28 @@ def get(handler):
 	session = __session_pool__.get(sessionid, None)
 	return session
 
+def info(handler):
+	session = get(handler)
+	if session is None:
+		return None
+	id_ = session.get('uid', None)
+	if id_ is None:
+		return None
+	host = config.mysql_host
+	user = config.mysql_user
+	password = config.mysql_password
+	database = config.mysql_database
+	con = tool.connect_mysql(host = host, user = user, password = password, database = database)
+	if con is None:
+		return None
+	connector = tool.Connector(con)
+	db_result = connector.select('u_user', '`id` = %s' % id_)
+	connector.close()
+	if len(db_result) == 0:
+		return None
+	return db_result[0]
+
+
 if __name__ == '__main__':
 	pass
 	# new thread

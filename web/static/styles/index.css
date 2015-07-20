@@ -81,3 +81,41 @@
   padding-right: 10px;
   text-align: center;
 }
+.add-host .add-host-header {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 15px;
+  vertical-align: middle;
+  background: #438eb9;
+  color: white;
+}
+.add-host .add-host-form {
+  background: #f5f5f5;
+  padding: 10px;
+}
+.add-host .add-host-form fieldset {
+  display: block;
+  color: #438eb9;
+  border-color: #438eb9;
+  padding: 10px;
+}
+.add-host .add-host-form fieldset legend {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.add-host .add-host-form fieldset table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.add-host .add-host-form fieldset table td,
+.add-host .add-host-form fieldset table th {
+  border: solid 1px #cccccc;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}

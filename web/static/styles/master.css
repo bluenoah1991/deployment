@@ -262,3 +262,6 @@
 .button:hover {
   background: #82c1c7;
 }
+.button i {
+  margin-right: 5px;
+}

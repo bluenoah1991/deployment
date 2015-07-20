@@ -1,0 +1,74 @@
+﻿<!-- Add Host Start-->
+<div class="add-host">
+    <div class="add-host-header">Add Host</div>
+    <div class="add-host-form">
+        <fieldset>
+            <legend>New Host</legend>
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input id="input_name" type="text" /></td>
+                    <td>HostName:</td>
+                    <td><input id="input_hostname" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Internal IpAddr:</td>
+                    <td><input id="input_in_ipaddr" type="text" /></td>
+                    <td>External IpAddr:</td>
+                    <td><input id="input_ex_ipaddr" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>UserName:</td>
+                    <td><input id="input_username" type="text" /></td>
+                    <td>Password:</td>
+                    <td><input id="input_password" type="password" /></td>
+                </tr>
+                <tr>
+                    <td>OS:</td>
+                    <td>
+                        <select id="options_os"></select>
+                    </td>
+                    <td colspan="2">
+                        <a href="javascript:void(0);" id="button_submit" class="button"><i class="icon-ok"></i>Create</a>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        Toolkits.async_get("ajax-handler/global.get_os_options", {}, function (xmlhttp, data) {
+            if (!data) {
+                return;
+            }
+            var d = Toolkits.toJson(data);
+            var options_os = document.getElementById('options_os');
+            for (var i in d) {
+                var option = document.createElement('option');
+                option.textContent = d[i].name;
+                option.value = d[i].id;
+                options_os.appendChild(option);
+            }
+        });
+
+        var submit = document.getElementById('button_submit');
+
+        submit.addEventListener('click', function (e) {
+            var d = {};
+            d.name = document.getElementById('input_name').value;
+            d.hostname = document.getElementById('input_hostname').value;
+            d.in_ipaddr = document.getElementById('input_in_ipaddr').value;
+            d.ex_ipaddr = document.getElementById('input_ex_ipaddr').value;
+            d.username = document.getElementById('input_username').value;
+            d.password = document.getElementById('input_password').value;
+            d.os = document.getElementById('options_os').value;
+            djson = JSON.stringify(d);
+            Toolkits.async_post("ajax-handler/global.add_host", {}, djson, "application/json", function (e) {
+                alert('success');
+            });
+        });
+
+    });
+</script>
+<!-- Add Host End-->

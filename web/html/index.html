@@ -33,28 +33,33 @@
                         break;
                     case 'clean':
                         iframe_switch('Clean Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-clean', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-clean', 'index': '1', } },
                             { url: 'parts/commit', d: { 'wizardName': 'hadoop-clean', 'index': '2', 'arg0': 'hadoop.clean.main' } },
                         ]);
                         break;
                     case 'start':
                         iframe_switch('Start Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-start', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-start', 'index': '1', } },
                             { url: 'parts/commit', d: { 'wizardName': 'hadoop-start', 'index': '2', 'arg0': 'hadoop.start.main' } },
                         ]);
                         break;
                     case 'stop':
                         iframe_switch('Stop Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
+                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-stop', 'index': '0', } },
+                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-stop', 'index': '1', } },
                             { url: 'parts/commit', d: { 'wizardName': 'hadoop-stop', 'index': '2', 'arg0': 'hadoop.stop.main' } },
                         ]);
                         break;
                     case 'tasks-list':
                         iframe_switch('Tasks List', '>> All tasks list', [
                             { url: 'parts/table-style-1', d: { 'title': 'Results for "All Tasks"', 'url': 'ajax-handler/tasks.list', } },
+                        ]);
+                        break;
+                    case 'add-host':
+                        iframe_switch('Add Host', '>> Register your machine to the system', [
+                            { url: 'parts/add-host', d: {} },
                         ]);
                         break;
                 }
@@ -89,7 +94,13 @@
                 </li>
                 <li><a class="_focus_" href="javascript:switch_('tasks-list');"><i class="icon-tasks icon-large"></i>Tasks</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
-                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-sitemap icon-large"></i>My Hosts</a></li>
+                <li>
+                    <a id="_02" focus="1" href="javascript:switch_('my-host');"><i class="icon-sitemap icon-large"></i>My Hosts</a>
+                    <ul id="_02_">
+                        <li><a class="_focus_" href="javascript:switch_('add-host');">Add Host</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('host-list');">Host List</a></li>
+                    </ul>
+                </li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-lightbulb icon-large"></i>Issues</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-file icon-large"></i>Other Pages</a></li>
             </ul>

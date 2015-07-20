@@ -48,7 +48,7 @@ class Connector(object):
 		sql += ') VALUES ('
 		keys_wrapper = []
 		for k in keys:
-			keys_wrapper.append("\%(%s)s" % k)
+			keys_wrapper.append("%%(%s)s" % k)
 		sql += ','.join(keys_wrapper)
 		sql += ')'
 		cursor = self.con.cursor()

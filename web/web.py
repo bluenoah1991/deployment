@@ -61,6 +61,7 @@ class AjaxHandler(tornado.web.RequestHandler):
 			sock.close()
 
 __PARTS__ = {}
+__CACHE__ = True
 
 class PartsHandler(tornado.web.RequestHandler):
 	def get(self, partName):
@@ -69,7 +70,8 @@ class PartsHandler(tornado.web.RequestHandler):
 		else:
 			f = open(tool.join(__file__, 'parts/%s.html' % partName), 'r')
 			content = f.read()
-			__PARTS__[partName] = content
+			if __CACHE__:
+				__PARTS__[partName] = content
 			f.close()
 			self.write(content)
 
@@ -98,6 +100,8 @@ if __name__ == "__main__":
 
 	if '-d' in sys.argv:
 		zygote.create()
+	if '-nocache' in sys.argv:
+		__CACHE__ = False
 
 	application.listen(80)
 	tornado.ioloop.IOLoop.instance().start()
