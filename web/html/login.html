@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ClickCloud | Rapid deployment</title>
+    <link rel="stylesheet" type="text/css" href="static/styles/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="static/styles/login.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="static/styles/font-awesome-ie7.min.css">
+    <![endif]-->
+    <script type="text/javascript" src="static/scripts/jquery.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var button = document.getElementById('submit-login');
+            button.onclick = function () {
+                var form = document.getElementById('form-login');
+                form.submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="center">
+        <div class="head"></div>
+        <div class="dialog">
+            <div class="form">
+                <div class="title"><i class="icon-coffee icon-large"></i>Please Enter Your Information</div>
+                <form id="form-login" method="post" action="ajax-handler/global.login">
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <div class="border">
+                                    <input name="username" type="text" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="border">
+                                    <input name="password" type="password" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox"><input name="cache" type="checkbox" />Remember Me</td>
+                            <td><a id="submit-login" class="button" href="javascript:void(0);"><i class="icon-key"></i>Login</a></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="goto">
+                <a class="left" href="javascript:void(0);"><i class="icon-arrow-left"></i>I forgot my password</a>
+                <a class="right" href="javascript:void(0);">I want to register<i class="icon-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

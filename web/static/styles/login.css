@@ -1,0 +1,378 @@
+/*!
+ * Preboot v2
+ *
+ * Open sourced under MIT license by @mdo.
+ * Some variables and mixins from Bootstrap (Apache 2 license).
+ */
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 10pt;
+  font-family: Arial;
+}
+.magic-name {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  border: solid 1px #f5f5f5;
+  background: #d9edf7;
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  clear: both;
+}
+.magic-name i {
+  margin-right: 10px;
+}
+.magic-mirror {
+  min-height: 24px;
+  background: #f9f9f9;
+  padding: 15px;
+  clear: both;
+}
+.row-head {
+  margin-left: 0px;
+  margin-right: 0px;
+  *zoom: 1;
+  height: 45px;
+  background: #438eb9;
+}
+.row-head:before,
+.row-head:after {
+  content: " ";
+  display: table;
+  line-height: 0;
+}
+.row-head:after {
+  clear: both;
+}
+.row-head .column-logo {
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 45px;
+  background: url(images/logo-mini.png) 20px center no-repeat;
+}
+@media (min-width: 768px) {
+  .row-head .column-logo {
+    float: left;
+    width: 25%;
+  }
+}
+.row-navigation {
+  margin-left: 0px;
+  margin-right: 0px;
+  *zoom: 1;
+  height: 45px;
+  background: #f5f5f5;
+}
+.row-navigation:before,
+.row-navigation:after {
+  content: " ";
+  display: table;
+  line-height: 0;
+}
+.row-navigation:after {
+  clear: both;
+}
+.row-navigation .column-icons {
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 45px;
+  border-right: solid 1px #cccccc;
+  border-bottom: solid 1px #cccccc;
+  margin-right: -1px;
+}
+@media (min-width: 768px) {
+  .row-navigation .column-icons {
+    float: left;
+    width: 25%;
+  }
+}
+.row-navigation .column-crumbs {
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 45px;
+  border-bottom: solid 1px #cccccc;
+}
+@media (min-width: 768px) {
+  .row-navigation .column-crumbs {
+    float: left;
+    width: 75%;
+  }
+}
+.row-navigation .column-crumbs .crumbs {
+  height: 45px;
+  line-height: 45px;
+  vertical-align: middle;
+  padding-left: 12px;
+}
+.row-navigation .column-crumbs .crumbs span,
+.row-navigation .column-crumbs .crumbs i {
+  color: #555555;
+  padding-left: 8px;
+}
+.row-navigation .column-crumbs .crumbs a {
+  color: #438eb9;
+  text-decoration: none;
+  padding-left: 8px;
+}
+.row-main {
+  margin-left: 0px;
+  margin-right: 0px;
+  *zoom: 1;
+  min-height: 500px;
+}
+.row-main:before,
+.row-main:after {
+  content: " ";
+  display: table;
+  line-height: 0;
+}
+.row-main:after {
+  clear: both;
+}
+.row-main .column-list {
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 500px;
+  border-right: solid 1px #cccccc;
+  margin-right: -1px;
+  background: #f5f5f5;
+}
+@media (min-width: 768px) {
+  .row-main .column-list {
+    float: left;
+    width: 25%;
+  }
+}
+.row-main .column-list li {
+  display: block;
+  min-height: 50px;
+  line-height: 50px;
+}
+.row-main .column-list li a {
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  color: #555555;
+  padding-left: 20px;
+  vertical-align: middle;
+  font-size: 11pt;
+  text-decoration: none;
+  border-bottom: solid 1px #cccccc;
+}
+.row-main .column-list li a.focus {
+  background: white url(images/arrow-right.png) center right no-repeat;
+}
+.row-main .column-list li a i {
+  margin-right: 10px;
+}
+.row-main .column-list li a:hover {
+  background: white url(images/arrow-right.png) center right no-repeat;
+  color: #438eb9;
+}
+.row-main .column-list li ul li a {
+  background: white url(images/dotted-blur.png) 10px center no-repeat;
+  border-bottom: none;
+  border-bottom: dotted 1px #cccccc;
+  padding-left: 30px;
+}
+.row-main .column-list li ul li a.focus {
+  background: white url(images/dotted-focus.png) 10px center no-repeat;
+}
+.row-main .column-list li ul li a:hover {
+  background: white url(images/dotted-focus.png) 10px center no-repeat;
+}
+.row-main .column-list li ul li:last-child a {
+  border-bottom: solid 1px #cccccc;
+}
+.row-main .column-board {
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 500px;
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .row-main .column-board {
+    float: left;
+    width: 75%;
+  }
+}
+.row-main .column-board .title {
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+  border-bottom: solid 1px #cccccc;
+}
+.row-main .column-board .title .maintitle {
+  font-size: 16pt;
+  color: #438eb9;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.row-main .column-board .title .subtitle {
+  color: #555555;
+}
+.row-main .column-board .alert {
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  border: solid 1px #d6e9c6;
+  background: #dff0d8;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #46959d;
+}
+.button {
+  text-decoration: none;
+  display: inline-block;
+  min-width: 40px;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  background: #46959d;
+  border: solid 1px #cccccc;
+}
+.button:hover {
+  background: #82c1c7;
+}
+.button i {
+  margin-right: 5px;
+}
+body {
+  background: #555555;
+}
+body .center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+}
+body .center .head {
+  width: 400px;
+  height: 100px;
+  background: url(images/logo.png) center center no-repeat;
+}
+body .center .dialog {
+  border: solid #888888 5px;
+  background: white;
+}
+body .center .dialog .form {
+  padding: 30px;
+}
+body .center .dialog .form .title {
+  height: 28px;
+  line-height: 28px;
+  vertical-align: middle;
+  font-size: 18px;
+  font-weight: lighter;
+  color: #438eb9;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: solid #d9edf7 1px;
+}
+body .center .dialog .form .title i {
+  font-size: 19px;
+  margin-right: 10px;
+  color: #69aa46;
+}
+body .center .dialog .form table {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+body .center .dialog .form table td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  height: 35px;
+  line-height: 35px;
+}
+body .center .dialog .form table td div.border {
+  border: solid 1px #cccccc;
+  height: 33px;
+  line-height: 33px;
+  vertical-align: middle;
+}
+body .center .dialog .form table td div.border input[type=text],
+body .center .dialog .form table td div.border input[type=password] {
+  border: none;
+  box-sizing: border-box;
+  padding-left: 10px;
+  width: 100%;
+  height: 33px;
+  line-height: 33px;
+  vertical-align: middle;
+}
+body .center .dialog .form table td div.border input[type=text] {
+  background: url(images/icon-user.png) 98% center no-repeat;
+}
+body .center .dialog .form table td div.border input[type=password] {
+  background: url(images/icon-lock.png) 98% center no-repeat;
+}
+body .center .dialog .form table td.checkbox {
+  height: 16px;
+  line-height: 16px;
+  font-size: 11pt;
+  vertical-align: middle;
+}
+body .center .dialog .form table td.checkbox input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+body .center .dialog .form table td .button {
+  float: right;
+}
+body .center .dialog .goto {
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+  background: #d9edf7;
+}
+body .center .dialog .goto a {
+  text-decoration: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #438eb9;
+}
+body .center .dialog .goto a.left {
+  float: left;
+}
+body .center .dialog .goto a.right {
+  float: right;
+}
+body .center .dialog .goto a i {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+body .center .dialog .goto a:hover {
+  text-decoration: underline;
+}

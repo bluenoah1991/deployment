@@ -1,0 +1,136 @@
+﻿@import "master.less";
+
+body {
+    background: @black;
+
+    .center {
+        .center-block();
+        @width: 400px;
+        width: @width;
+
+        .head {
+            width: @width;
+            height: 100px;
+            background: url(images/logo.png) center center no-repeat;
+        }
+
+        .dialog {
+            border: solid lighten(@black, 20%) 5px;
+            background: white;
+
+            .form {
+                padding: 30px;
+
+                .title {
+                    @height: 28px;
+                    height: @height;
+                    line-height: @height;
+                    vertical-align: middle;
+                    font-size: 18px;
+                    font-weight: lighter;
+                    color: @blue;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    border-bottom: solid @blue2 1px;
+
+                    i {
+                        font-size: 19px;
+                        margin-right: 10px;
+                        color: @green4;
+                    }
+                }
+
+                table {
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    width: 100%;
+
+                    & td {
+                        padding-top: 3px;
+                        padding-bottom: 3px;
+                        @height: 35px;
+                        height: @height;
+                        line-height: @height;
+
+                        div.border {
+                            border: @border;
+                            height: @height - 2px;
+                            line-height: @height - 2px;
+                            vertical-align: middle;
+
+                            input[type=text], input[type=password] {
+                                border: none;
+                                box-sizing: border-box;
+                                padding-left: 10px;
+                                width: 100%;
+                                height: @height - 2px;
+                                line-height: @height - 2px;
+                                vertical-align: middle;
+                            }
+
+                            input[type=text] {
+                                background: url(images/icon-user.png) 98% center no-repeat;
+                            }
+
+                            input[type=password] {
+                                background: url(images/icon-lock.png) 98% center no-repeat;
+                            }
+                        }
+
+                        &.checkbox {
+                            @height: 16px;
+                            height: @height;
+                            line-height: @height;
+                            font-size: 11pt;
+                            vertical-align: middle;
+
+                            input[type=checkbox] {
+                                width: @height;
+                                height: @height;
+                                line-height: @height;
+                                vertical-align: middle;
+                                margin-right: 8px;
+                            }
+                        }
+
+                        .button {
+                            float: right;
+                        }
+                    }
+                }
+            }
+
+            .goto {
+                @height: 60px;
+                height: @height;
+                line-height: @height;
+                vertical-align: middle;
+                background: @blue2;
+
+                a {
+                    text-decoration: none;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    color: @blue;
+
+                    &.left {
+                        float: left;
+                    }
+
+                    &.right {
+                        float: right;
+                    }
+
+                    i {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                    }
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
