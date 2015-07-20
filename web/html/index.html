@@ -62,6 +62,11 @@
                             { url: 'parts/add-host', d: {} },
                         ]);
                         break;
+                    case 'host-list':
+                        iframe_switch('My Host List', '>> Registered host', [
+                            { url: 'parts/table-style-1', d: { 'title': 'Results for "All Host"', 'url': 'ajax-handler/global.host_list', } },
+                        ]);
+                        break;
                 }
             }
         });

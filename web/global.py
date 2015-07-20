@@ -89,7 +89,24 @@ def add_host(handler):
 	db_result = connector.insert('u_machine', do)
 	connector.close()
 	
-
+def host_list(handler):
+	uinfo = session.info(handler)
+	if uinfo is None:
+		return ""
+	host = config.mysql_host
+	user = config.mysql_user
+	password = config.mysql_password
+	database = config.mysql_database
+	con = tool.connect_mysql(host = host, user = user, password = password, database = database)
+	if con is None:
+		return ""
+	connector = tool.Connector(con)
+	db_result = connector.select('v_machine', '`uid` = %s' % uinfo.get('id', 0))
+	connector.close()
+	result = {'columns': ['name', 'in_ipaddr', 'ex_ipaddr', 'hostname', 'os']}
+	result['rows'] = db_result
+	return json.dumps(result)
+	
 
 
 
