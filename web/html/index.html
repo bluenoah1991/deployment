@@ -52,6 +52,11 @@
                             { url: 'parts/commit', d: { 'wizardName': 'hadoop-stop', 'index': '2', 'arg0': 'hadoop.stop.main' } },
                         ]);
                         break;
+                    case 'tasks-list':
+                        iframe_switch('Tasks List', '>> All tasks list', [
+                            { url: 'parts/table-style-1', d: { 'title': 'Results for "All Tasks"', 'url': 'ajax-handler/tasks.list', } },
+                        ]);
+                        break;
                 }
             }
         });
@@ -82,6 +87,7 @@
                         <li><a class="_focus_" href="javascript:switch_('stop');">Stop</a></li>
                     </ul>
                 </li>
+                <li><a class="_focus_" href="javascript:switch_('tasks-list');"><i class="icon-tasks icon-large"></i>Tasks</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-sitemap icon-large"></i>My Hosts</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-lightbulb icon-large"></i>Issues</a></li>

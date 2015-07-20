@@ -16,6 +16,16 @@ class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render("html/index.html")
 
+class AjaxHandlerModule(tornado.web.RequestHandler):
+	def all_(self, moduleName):
+		args = [moduleName, self.request]
+		self.write(zygote.refcall(args))
+		
+	def get(self, moduleName):
+		self.all_(moduleName)
+	def post(self, moduleName):
+		self.all_(moduleName)
+
 class AjaxHandler(tornado.web.RequestHandler):
 	def post(self):
 		command = None
@@ -49,6 +59,7 @@ settings = {
 application = tornado.web.Application([
 	(r"/", MainHandler),
 	(r"/ajax-handler", AjaxHandler),
+	(r"/ajax-handler/(\S+)", AjaxHandlerModule),
 	(r"/parts/(\S+)", PartsHandler),
 ], **settings)
 

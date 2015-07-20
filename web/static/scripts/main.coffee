@@ -4,6 +4,10 @@ String.prototype.replaceAll  = (s1, s2) ->
     @replace(new RegExp(s1, "gm"), s2)
 
 window.Toolkits = class Toolkits
+
+    @toJson = (str) -> 
+        json = (new Function("return " + str))() 
+
     @hasClass = (element, className) -> 
         reg = new RegExp('(\\s|^)' + className + '(\\s|$)') 
         return element.className.match(reg) 

@@ -8,6 +8,11 @@ String.prototype.replaceAll = function(s1, s2) {
 window.Toolkits = Toolkits = (function() {
   function Toolkits() {}
 
+  Toolkits.toJson = function(str) {
+    var json;
+    return json = (new Function("return " + str))();
+  };
+
   Toolkits.hasClass = function(element, className) {
     var reg;
     reg = new RegExp('(\\s|^)' + className + '(\\s|$)');

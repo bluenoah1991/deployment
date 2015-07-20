@@ -21,7 +21,7 @@ class Unbuffered(object):
 
 def refcall(args):
 	if args is None or len(args) == 0:
-		return -1
+		return None
 	ns = []
 	fullpath = ''
 	path = ''
@@ -38,21 +38,21 @@ def refcall(args):
 		try:
 			root = __import__(ns[0][0]) # Import Error
 		except ImportError, e:
-			return -1
+			return None
 	current = root
 	for _ in ns[1:]:
 		if _[0] not in dir(current):
 			try:
 				__import__(_[1]) # Import Error
 			except ImportError, e:
-				return -1
+				return None
 		current = getattr(current, _[0])
 	if not callable(current):
-		return -1
+		return None
 	try:
-		current(*args[1:]) # Call Failure
+		return current(*args[1:]) # Call Failure
 	except TypeError, e:
-		return -1
+		return None
 
 def create(chdir = False):
 	try:
