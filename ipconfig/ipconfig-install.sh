@@ -18,22 +18,25 @@ if [ ! $h ] || [ ! $s ]; then
 	exit -1
 fi
 
-echo $h > /etc/hostname
-hostname $h
+if [ -f /etc/hostname.x ]; then
+	echo 'repeat configuration'
+else
+	cp /etc/hostname /etc/hostname.x
+	echo $h > /etc/hostname
+	hostname $h
+fi
 
 if [ -f /etc/hosts.x ]; then
 	echo 'repeat configuration'
-	exit 0
+else
+	cp /etc/hosts /etc/hosts.x
+	arr=(${s//,/ })
+	for ((i=0; i<${#arr[@]}; ++i))
+	do
+		if [[ `expr ${i} % 2` == 0 ]]; then
+			echo -e "${arr[${i}]}\\t${arr[`expr ${i} + 1`]}" >> /etc/hosts
+		fi
+	done
 fi
 
-cp /etc/hosts /etc/hosts.x
-
-arr=(${s//,/ })
-
-for ((i=0; i<${#arr[@]}; ++i))
-do
-	if [[ `expr ${i} % 2` == 0 ]]; then
-		echo -e "${arr[${i}]}\\t${arr[`expr ${i} + 1`]}" >> /etc/hosts
-	fi
-done
 
