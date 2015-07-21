@@ -20,10 +20,10 @@
             var box = document.getElementById('machines-{{index}}');
             var tr = document.createElement('tr');
             var th = document.createElement('th');
-            th.textContent = 'master';
+            th.textContent = '{{column1}}';
             tr.appendChild(th);
             var th2 = document.createElement('th');
-            th2.textContent = 'slave';
+            th2.textContent = '{{column2}}';
             tr.appendChild(th2);
             for (var _ in d.columns) {
                 if (d.columns[_] != 'id') {
@@ -86,16 +86,16 @@
             }
             for (var _ in chks_master) {
                 if (chks_master[_]['b']) {
-                    mana['master'] = _;
+                    mana['{{field1}}'] = parseInt(_);
                 }
             }
             var slaves = [];
             for (var _ in chks_slave) {
                 if (chks_slave[_]['b']) {
-                    slaves.push(_);
+                    slaves.push(parseInt(_));
                 }
             }
-            mana['slaves'] = slaves;
+            mana['{{field2}}'] = slaves;
             return mana;
         });
         Magician.practice(m);

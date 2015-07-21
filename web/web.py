@@ -15,6 +15,13 @@ import config, session
 
 sockFile = '/tmp/d2'
 
+def SendMessage(command, data):
+	message = '%s \'%s\'' % (command, data)	
+	sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+	sock.connect(sockFile)
+	sock.send(zygote.pack(message))
+	sock.close()
+
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		fileName = self.request.uri
@@ -54,11 +61,7 @@ class AjaxHandler(tornado.web.RequestHandler):
 		headers = self.request.headers
 		if 'command' in headers:
 			command = headers.get('command')
-			message = '%s \'%s\'' % (command, body)	
-			sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-			sock.connect(sockFile)
-			sock.send(zygote.pack(message))
-			sock.close()
+			SendMessage(command, body)
 
 __PARTS__ = {}
 __CACHE__ = True

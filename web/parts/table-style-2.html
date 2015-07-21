@@ -1,0 +1,54 @@
+﻿<!-- Table Style 1 Start-->
+<div class="table-style-2">
+    <div class="table-style-2-header">{{title}}</div>
+    <div class="table-style-2-toolbar">
+        <span>Display</span>
+        <select>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+        </select>
+        <span>records</span>
+    </div>
+    <table id="table-style-2"></table>
+    <a href="javascript:void(0);" class="button" id="button-dns">Configuration your dns</a>
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        Toolkits.async_get("{{url}}", {}, function (xmlhttp, data) {
+            if (!data) {
+                return;
+            }
+            var d = Toolkits.toJson(data);
+            var box = document.getElementById('table-style-2');
+            var tr = document.createElement('tr');
+            for (var _ in d.columns) {
+                var th = document.createElement('th');
+                th.textContent = d.columns[_];
+                tr.appendChild(th);
+            }
+            box.appendChild(tr);
+            for (var _ in d.rows) {
+                var tr = document.createElement('tr');
+                for (var _1 in d.columns) {
+                    var val = d.rows[_][d.columns[_1]];
+                    var td = document.createElement('td');
+                    td.textContent = val;
+                    tr.appendChild(td);
+                }
+                box.appendChild(tr);
+            }
+
+        });
+
+        var button_dns = document.getElementById('button-dns');
+        button_dns.addEventListener('click', function () {
+            Toolkits.async_post("{{cfg_dns_url}}", {}, {}, "application/json",
+                function (xmlhttp, data) {
+                    alert('success');
+                });
+        });
+
+    });
+</script>
+<!-- Table Style 1 End-->

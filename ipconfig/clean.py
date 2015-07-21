@@ -8,7 +8,7 @@ from common import ssh, tool
 def main(cfg = None):
 
 	if cfg is not None:
-		ssh.init2(cfg)
+		ssh.init3(cfg)
 
 	hosts = ssh.init()
 	ssh.upload(tool.join(__file__, 'ipconfig-clean.sh'), '/tmp/ipconfig-clean.sh')

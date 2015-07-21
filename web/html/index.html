@@ -72,8 +72,19 @@
                     case 'hdfs':
                         iframe_switch('Install Hadoop Distributed File System', '>> This operation needs to provide server login credentials', [
                             { url: 'parts/cluster-name', d: { 'wizardName': 'hdfs', 'index': '0', } },
-                            { url: 'parts/machine-filter-1-n', d: { 'title': 'Select your master node', 'url': 'ajax-handler/global.host_list', 'wizardName': 'hdfs', 'index': '1', } },
-                            { url: 'parts/commit', d: { 'wizardName': 'hdfs', 'index': '2', 'arg0': 'hadoop.install.main' } },
+                            { url: 'parts/machine-filter-1-n', d: { 'title': 'Select your master node and slave nodes', 'url': 'ajax-handler/global.host_list', 'wizardName': 'hdfs', 'index': '1', 'column1': 'master', 'column2': 'slave', 'field1': 'master', 'field2': 'slave' } },
+                            { url: 'parts/commit', d: { 'wizardName': 'hdfs', 'index': '2', 'url': 'ajax-handler/global.hdfs_install' } },
+                        ]);
+                        break;
+                    case 'dns':
+                        iframe_switch('Domain Name System', '>> Configuration /etc/hosts', [
+                            { url: 'parts/table-style-2', d: { 'title': 'Results for "All Host"', 'url': 'ajax-handler/global.host_list', 'cfg_dns_url': 'ajax-handler/global.cfg_dns' } },
+                        ]);
+                        break;
+                    case 'develop01':
+                        iframe_switch('Install Develop Enviroment 1', '>> hadoop 2.6.0 + spark 1.3.0', [
+                            { url: 'parts/machine-filter-1-n', d: { 'title': 'Select your master node and spark client nodes', 'url': 'ajax-handler/global.host_list', 'wizardName': 'develop01', 'index': '0', 'column1': 'master', 'column2': 'spark client', 'field1': 'master', 'field2': 'spark' } },
+                            { url: 'parts/commit', d: { 'wizardName': 'develop01', 'index': '1', 'url': 'ajax-handler/global.develop_01_install' } },
                         ]);
                         break;
                 }
@@ -97,9 +108,11 @@
         <div class="column-list">
             <ul>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-dashboard icon-large"></i>Dashboard</a></li>
+                <li><a class="_focus_" href="javascript:switch_('dns');"><i class="icon-book icon-large"></i>DNS</a></li>
                 <li>
                     <a id="_01" focus="1" href="javascript:void(0);"><i class="icon-book icon-large"></i>Hadoop</a>
                     <ul id="_01_">
+                        <li><a class="_focus_" href="javascript:switch_('develop01');">Create a Develop Enviroment</a></li>
                         <li><a class="_focus_" href="javascript:switch_('hdfs');">Create a HDFS</a></li>
                         <li><a class="_focus_" href="javascript:switch_('yarn');">Create a YARN cluster</a></li>
                     </ul>

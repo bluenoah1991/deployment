@@ -1,8 +1,11 @@
 #!/usr/bin/python
 
 import sys, os
+sys.path.append('..')
+
 import config
 import session
+import web
 from common import tool
 
 import json
@@ -107,7 +110,57 @@ def host_list(handler):
 	result['rows'] = db_result
 	return json.dumps(result)
 	
+def cfg_dns(handler):
+	uinfo = session.info(handler)
+	if uinfo is None:
+		return ""
+	host = config.mysql_host
+	user = config.mysql_user
+	password = config.mysql_password
+	database = config.mysql_database
+	con = tool.connect_mysql(host = host, user = user, password = password, database = database)
+	if con is None:
+		return ""
+	connector = tool.Connector(con)
+	db_result = connector.select('u_machine', '`uid` = %s' % uinfo.get('id', 0))
+	connector.close()
+	data = json.dumps(db_result)
+	web.SendMessage('ipconfig.clean.main', data)
+	web.SendMessage('ipconfig.install.main', data)
+
+def hdfs_install(handler):
+	pass
+
+def develop_01_install(handler):
+	body = handler.request.body
+	cfg = json.loads(body)
+	master_id = cfg.get('master', 0)
+	spark_client_ids = cfg.get('spark', [])
+	uinfo = session.info(handler)
+	if uinfo is None:
+		return ""
+	host = config.mysql_host
+	user = config.mysql_user
+	password = config.mysql_password
+	database = config.mysql_database
+	con = tool.connect_mysql(host = host, user = user, password = password, database = database)
+	if con is None:
+		return ""
+	connector = tool.Connector(con)
+	db_result = connector.select('v_machine', '`uid` = %s' % uinfo.get('id', 0))
+	connector.close()
+	for _ in db_result:
+		id_ = _.get('id', 0)
+		if id_ == master_id:
+			_['keys'] = 'hadoop_master'
+		else:
+			_['keys'] = 'hadoop_slave'
+		if id_ in spark_client_ids:
+			_['keys'] += ',spark_client'
+	data = json.dumps(db_result)
+	web.SendMessage('hadoop.install.main', data)
 
 
 
-	
+
+

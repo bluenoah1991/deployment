@@ -35,34 +35,38 @@ def init3(cfile):
 	sftps = {}
 	hosts = []
 
-	#dom = minidom.parseString(cfile)
-	#hostNodes = dom.getElementsByTagName('host')
 	entities = json.loads(cfile)
 	for entity in entities:
 		name = entity.get('name', '')
 		hostname = entity.get('hostname', '')
-		port_ = entity.get('port', 22)
+		port = entity.get('port', 22)
+		if port is None:
+			port = 22
 		ipaddr = entity.get('in_ipaddr', '')
 		ex_ipaddr = entity.get('ex_ipaddr', '')
 		os = entity.get('os', '')
 		username = entity.get('uname', '')
 		password = entity.get('passwd', '')
 		roles_ = entity.get('roles', '')
-		roles = roles_.split(',')
+		roles = None
+		if roles_ is not None:
+			roles = roles_.split(',')
 		keys_ = entity.get('keys', '')
-		keys = keys_.split(',')
+		keys = None
+		if keys_ is not None:
+			keys = keys_.split(',')
 		
 		client = paramiko.SSHClient()
 		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		try:
 			client.connect(hostname = ipaddr, port = port, username = username, password = password)
-		except BadHostKeyException, e:
+		except paramiko.BadHostKeyException, e:
 			print 'BadHostKeyException[%s]: %s' % (host, e)
 			return None
-		except AutenticationException, e:
+		except paramiko.AutenticationException, e:
 			print 'AutenticationException[%s]: %s' % (host, e)
 			return None
-		except SSHException, e:
+		except paramiko.SSHException, e:
 			print 'SSHException[%s]: %s' % (host, e)
 			return None
 		clients[hostname] = client
@@ -129,13 +133,13 @@ def init2(cfile):
 			client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 			try:
 				client.connect(hostname = ipaddr, port = port, username = username, password = password)
-			except BadHostKeyException, e:
+			except paramiko.BadHostKeyException, e:
 				print 'BadHostKeyException[%s]: %s' % (host, e)
 				return None
-			except AutenticationException, e:
+			except paramiko.AutenticationException, e:
 				print 'AutenticationException[%s]: %s' % (host, e)
 				return None
-			except SSHException, e:
+			except paramiko.SSHException, e:
 				print 'SSHException[%s]: %s' % (host, e)
 				return None
 			clients[hostname] = client
@@ -197,13 +201,13 @@ def init():
 		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		try:
 			client.connect(hostname = ipaddr, port = port, username = username, password = password)
-		except BadHostKeyException, e:
+		except paramiko.BadHostKeyException, e:
 			print 'BadHostKeyException[%s]: %s' % (hostname, e)
 			return None
-		except AutenticationException, e:
+		except paramiko.AutenticationException, e:
 			print 'AutenticationException[%s]: %s' % (hostname, e)
 			return None
-		except SSHException, e:
+		except paramiko.SSHException, e:
 			print 'SSHException[%s]: %s' % (hostname, e)
 			return None
 		clients[hostname] = client

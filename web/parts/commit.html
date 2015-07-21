@@ -35,8 +35,9 @@
                 i.classList.add('icon-check');
             }
             if (m.ready) {
-                alert(data);
-                Toolkits.async_post("ajax-handler", { "command": "{{arg0}}" }, data, "text/xml");
+                var d = JSON.stringify(data);
+                alert(d);
+                Toolkits.async_post("{{url}}", {}, d, "application/json");
             }
         });
     });

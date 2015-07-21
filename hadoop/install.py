@@ -9,7 +9,7 @@ import ipconfig.install
 def main(cfg = None):
 
 	if cfg is not None:
-		ssh.init2(cfg)
+		ssh.init3(cfg)
 
 	ipconfig.install.main(cfg)
 
