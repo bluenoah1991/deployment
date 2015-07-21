@@ -11,9 +11,9 @@ sockFile = '/tmp/d2'
 
 if __name__ == '__main__':
 
-	f = open('cfg.xml', 'r')
+	f = open('cfg.json', 'r')
 	cfg = f.read()
-	cmd = "hadoop.stop.main '%s'" % cfg
+	cmd = "hadoop.install.main '%s'" % cfg
 
 	if os.path.exists(sockFile):
 		sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)

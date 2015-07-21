@@ -20,6 +20,8 @@
             clickgo(document.getElementsByClassName('alert'));
             clicktoggle(document.getElementById('_01'),
                         document.getElementById('_01_'));
+            clicktoggle(document.getElementById('_02'),
+                        document.getElementById('_02_'));
             clickfocus(document.getElementsByClassName('_focus_'));
             __IFRAME__ = document.getElementById('iframe_just_me');
             window.switch_ = function (flag) {
@@ -63,8 +65,15 @@
                         ]);
                         break;
                     case 'host-list':
-                        iframe_switch('My Host List', '>> Registered host', [
+                        iframe_switch('My Hosts', '>> Registered host', [
                             { url: 'parts/table-style-1', d: { 'title': 'Results for "All Host"', 'url': 'ajax-handler/global.host_list', } },
+                        ]);
+                        break;
+                    case 'hdfs':
+                        iframe_switch('Install Hadoop Distributed File System', '>> This operation needs to provide server login credentials', [
+                            { url: 'parts/cluster-name', d: { 'wizardName': 'hdfs', 'index': '0', } },
+                            { url: 'parts/machine-filter-1-n', d: { 'title': 'Select your master node', 'url': 'ajax-handler/global.host_list', 'wizardName': 'hdfs', 'index': '1', } },
+                            { url: 'parts/commit', d: { 'wizardName': 'hdfs', 'index': '2', 'arg0': 'hadoop.install.main' } },
                         ]);
                         break;
                 }
@@ -91,19 +100,18 @@
                 <li>
                     <a id="_01" focus="1" href="javascript:void(0);"><i class="icon-book icon-large"></i>Hadoop</a>
                     <ul id="_01_">
-                        <li><a class="_focus_" href="javascript:switch_('install');">Install</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('clean');">Clean</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('start');">Start</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('stop');">Stop</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('hdfs');">Create a HDFS</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('yarn');">Create a YARN cluster</a></li>
                     </ul>
                 </li>
                 <li><a class="_focus_" href="javascript:switch_('tasks-list');"><i class="icon-tasks icon-large"></i>Tasks</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
                 <li>
-                    <a id="_02" focus="1" href="javascript:switch_('my-host');"><i class="icon-sitemap icon-large"></i>My Hosts</a>
+                    <a id="_02" focus="1" href="javascript:void(0);"><i class="icon-sitemap icon-large"></i>My Cluster</a>
                     <ul id="_02_">
+                        <li><a class="_focus_" href="javascript:switch_('cluster-list');">Clusters</a></li>
                         <li><a class="_focus_" href="javascript:switch_('add-host');">Add Host</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('host-list');">Host List</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('host-list');">Hosts</a></li>
                     </ul>
                 </li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-lightbulb icon-large"></i>Issues</a></li>

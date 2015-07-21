@@ -8,9 +8,74 @@ import tool
 import paramiko
 import os
 import datetime
+import json
 
 from ConfigParser import ConfigParser
 from xml.dom import minidom, Node
+
+
+def init3(cfile):
+	
+	# Load configuration
+	
+	global boot
+	global clients
+	global transports
+	global sftps
+	global hosts
+
+	if globals().has_key('boot') and boot:
+		return hosts
+
+	print 'Beginning initialize'
+
+	boot = False
+	clients = {}
+	transports = []
+	sftps = {}
+	hosts = []
+
+	#dom = minidom.parseString(cfile)
+	#hostNodes = dom.getElementsByTagName('host')
+	entities = json.loads(cfile)
+	for entity in entities:
+		name = entity.get('name', '')
+		hostname = entity.get('hostname', '')
+		port_ = entity.get('port', 22)
+		ipaddr = entity.get('in_ipaddr', '')
+		ex_ipaddr = entity.get('ex_ipaddr', '')
+		os = entity.get('os', '')
+		username = entity.get('uname', '')
+		password = entity.get('passwd', '')
+		roles_ = entity.get('roles', '')
+		roles = roles_.split(',')
+		keys_ = entity.get('keys', '')
+		keys = keys_.split(',')
+		
+		client = paramiko.SSHClient()
+		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+		try:
+			client.connect(hostname = ipaddr, port = port, username = username, password = password)
+		except BadHostKeyException, e:
+			print 'BadHostKeyException[%s]: %s' % (host, e)
+			return None
+		except AutenticationException, e:
+			print 'AutenticationException[%s]: %s' % (host, e)
+			return None
+		except SSHException, e:
+			print 'SSHException[%s]: %s' % (host, e)
+			return None
+		clients[hostname] = client
+		t = paramiko.Transport((ipaddr, port))
+		t.connect(username = username, password = password)
+		transports.append(t)
+		sftp = paramiko.SFTPClient.from_transport(t)
+		sftps[hostname] = sftp
+		hosts.append({'name': name, 'hostname': hostname, 'port': port, 'ipaddr': ipaddr, 'ex_ipaddr': ex_ipaddr, 'username': username, 'password': password, 'roles': roles, 'keys': keys})
+	print 'Initialize success'
+	boot = True
+	return hosts
+
 
 def getNodeValue(node, tagName):
 	if node.nodeType <> Node.ELEMENT_NODE:
@@ -151,6 +216,20 @@ def init():
 	print 'Initialize success'
 	boot = True
 	return hosts
+
+def filterRole(key):
+	hs_ = []
+	for host in hosts:
+		if key in host.get('roles', []):
+			hs_.append(host)
+	return hs_
+
+def filterRoleName(key, name):
+	hs_ = []
+	for host in hosts:
+		if key in host.get('roles', []):
+			hs_.append(host.get(name))
+	return hs_
 
 def filter(key):
 	hs_ = []

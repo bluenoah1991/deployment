@@ -119,3 +119,31 @@
   padding-right: 10px;
   text-align: center;
 }
+.magic-mirror .cluster-name-box {
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+}
+.magic-mirror .cluster-name-box input[type=text] {
+  width: 120px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.magic-mirror table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.magic-mirror table th {
+  background: #f9f9f9;
+  color: #555555;
+}
+.magic-mirror table td,
+.magic-mirror table th {
+  border: solid 1px #cccccc;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}

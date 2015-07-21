@@ -103,7 +103,7 @@ def host_list(handler):
 	connector = tool.Connector(con)
 	db_result = connector.select('v_machine', '`uid` = %s' % uinfo.get('id', 0))
 	connector.close()
-	result = {'columns': ['name', 'in_ipaddr', 'ex_ipaddr', 'hostname', 'os']}
+	result = {'columns': ['id', 'name', 'in_ipaddr', 'ex_ipaddr', 'hostname', 'os']}
 	result['rows'] = db_result
 	return json.dumps(result)
 	
