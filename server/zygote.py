@@ -6,6 +6,9 @@ sys.path.append('..')
 import os, socket
 # import pdb
 
+import config
+import ConfigParser, string
+
 startFlag = '<$'
 endFlag = '$>'
 sockFile = '/tmp/d2'
@@ -137,6 +140,13 @@ def acceptEvent(conn):
 	conn.close()
 
 if __name__ == '__main__':
+
+	cf = ConfigParser.ConfigParser()
+	cf.read('server.conf')
+	config.mysql_host = cf.get('mysql', 'host')
+	config.mysql_user = cf.get('mysql', 'user')
+	config.mysql_password = cf.get('mysql', 'password')
+	config.mysql_database = cf.get('mysql', 'database')
 
 	if '-d' in sys.argv:
 		create()

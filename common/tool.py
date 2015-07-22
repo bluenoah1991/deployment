@@ -42,9 +42,10 @@ class Connector(object):
 	def __init__(self, con):
 		self.con = con
 	def insert(self, tableName, d):
-		sql = "INSERT INTO %s (" % tableName
+		sql = "INSERT INTO `%s` (" % tableName
 		keys = d.keys()
-		sql += ','.join(keys)
+		keys_ = [ '`%s`' % _ for _ in keys]
+		sql += ','.join(keys_)
 		sql += ') VALUES ('
 		keys_wrapper = []
 		for k in keys:
@@ -52,35 +53,38 @@ class Connector(object):
 		sql += ','.join(keys_wrapper)
 		sql += ')'
 		cursor = self.con.cursor()
+		id_ = -1
 		try:
 			cursor.execute((sql), d)
+			id_ = cursor.lastrowid
 			self.con.commit()
-		except:
+		except Exception, e:
 			self.con.rollback()
 		cursor.close()
+		return id_
 
 	def delete(self, tableName, id_):
-		sql = "DELETE FROM %s WHERE `id` = %s" % (tableName, id_)
+		sql = "DELETE FROM `%s` WHERE `id` = %s" % (tableName, id_)
 		cursor = self.con.cursor()
 		try:
 			cursor.execute((sql))
 			self.con.commit()
-		except:
+		except Error, e:
 			self.con.rollback()
 		cursor.close()
 
 	def update(self, tableName, id_, setstr):
-		sql = "UPDATE %s SET %s WHERE `id` = %s" % (tableName, setstr, id_)
+		sql = "UPDATE `%s` SET %s WHERE `id` = %s" % (tableName, setstr, id_)
 		cursor = self.con.cursor()
 		try:
 			cursor.execute((sql))
 			self.con.commit()
-		except:
+		except Error, e:
 			self.con.rollback()
 		cursor.close()
 
 	def select(self, tableName, wherestr):
-		sql = "SELECT * FROM %s WHERE %s" % (tableName, wherestr)
+		sql = "SELECT * FROM `%s` WHERE %s" % (tableName, wherestr)
 		cursor = self.con.cursor()
 		try:
 			cursor.execute((sql))
@@ -90,7 +94,7 @@ class Connector(object):
 			for row in rows:
 				results.append(dict(zip(columns, row)))
 			return results
-		except:
+		except Error, e:
 			return None
 		cursor.close()
 

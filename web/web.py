@@ -15,8 +15,12 @@ import config, session
 
 sockFile = '/tmp/d2'
 
-def SendMessage(command, data):
-	message = '%s \'%s\'' % (command, data)	
+def SendMessage(handler, command, data):
+	uinfo = session.info(handler)
+	if uinfo is None:
+		return ""
+	uid = uinfo.get('id', 0)
+	message = '%s \'%s\' \'%s\'' % (command, uid, data)	
 	sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	sock.connect(sockFile)
 	sock.send(zygote.pack(message))
@@ -61,7 +65,7 @@ class AjaxHandler(tornado.web.RequestHandler):
 		headers = self.request.headers
 		if 'command' in headers:
 			command = headers.get('command')
-			SendMessage(command, body)
+			SendMessage(self, command, body)
 
 __PARTS__ = {}
 __CACHE__ = True

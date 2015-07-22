@@ -125,8 +125,8 @@ def cfg_dns(handler):
 	db_result = connector.select('u_machine', '`uid` = %s' % uinfo.get('id', 0))
 	connector.close()
 	data = json.dumps(db_result)
-	web.SendMessage('ipconfig.clean.main', data)
-	web.SendMessage('ipconfig.install.main', data)
+	web.SendMessage(handler, 'ipconfig.clean.main', data)
+	web.SendMessage(handler, 'ipconfig.install.main', data)
 
 def hdfs_install(handler):
 	pass
@@ -158,7 +158,7 @@ def develop_01_install(handler):
 		if id_ in spark_client_ids:
 			_['keys'] += ',spark_client'
 	data = json.dumps(db_result)
-	web.SendMessage('hadoop.install.main', data)
+	web.SendMessage(handler, 'hadoop.install.main', data)
 
 
 

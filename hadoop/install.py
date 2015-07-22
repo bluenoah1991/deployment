@@ -11,7 +11,7 @@ def main(uid = None, cfg = None):
 
 	cluster_id = None
 	if uid is not None:
-		cluster_id = db.cluster_building(uid, 'unknown', 10, cfg)
+		cluster_id = db.cluster_building(int(uid), 'unknown', 10, cfg)
 
 	if cfg is not None:
 		ssh.init3(cfg)
