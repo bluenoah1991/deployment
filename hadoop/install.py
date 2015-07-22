@@ -3,10 +3,15 @@
 import sys
 sys.path.append('..')
 
+from server import db
 from common import ssh, tool
 import ipconfig.install
 
-def main(cfg = None):
+def main(uid = None, cfg = None):
+
+	cluster_id = None
+	if uid is not None:
+		cluster_id = db.cluster_building(uid, 'unknown', 10, cfg)
 
 	if cfg is not None:
 		ssh.init3(cfg)
@@ -55,6 +60,9 @@ def main(cfg = None):
 	ssh.cmd('sudo /tmp/spark-install.sh', False, *spark_client)
 
 	ssh.close()
+	
+	if cluster_id is not None:
+		db.cluster_new(cluster_id)
 
 if __name__ == '__main__':
 	main()
