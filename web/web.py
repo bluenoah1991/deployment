@@ -10,7 +10,6 @@ from server import zygote
 import tornado.ioloop
 import tornado.web
 
-import ConfigParser, string
 import config, session
 
 sockFile = '/tmp/d2'
@@ -98,12 +97,7 @@ application = tornado.web.Application([
 
 if __name__ == "__main__":
 
-	cf = ConfigParser.ConfigParser()
-	cf.read('web.conf')
-	config.mysql_host = cf.get('mysql', 'host')
-	config.mysql_user = cf.get('mysql', 'user')
-	config.mysql_password = cf.get('mysql', 'password')
-	config.mysql_database = cf.get('mysql', 'database')
+	config.Run()
 
 	if '-d' in sys.argv:
 		zygote.create()

@@ -1,0 +1,62 @@
+﻿<div class="table-style-1">
+    <div class="table-style-1-header">Results for "My Clusters"</div>
+    <div class="table-style-1-toolbar">
+        <span>Display</span>
+        <select>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+        </select>
+        <span>records</span>
+    </div>
+    <table id="table-cluster">
+		<tr>
+			<th>Name</th>
+			<th>Type</th>
+			<th>Status</th>
+			<th>Action</th>
+		</tr>
+	</table>
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        Toolkits.async_get("ajax-handler/controller.clusters", {}, function (xmlhttp, data) {
+            if (!data) {
+                return;
+            }
+            var d = Toolkits.toJson(data);
+            var box = document.getElementById('table-cluster');
+			var columns = ['name', 'type_', 'status_'];
+            for (var _ in d) {
+				var tr = document.createElement('tr');
+				for(var __ in columns){
+					var td = document.createElement('td');
+					td.textContent = d[_][columns[__]];
+					tr.appendChild(td);
+				}
+				var td = document.createElement('td');
+				var _ = function(text, url, id, callback){
+					var link = document.createElement('a');
+					link.href = 'javascript:void(0);';
+					link.class = 'button';
+					link.textContent = text;
+					link.addEventListener('click', function(){
+						Toolkits.async_post(url, {}, id, 'text/plain', callback);
+						td.appendChild(link);
+					};
+				});
+				_('Start', 'ajax-handler/controller.cluster_start', d[_]['id'], function(xmlhttp, data){
+					alert('success');
+				});
+				_('Stop', 'ajax-handler/controller.cluster_stop', d[_]['id'], function(xmlhttp, data){
+					alert('success');
+				});
+				_('Clean', 'ajax-handler/controller.cluster_clean', d[_]['id'], function(xmlhttp, data){
+					alert('success');
+				});
+				tr.appendChild(td);
+				box.appendChild(tr);
+            }
+        });
+    });
+</script>

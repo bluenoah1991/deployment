@@ -59,6 +59,11 @@
                             { url: 'parts/table-style-1', d: { 'title': 'Results for "All Tasks"', 'url': 'ajax-handler/tasks.list', } },
                         ]);
                         break;
+                    case 'cluster-list':
+                        iframe_switch('My Cluster', '>> Cluster list', [
+                            { url: 'parts/clusters', d: {} },
+                        ]);
+                        break;
                     case 'add-host':
                         iframe_switch('Add Host', '>> Register your machine to the system', [
                             { url: 'parts/add-host', d: {} },

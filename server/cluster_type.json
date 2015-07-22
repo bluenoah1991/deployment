@@ -1,0 +1,10 @@
+{
+    "HS": {
+        "name": "Hadoop and Spark (include HDFS and YARN clusters)",
+        "roles": {
+            "M": "Master",
+            "S": "Slave",
+            "SC": "Spark Client"
+        }
+    }
+}
