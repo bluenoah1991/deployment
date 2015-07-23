@@ -1,16 +1,23 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append('..')
+sys.path.append('../..')
 
+from server import db
 from common import ssh
 
-def main(cfg = None):
+def main(message):
 
-	if cfg is not None:
-		ssh.init2(cfg)
+	if message is None:
+		return None
+	desc = message.get('desc')
+	if desc is None:
+		return None
+	id_ = message.get('id')
+	if id_ is None:
+		return None
 
-	hosts = ssh.init()
+	hosts = ssh.init3(desc)
 
 	master = ssh.filterName('hadoop_master', 'hostname')
 	slave = ssh.filterName('hadoop_slave', 'hostname')
@@ -21,6 +28,8 @@ def main(cfg = None):
 	ssh.cmd('sudo /usr/local/hadoop/sbin/yarn-daemon.sh --config /usr/local/hadoop/etc/hadoop start nodemanager', False, *slave)
 
 	ssh.close()
+
+	db.u_cluster_update_status(id_, 'R')
 
 if __name__ == '__main__':
 	main()

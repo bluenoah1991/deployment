@@ -1,19 +1,23 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append('..')
+sys.path.append('../..')
 
+from server import db
 from common import ssh, tool
-import ipconfig.clean
 
-def main(cfg = None):
+def main(message):
 
-	if cfg is not None:
-		ssh.init2(cfg)
+	if message is None:
+		return None
+	desc = message.get('desc')
+	if desc is None:
+		return None
+	id_ = message.get('id')
+	if id_ is None:
+		return None
 
-	ipconfig.clean.main(cfg)
-
-	hosts = ssh.init()
+	hosts = ssh.init3(desc)
 
 	spark_client = ssh.filterName('spark_client', 'hostname')
 
@@ -27,6 +31,8 @@ def main(cfg = None):
 	ssh.cmd('sudo /tmp/hadoop-clean.sh')
 
 	ssh.close()
+	
+	db.u_cluster_remove(id_)
 
 if __name__ == '__main__':
 	main()

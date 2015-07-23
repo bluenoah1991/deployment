@@ -5,12 +5,13 @@ sys.path.append('..')
 
 from common import ssh, tool
 
-def main(cfg = None):
+def main(message):
 
-	if cfg is not None:
-		ssh.init3(cfg)
+	desc = message.get('desc')
+	if desc is None:
+		return None
 
-	hosts = ssh.init()
+	hosts = ssh.init3(desc)
 	ssh.upload(tool.join(__file__, 'ipconfig-clean.sh'), '/tmp/ipconfig-clean.sh')
 	ssh.cmd('sudo chmod u+x /tmp/ipconfig-clean.sh')
 	ssh.cmd('sudo /tmp/ipconfig-clean.sh')

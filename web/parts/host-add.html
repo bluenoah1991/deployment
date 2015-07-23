@@ -1,5 +1,4 @@
-﻿<!-- Add Host Start-->
-<div class="add-host">
+﻿<div class="add-host">
     <div class="add-host-header">Add Host</div>
     <div class="add-host-form">
         <fieldset>
@@ -38,7 +37,7 @@
 </div>
 <script type="text/javascript">
     iframe_register(function () {
-        Toolkits.async_get("ajax-handler/global.get_os_options", {}, function (xmlhttp, data) {
+        Toolkits.async_get("ajax-handler/controller.get_os_options", {}, function (xmlhttp, data) {
             if (!data) {
                 return;
             }
@@ -46,8 +45,8 @@
             var options_os = document.getElementById('options_os');
             for (var i in d) {
                 var option = document.createElement('option');
-                option.textContent = d[i].name;
-                option.value = d[i].id;
+                option.textContent = d[i];
+                option.value = i;
                 options_os.appendChild(option);
             }
         });
@@ -64,11 +63,10 @@
             d.password = document.getElementById('input_password').value;
             d.os = document.getElementById('options_os').value;
             djson = JSON.stringify(d);
-            Toolkits.async_post("ajax-handler/global.add_host", {}, djson, "application/json", function (e) {
+            Toolkits.async_post("ajax-handler/controller.host_add", {}, djson, "application/json", function (e) {
                 alert('success');
             });
         });
 
     });
 </script>
-<!-- Add Host End-->

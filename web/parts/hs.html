@@ -1,0 +1,103 @@
+﻿<div class="table-style-1">
+    <div class="table-style-1-header">Select the node to install</div>
+    <div class="table-style-1-toolbar">
+        <span>Display</span>
+        <select>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+        </select>
+        <span>records</span>
+    </div>
+    <table id="table-hs">
+		<tr>
+			<th>Master</th>
+			<th>Slave</th>
+			<th>Spark Client</th>
+            <th>Name</th>
+            <th>Internal IpAddress</th>
+            <th>External IpAddress</th>
+            <th>Hostname</th>
+            <th>OS</th>
+            <th>Roles</th>
+		</tr>
+	</table>
+    <a href="javascript:void(0);" class="button" id="button-hs">Install</a>
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        list_master = {};
+        list_slave = {};
+        list_spark = {};
+
+        Toolkits.async_get("ajax-handler/controller.hosts", {}, function (xmlhttp, data) {
+            if (!data) {
+                return;
+            }
+            var d = Toolkits.toJson(data);
+            var box = document.getElementById('table-hs');
+            var columns = ['name', 'in_ipaddr', 'ex_ipaddr', 'hostname', 'os_', 'roles_'];
+            for (var _ in d) {
+                var tr = document.createElement('tr');
+                var f = function (id, list, s) {
+                    var td = document.createElement('td');
+                    var chk = document.createElement('input');
+                    chk.type = 'checkbox';
+                    chk.addEventListener('change', function (e) {
+                        if (!!s) {
+                            if (!!e.srcElement.checked) {
+                                for (var _ in list) {
+                                    list[_]['e'].checked = false;
+                                }
+                                e.srcElement.checked = true;
+                            }
+                        }
+                        list[id] = { 'e': e.srcElement, 'b': !!e.srcElement.checked };
+                    });
+                    td.appendChild(chk);
+                    tr.appendChild(td);
+                };
+                f(d[_]['id'], list_master, true);
+                f(d[_]['id'], list_slave);
+                f(d[_]['id'], list_spark);
+
+				for(var __ in columns){
+					var td = document.createElement('td');
+					td.textContent = d[_][columns[__]];
+					tr.appendChild(td);
+				}
+
+				box.appendChild(tr);
+            }
+        });
+
+        var button_hs = document.getElementById('button-hs');
+        button_hs.addEventListener('click', function () {
+            var data = {};
+            for (var _ in list_master) {
+                if (!data[_]) {
+                    data[_] = [];
+                }
+                data[_].push('hadoop_master');
+            }
+            for (var _ in list_slave) {
+                if (!data[_]) {
+                    data[_] = [];
+                }
+                data[_].push('hadoop_slave');
+            }
+            for (var _ in list_spark) {
+                if (!data[_]) {
+                    data[_] = [];
+                }
+                data[_].push('spark_client');
+            }
+
+            Toolkits.async_post("ajax-handler/controller.hs_install", {}, JSON.stringify(data), "text/plain",
+                function (xmlhttp, data) {
+                    alert('success');
+                });
+        });
+
+    });
+</script>

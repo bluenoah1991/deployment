@@ -1,0 +1,53 @@
+﻿<div class="table-style-1">
+    <div class="table-style-1-header">Domain Name System</div>
+    <div class="table-style-1-toolbar">
+        <span>Display</span>
+        <select>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+        </select>
+        <span>records</span>
+    </div>
+    <table id="table-dns">
+        <tr>
+            <th>Name</th>
+            <th>Internal IpAddress</th>
+            <th>External IpAddress</th>
+            <th>Hostname</th>
+            <th>OS</th>
+            <th>Roles</th>
+        </tr>
+    </table>
+    <a href="javascript:void(0);" class="button" id="button-dns">Reset your dns</a>
+</div>
+<script type="text/javascript">
+    iframe_register(function () {
+        Toolkits.async_get("ajax-handler/controller.hosts", {}, function (xmlhttp, data) {
+            if (!data) {
+                return;
+            }
+            var d = Toolkits.toJson(data);
+            var box = document.getElementById('table-dns');
+            var columns = ['name', 'in_ipaddr', 'ex_ipaddr', 'hostname', 'os_', 'roles_'];
+            for (var _ in d) {
+                var tr = document.createElement('tr');
+                for (var __ in columns) {
+                    var td = document.createElement('td');
+                    td.textContent = d[_][columns[__]];
+                    tr.appendChild(td);
+                }
+                box.appendChild(tr);
+            }
+        });
+
+        var button_dns = document.getElementById('button-dns');
+        button_dns.addEventListener('click', function () {
+            Toolkits.async_post("ajax-handler/controller.cfg_dns", {}, {}, "text/plain",
+                function (xmlhttp, data) {
+                    alert('success');
+                });
+        });
+
+    });
+</script>

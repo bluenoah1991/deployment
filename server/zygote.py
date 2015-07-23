@@ -5,6 +5,7 @@ sys.path.append('..')
 
 import os, socket
 # import pdb
+import json
 
 import config
 import ConfigParser, string
@@ -22,13 +23,18 @@ class Unbuffered(object):
 	def __getattr__(self, attr):
 		return getattr(self.stream, attr)
 
-def refcall(args):
-	if args is None or len(args) == 0:
+def refcall(msg):
+	if msg is None or len(msg) == 0:
+		return None
+	if isinstance(msg, basestring):
+		msg = json.loads(msg)
+	module = msg.get('module')
+	if module is None:
 		return None
 	ns = []
 	fullpath = ''
 	path = ''
-	for i, ch in enumerate(args[0]):
+	for i, ch in enumerate(module):
 		if ch == '.':
 			ns.append((path, fullpath))
 			path = ''
@@ -53,7 +59,7 @@ def refcall(args):
 	if not callable(current):
 		return None
 	try:
-		return current(*args[1:]) # Call Failure
+		return current(msg) # Call Failure
 	except TypeError, e:
 		return None
 
@@ -76,34 +82,34 @@ def create(chdir = False):
 	os.setsid()
 	os.umask(0)
 
-def parse(cmd):
-	if cmd is None:
-		return None
-	args = []
-	seg = ''
-	flag = ''
-	for i, ch in enumerate(cmd):
-		if flag == '' and ch == '"':
-			flag = '"'
-			continue
-		if flag == '' and ch == "'":
-			flag = "'"
-			continue
-		if (flag == '"' and ch == '"') or (flag == "'" and ch == "'"):
-			args.append(seg)
-			seg = ''
-			flag = ''
-			continue
-		if flag == '' and ch == ' ':
-			if seg is not None and seg <> '':
-				args.append(seg)
-				seg = ''
-			continue
-		seg = seg + ch
-	if seg is not None and seg <> '':
-		args.append(seg)
-		seg = ''
-	return args
+# def parse(cmd):
+# 	if cmd is None:
+# 		return None
+# 	args = []
+# 	seg = ''
+# 	flag = ''
+# 	for i, ch in enumerate(cmd):
+# 		if flag == '' and ch == '"':
+# 			flag = '"'
+# 			continue
+# 		if flag == '' and ch == "'":
+# 			flag = "'"
+# 			continue
+# 		if (flag == '"' and ch == '"') or (flag == "'" and ch == "'"):
+# 			args.append(seg)
+# 			seg = ''
+# 			flag = ''
+# 			continue
+# 		if flag == '' and ch == ' ':
+# 			if seg is not None and seg <> '':
+# 				args.append(seg)
+# 				seg = ''
+# 			continue
+# 		seg = seg + ch
+# 	if seg is not None and seg <> '':
+# 		args.append(seg)
+# 		seg = ''
+# 	return args
 
 def pack(cmd):
 	return startFlag + cmd + endFlag
@@ -125,10 +131,9 @@ def pick(buffstr, recv):
 		recv(sub)
 	return buffstr[endIndex + len(endFlag):]
 
-def proc(cmd):
-	args = parse(cmd)
-	print 'exec: "%s"' % cmd
-	refcall(args) # Stdout redirect
+def proc(msg):
+	print 'exec: "%s"' % msg
+	refcall(msg) # Stdout redirect
 
 def acceptEvent(conn):
 	buffstr = ''
@@ -141,12 +146,7 @@ def acceptEvent(conn):
 
 if __name__ == '__main__':
 
-	cf = ConfigParser.ConfigParser()
-	cf.read('server.conf')
-	config.mysql_host = cf.get('mysql', 'host')
-	config.mysql_user = cf.get('mysql', 'user')
-	config.mysql_password = cf.get('mysql', 'password')
-	config.mysql_database = cf.get('mysql', 'database')
+	config.Run()
 
 	if '-d' in sys.argv:
 		create()

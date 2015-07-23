@@ -14,17 +14,6 @@ import config, session
 
 sockFile = '/tmp/d2'
 
-def SendMessage(handler, command, data):
-	uinfo = session.info(handler)
-	if uinfo is None:
-		return ""
-	uid = uinfo.get('id', 0)
-	message = '%s \'%s\' \'%s\'' % (command, uid, data)	
-	sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-	sock.connect(sockFile)
-	sock.send(zygote.pack(message))
-	sock.close()
-
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		fileName = self.request.uri
@@ -45,10 +34,12 @@ class SessionHandler(tornado.web.RequestHandler):
 			fileName = 'index.html'
 		self.render("html/%s" % fileName)
 
-class AjaxHandlerModule(tornado.web.RequestHandler):
+class AjaxHandler(tornado.web.RequestHandler):
 	def all_(self, moduleName):
-		args = [moduleName, self]
-		result = zygote.refcall(args)
+		message = {}
+		message['module'] = moduleName
+		message['handler'] = self
+		result = zygote.refcall(message)
 		if result is not None:
 			self.write(result)
 		
@@ -56,15 +47,6 @@ class AjaxHandlerModule(tornado.web.RequestHandler):
 		self.all_(moduleName)
 	def post(self, moduleName):
 		self.all_(moduleName)
-
-class AjaxHandler(tornado.web.RequestHandler):
-	def post(self):
-		command = None
-		body = self.request.body
-		headers = self.request.headers
-		if 'command' in headers:
-			command = headers.get('command')
-			SendMessage(self, command, body)
 
 __PARTS__ = {}
 __CACHE__ = True
@@ -90,8 +72,7 @@ application = tornado.web.Application([
 	(r"/", SessionHandler),
 	(r"/login.html", MainHandler),
 	(r"/\S+.html", SessionHandler),
-	(r"/ajax-handler", AjaxHandler),
-	(r"/ajax-handler/(\S+)", AjaxHandlerModule),
+	(r"/ajax-handler/(\S+)", AjaxHandler),
 	(r"/parts/(\S+)", PartsHandler),
 ], **settings)
 

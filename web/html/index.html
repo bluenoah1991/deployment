@@ -26,70 +26,29 @@
             __IFRAME__ = document.getElementById('iframe_just_me');
             window.switch_ = function (flag) {
                 switch (flag) {
-                    case 'install':
-                        iframe_switch('Install Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-install', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-install', 'index': '1', } },
-                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-install', 'index': '2', 'arg0': 'hadoop.install.main' } },
-                        ]);
-                        break;
-                    case 'clean':
-                        iframe_switch('Clean Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-clean', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-clean', 'index': '1', } },
-                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-clean', 'index': '2', 'arg0': 'hadoop.clean.main' } },
-                        ]);
-                        break;
-                    case 'start':
-                        iframe_switch('Start Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-start', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-start', 'index': '1', } },
-                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-start', 'index': '2', 'arg0': 'hadoop.start.main' } },
-                        ]);
-                        break;
-                    case 'stop':
-                        iframe_switch('Stop Hadoop', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/machine-number', d: { 'wizardName': 'hadoop-stop', 'index': '0', } },
-                            { url: 'parts/machine-list-hadoop', d: { 'wizardName': 'hadoop-stop', 'index': '1', } },
-                            { url: 'parts/commit', d: { 'wizardName': 'hadoop-stop', 'index': '2', 'arg0': 'hadoop.stop.main' } },
-                        ]);
-                        break;
-                    case 'tasks-list':
-                        iframe_switch('Tasks List', '>> All tasks list', [
-                            { url: 'parts/table-style-1', d: { 'title': 'Results for "All Tasks"', 'url': 'ajax-handler/tasks.list', } },
-                        ]);
-                        break;
-                    case 'cluster-list':
+                    case 'clusters':
                         iframe_switch('My Cluster', '>> Cluster list', [
                             { url: 'parts/clusters', d: {} },
                         ]);
                         break;
-                    case 'add-host':
+                    case 'host-add':
                         iframe_switch('Add Host', '>> Register your machine to the system', [
-                            { url: 'parts/add-host', d: {} },
+                            { url: 'parts/host-add', d: {} },
                         ]);
                         break;
-                    case 'host-list':
+                    case 'hosts':
                         iframe_switch('My Hosts', '>> Registered host', [
-                            { url: 'parts/table-style-1', d: { 'title': 'Results for "All Host"', 'url': 'ajax-handler/global.host_list', } },
-                        ]);
-                        break;
-                    case 'hdfs':
-                        iframe_switch('Install Hadoop Distributed File System', '>> This operation needs to provide server login credentials', [
-                            { url: 'parts/cluster-name', d: { 'wizardName': 'hdfs', 'index': '0', } },
-                            { url: 'parts/machine-filter-1-n', d: { 'title': 'Select your master node and slave nodes', 'url': 'ajax-handler/global.host_list', 'wizardName': 'hdfs', 'index': '1', 'column1': 'master', 'column2': 'slave', 'field1': 'master', 'field2': 'slave' } },
-                            { url: 'parts/commit', d: { 'wizardName': 'hdfs', 'index': '2', 'url': 'ajax-handler/global.hdfs_install' } },
+                            { url: 'parts/hosts', d: {} },
                         ]);
                         break;
                     case 'dns':
                         iframe_switch('Domain Name System', '>> Configuration /etc/hosts', [
-                            { url: 'parts/table-style-2', d: { 'title': 'Results for "All Host"', 'url': 'ajax-handler/global.host_list', 'cfg_dns_url': 'ajax-handler/global.cfg_dns' } },
+                            { url: 'parts/dns', d: {} },
                         ]);
                         break;
-                    case 'develop01':
-                        iframe_switch('Install Develop Enviroment 1', '>> hadoop 2.6.0 + spark 1.3.0', [
-                            { url: 'parts/machine-filter-1-n', d: { 'title': 'Select your master node and spark client nodes', 'url': 'ajax-handler/global.host_list', 'wizardName': 'develop01', 'index': '0', 'column1': 'master', 'column2': 'spark client', 'field1': 'master', 'field2': 'spark' } },
-                            { url: 'parts/commit', d: { 'wizardName': 'develop01', 'index': '1', 'url': 'ajax-handler/global.develop_01_install' } },
+                    case 'hs':
+                        iframe_switch('Install Hadoop and Spark Enviroment', '>> include HDFS and YARN cluster', [
+                            { url: 'parts/hs', d: {} },
                         ]);
                         break;
                 }
@@ -117,19 +76,17 @@
                 <li>
                     <a id="_01" focus="1" href="javascript:void(0);"><i class="icon-book icon-large"></i>Hadoop</a>
                     <ul id="_01_">
-                        <li><a class="_focus_" href="javascript:switch_('develop01');">Create a Develop Enviroment</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('hdfs');">Create a HDFS</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('yarn');">Create a YARN cluster</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('hs');">Install Hadoop and Spark</a></li>
                     </ul>
                 </li>
-                <li><a class="_focus_" href="javascript:switch_('tasks-list');"><i class="icon-tasks icon-large"></i>Tasks</a></li>
+                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-tasks icon-large"></i>Tasks</a></li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
                 <li>
                     <a id="_02" focus="1" href="javascript:void(0);"><i class="icon-sitemap icon-large"></i>My Cluster</a>
                     <ul id="_02_">
-                        <li><a class="_focus_" href="javascript:switch_('cluster-list');">Clusters</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('add-host');">Add Host</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('host-list');">Hosts</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('clusters');">Clusters</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('host-add');">Add Host</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('hosts');">Hosts</a></li>
                     </ul>
                 </li>
                 <li><a class="_focus_" href="javascript:void(0);"><i class="icon-lightbulb icon-large"></i>Issues</a></li>

@@ -1,22 +1,26 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append('..')
+sys.path.append('../..')
 
 from server import db
 from common import ssh, tool
-import ipconfig.install
 
-def main(uid = None, cfg = None):
+def main(message):
 
-	cluster_id = None
-	if uid is not None:
-		cluster_id = db.cluster_building(int(uid), 'unknown', 10, cfg)
-
-	if cfg is not None:
-		ssh.init3(cfg)
-
-	ipconfig.install.main(cfg)
+	if message is None:
+		return None
+	desc = message.get('desc')
+	if desc is None:
+		return None
+	uid = message.get('uid')
+	if uid is None:
+		return None
+	name = message.get('name')
+	if name is None:
+		return None
+	
+	id_ = db.u_cluster(uid, name, 'HS', desc)
 
 	jdk_local_path = tool.join(__file__, "jdk-8u45-linux-x64.tar.gz")
 	jdk_tmp_path = "/tmp/jdk-8u45-linux-x64.tar.gz"
@@ -25,8 +29,9 @@ def main(uid = None, cfg = None):
 	spark_local_path = tool.join(__file__, "spark-1.3.0-bin-hadoop2.4.tgz")
 	spark_tmp_path = "/tmp/spark-1.3.0-bin-hadoop2.4.tgz"
 
-	hosts = ssh.init()
+	hosts = ssh.init3(desc)
 	hostnames = []
+
 	for host in hosts:
 		hostnames.append(host.get('hostname', ''))
 
@@ -61,8 +66,7 @@ def main(uid = None, cfg = None):
 
 	ssh.close()
 	
-	if cluster_id is not None:
-		db.cluster_new(cluster_id)
+	db.u_cluster_update_status(id_, 'R')
 
 if __name__ == '__main__':
 	main()

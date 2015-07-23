@@ -35,23 +35,24 @@
 					tr.appendChild(td);
 				}
 				var td = document.createElement('td');
-				var _ = function(text, url, id, callback){
+				var f = function(text, url, id, callback){
 					var link = document.createElement('a');
 					link.href = 'javascript:void(0);';
-					link.class = 'button';
+					link.classList.add('button');
 					link.textContent = text;
 					link.addEventListener('click', function(){
 						Toolkits.async_post(url, {}, id, 'text/plain', callback);
 						td.appendChild(link);
-					};
-				});
-				_('Start', 'ajax-handler/controller.cluster_start', d[_]['id'], function(xmlhttp, data){
+					});
+					td.appendChild(link);
+				};
+				f('Start', 'ajax-handler/controller.cluster_start', JSON.stringify(d[_]), function(xmlhttp, data){
 					alert('success');
 				});
-				_('Stop', 'ajax-handler/controller.cluster_stop', d[_]['id'], function(xmlhttp, data){
+				f('Stop', 'ajax-handler/controller.cluster_stop', JSON.stringify(d[_]), function (xmlhttp, data) {
 					alert('success');
 				});
-				_('Clean', 'ajax-handler/controller.cluster_clean', d[_]['id'], function(xmlhttp, data){
+				f('Clean', 'ajax-handler/controller.cluster_clean', JSON.stringify(d[_]), function (xmlhttp, data) {
 					alert('success');
 				});
 				tr.appendChild(td);

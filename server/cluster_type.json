@@ -5,6 +5,9 @@
             "M": "Master",
             "S": "Slave",
             "SC": "Spark Client"
-        }
+        },
+	"startModule": "modules.hs.start.main",
+	"stopModule": "modules.hs.stop.main",
+	"cleanModule": "modules.hs.clean.main"
     }
 }

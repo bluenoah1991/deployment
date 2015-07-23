@@ -1,16 +1,17 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append('..')
+sys.path.append('../..')
 
 from common import ssh, tool
 
-def main(cfg = None):
+def main(message):
 
-	if cfg is not None:
-		ssh.init3(cfg)
+	desc = message.get('desc')
+	if desc is None:
+		return None
 
-	hosts = ssh.init()
+	hosts = ssh.init3(desc)
 	maps = []
 	for host in hosts:
 		maps.append(host.get('ipaddr', ''))

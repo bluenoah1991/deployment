@@ -97,6 +97,20 @@ class Connector(object):
 		except Error, e:
 			return None
 		cursor.close()
+	
+	def select_one(self, tableName, wherestr):
+		sql = "SELECT * FROM `%s` WHERE %s LIMIT 0,1" % (tableName, wherestr)
+		cursor = self.con.cursor()
+		try:
+			cursor.execute((sql))
+			columns = cursor.column_names
+			rows = cursor.fetchall()
+			if len(rows) > 0:
+				return dict(zip(columns, rows[0]))
+			return None
+		except Error, e:
+			return None
+		cursor.close()
 
 	def close(self):
 		self.con.close()

@@ -35,8 +35,9 @@ def init3(cfile):
 	sftps = {}
 	hosts = []
 
-	entities = json.loads(cfile)
-	for entity in entities:
+	if isinstance(cfile, basestring):
+		cfile = json.loads(cfile)
+	for entity in cfile:
 		name = entity.get('name', '')
 		hostname = entity.get('hostname', '')
 		port = entity.get('port', 22)

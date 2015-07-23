@@ -1,5 +1,7 @@
 {
     "B": "Building",
     "R": "Running",
-    "E": "Error"
+    "E": "Error",
+    "S": "Stop",
+    "D": "Destroy"
 }
