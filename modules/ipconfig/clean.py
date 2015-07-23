@@ -11,7 +11,7 @@ def main(message):
 	if desc is None:
 		return None
 
-	hosts = ssh.init3(desc)
+	hosts = ssh.init(desc)
 	ssh.upload(tool.join(__file__, 'ipconfig-clean.sh'), '/tmp/ipconfig-clean.sh')
 	ssh.cmd('sudo chmod u+x /tmp/ipconfig-clean.sh')
 	ssh.cmd('sudo /tmp/ipconfig-clean.sh')

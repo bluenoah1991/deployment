@@ -17,7 +17,7 @@ def main(message):
 	if id_ is None:
 		return None
 
-	hosts = ssh.init3(desc)
+	hosts = ssh.init(desc)
 
 	master = ssh.filterName('hadoop_master', 'hostname')
 	slave = ssh.filterName('hadoop_slave', 'hostname')

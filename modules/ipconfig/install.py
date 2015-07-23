@@ -11,7 +11,7 @@ def main(message):
 	if desc is None:
 		return None
 
-	hosts = ssh.init3(desc)
+	hosts = ssh.init(desc)
 	maps = []
 	for host in hosts:
 		maps.append(host.get('ipaddr', ''))

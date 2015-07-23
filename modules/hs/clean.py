@@ -17,7 +17,7 @@ def main(message):
 	if id_ is None:
 		return None
 
-	hosts = ssh.init3(desc)
+	hosts = ssh.init(desc)
 
 	spark_client = ssh.filterName('spark_client', 'hostname')
 

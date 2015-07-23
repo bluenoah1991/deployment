@@ -29,7 +29,7 @@ def main(message):
 	spark_local_path = tool.join(__file__, "spark-1.3.0-bin-hadoop2.4.tgz")
 	spark_tmp_path = "/tmp/spark-1.3.0-bin-hadoop2.4.tgz"
 
-	hosts = ssh.init3(desc)
+	hosts = ssh.init(desc)
 	hostnames = []
 
 	for host in hosts:
