@@ -43,6 +43,9 @@ def init(cfile):
 			port = 22
 		ipaddr = entity.get('in_ipaddr', '')
 		ex_ipaddr = entity.get('ex_ipaddr', '')
+		ssh_ipaddr = ex_ipaddr
+		if ssh_ipaddr is None or len(ssh_ipaddr) == 0:
+			ssh_ipaddr = ipaddr
 		os = entity.get('os', '')
 		username = entity.get('uname', '')
 		password = entity.get('passwd', '')
@@ -58,7 +61,7 @@ def init(cfile):
 		client = paramiko.SSHClient()
 		client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		try:
-			client.connect(hostname = ipaddr, port = port, username = username, password = password)
+			client.connect(hostname = ssh_ipaddr, port = port, username = username, password = password)
 		except paramiko.BadHostKeyException, e:
 			print 'BadHostKeyException[%s]: %s' % (host, e)
 			return None
@@ -69,7 +72,7 @@ def init(cfile):
 			print 'SSHException[%s]: %s' % (host, e)
 			return None
 		clients[hostname] = client
-		t = paramiko.Transport((ipaddr, port))
+		t = paramiko.Transport((ssh_ipaddr, port))
 		t.connect(username = username, password = password)
 		transports.append(t)
 		sftp = paramiko.SFTPClient.from_transport(t)
