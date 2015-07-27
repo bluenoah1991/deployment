@@ -5,6 +5,9 @@ import tornado.ioloop
 import tornado.web
 import modules.hs
 
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 def deamon(chdir = False):
 	try:
 		if os.fork() > 0:
@@ -24,12 +27,27 @@ def deamon(chdir = False):
 	os.setsid()
 	os.umask(0)
 
+class IndexHandler(tornado.web.RequestHandler):
+	def load(self):
+		if not 'data' in dir(self):
+			f = open('data.json', 'r')
+			jsonstr = f.read()
+			self.data = json.loads(jsonstr)
+			f.close()
+
+	def get(self):
+		self.load()
+		index = self.request.uri
+		index = index[index.rfind('/') + 1:]
+		if index is None or len(index) == 0:
+			index = 1
+		index = int(index)
+		self.render("html/index.html", icons = self.data[(index - 1) * 24: index * 24])
+
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		fileName = self.request.uri
 		fileName = fileName[fileName.rfind('/') + 1:]
-		if fileName is None or len(fileName) == 0:
-			fileName = 'index'
 		self.render("html/%s.html" % fileName)
 
 class AjaxHandler(tornado.web.RequestHandler):
@@ -44,9 +62,10 @@ settings = {
 }
 
 application = tornado.web.Application([
-	(r"/", MainHandler),
-	(r"/\S+.html", MainHandler),
+	(r"/", IndexHandler),
+	(r"/\d+", IndexHandler),
 	(r"/ajax-handler/(\S+)", AjaxHandler),
+	(r"/\S+.html", MainHandler),
 ], **settings)
 
 if __name__ == "__main__":

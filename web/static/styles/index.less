@@ -39,6 +39,7 @@
                     img {
                         margin-left: 12px;
                         margin-top: 8px;
+                        border:none;
                     }
                 }
 
@@ -130,7 +131,11 @@
                 margin-right: 30px;
                 text-align: center;
 
-                a {
+                a.img{
+                    border:none;
+                }
+
+                a.text {
                     height:50px;
                     line-height: 20px;
                     vertical-align: middle;
@@ -148,13 +153,13 @@
             @height:30px;
             height:@height;
             line-height:@height;
-            padding-left:30px;
+            padding-right:50px;
             margin-top:10px;
             span{
-                float:left;
+                float:right;
             }
             ul{
-                                float:left;
+                float:right;
                 list-style:none;
                 li{
                     float:left;

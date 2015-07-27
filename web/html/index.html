@@ -3,48 +3,27 @@
 <head>
     <title>巧云 | 云主机销售门户</title>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="static/styles/jquery.qtip.min.css" />
     <link rel="stylesheet" type="text/css" href="static/styles/index.css" />
     <script type="text/javascript" src="static/scripts/jquery.js"></script>
+    <script type="text/javascript" src="static/scripts/jquery.qtip.min.js"></script>
     <script type="text/javascript">
-        function get(size, num) {
-            $.get('static/data.json', null, function (d, status, xhr) {
-                var box = $('#icons');
-                box.empty();
-                for (var _ = size * num ; _ < size * (num + 1); _++) {
-                    if (_ < 0 || _ >= d.length) {
-                        continue;
-                    }
-                    var li = $('<li/>');
-                    var img = $('<img/>');
-                    img.attr('src', d[_]['icon']);
-                    li.append(img);
-                    var link = $('<a/>');
-                    link.attr('href', d[_]['url']);
-                    link.text(d[_]['name']);
-                    li.append(link);
-                    box.append(li);
-                }
-            });
-        }
-
         $(function () {
-            get(24, 0);
-
-            var box = $('#pager');
-            for (var i = 0; i < 2; i++) {
-                var li = $('<li/>');
-                var link = $('<a/>');
-                link.attr('href', 'javascript:void(0);');
-                link.text(i + 1);
-                (function (li, i) {
-                    li.click(function () {
-                        get(24, i);
-                    });
-                })(li, i);
-                li.append(link);
-                box.append(li);
-            }
-
+            $('#icons').find('a').each(function () {
+                var _ = $('.tooltip').clone();
+                var company_name = $(this).attr('company_name');
+                var offical_site = $(this).attr('offical_site');
+                _.find('.company_name').text(company_name);
+                _.find('.offical_site').text(offical_site);
+                $(this).qtip({
+                    content: {
+                        text: _,
+                    },
+                    style: {
+                        classes: 'qtip-blue qtip-shadow'
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -96,13 +75,25 @@
         </div>
         <div class="webdir">
             <ul id="icons" class="icons">
+                {% for _ in icons %}
+                <li>
+                    <a class="img" href="{{ escape(_.get('url')) }}" target="_blank" company_name="{{ escape(_.get('name')) }}" offical_site="{{ escape(_.get('url')) }}">
+                        <img src="{{ escape(_.get('icon')) }}" />
+                    </a>
+                    <a class="text" href="{{ escape(_.get('url')) }}" target="_blank" company_name="{{ escape(_.get('name')) }}" offical_site="{{ escape(_.get('url')) }}">
+                        {{ escape(_.get('name')) }}
+                    </a>
+                </li>
+                {% end %}
                 <!-- insert to here -->
             </ul>
             <div class="pager">
-                <span>共计 2 页</span>
                 <ul id="pager">
-                    <!-- insert to here -->
+                    <li><a href="/1">1</a></li>
+                    <li><a href="/2">2</a></li>
+                    <li><a href="/3">3</a></li>
                 </ul>
+                <span>共计 3 页</span>
             </div>
         </div>
         <div class="bottom">
@@ -127,6 +118,18 @@
         <div class="copyright">
             &copy; 2015 TangramCloud. All Rights Reserved.
         </div>
+    </div>
+    <div class="tooltip" style="display:none;">
+        <table>
+            <tr>
+                <td>公司名称：</td>
+                <td class="company_name"></td>
+            </tr>
+            <tr>
+                <td>官方网站：</td>
+                <td class="offical_site"></td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

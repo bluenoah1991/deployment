@@ -36,6 +36,7 @@
 .body .top .background-1 .background-2 .logo img {
   margin-left: 12px;
   margin-top: 8px;
+  border: none;
 }
 .body .top .background-1 .background-2 .detail {
   width: 300px;
@@ -126,27 +127,30 @@
   margin-right: 30px;
   text-align: center;
 }
-.body .webdir .icons li a {
+.body .webdir .icons li a.img {
+  border: none;
+}
+.body .webdir .icons li a.text {
   height: 50px;
   line-height: 20px;
   vertical-align: middle;
   color: #0057a6;
   text-decoration: none;
 }
-.body .webdir .icons li a:hover {
+.body .webdir .icons li a.text:hover {
   text-decoration: underline;
 }
 .body .webdir .pager {
   height: 30px;
   line-height: 30px;
-  padding-left: 30px;
+  padding-right: 50px;
   margin-top: 10px;
 }
 .body .webdir .pager span {
-  float: left;
+  float: right;
 }
 .body .webdir .pager ul {
-  float: left;
+  float: right;
   list-style: none;
 }
 .body .webdir .pager ul li {
