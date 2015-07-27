@@ -1,0 +1,29 @@
+[
+    {
+        "hostname": "hadoop06.vdomain.com",
+        "port": 22,
+        "in_ipaddr": "10.0.98.192",
+        "ex_ipaddr": "192.168.100.194",
+        "username": "ubuntu",
+        "password": "123456",
+        "keys": "hadoop_master"
+    },
+    {
+        "hostname": "hadoop07.vdomain.com",
+        "port": 22,
+        "in_ipaddr": "10.0.98.193",
+        "ex_ipaddr": "",
+        "username": "ubuntu",
+        "password": "123456",
+        "keys": "hadoop_slave,spark_client"
+    },
+    {
+        "hostname": "hadoop08.vdomain.com",
+        "port": 22,
+        "in_ipaddr": "10.0.98.194",
+        "ex_ipaddr": "",
+        "username": "ubuntu",
+        "password": "123456",
+        "keys": "hadoop_slave"
+    }
+]

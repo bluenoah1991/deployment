@@ -1,109 +1,131 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>ClickCloud | Rapid deployment</title>
-    <link rel="stylesheet" type="text/css" href="static/styles/font-awesome.css" />
-    <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" href="static/styles/font-awesome-ie7.min.css">
-    <![endif]-->
-    <link rel="stylesheet" type="text/css" href="static/styles/master.css" />
-    <link rel="stylesheet" type="text/css" href="static/styles/index.css" /><!-- Only Hadoop Install -->
+    <title>巧云 | 云主机销售门户</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="static/styles/index.css" />
     <script type="text/javascript" src="static/scripts/jquery.js"></script>
-    <script type="text/javascript" src="static/scripts/click.js"></script>
     <script type="text/javascript">
-        window.addEventListener('load', function () {
-            crumbsContent = crumbs([{ name: 'Home', url: 'index.html' }, { name: 'Hadoop', url: '' }]);
-            var crumbs_ = document.getElementById('crumbs');
-            if (!!crumbs_) {
-                crumbs_.insertAdjacentHTML('afterBegin', crumbsContent);
-            }
-            clickgo(document.getElementsByClassName('alert'));
-            clicktoggle(document.getElementById('_01'),
-                        document.getElementById('_01_'));
-            clicktoggle(document.getElementById('_02'),
-                        document.getElementById('_02_'));
-            clickfocus(document.getElementsByClassName('_focus_'));
-            __IFRAME__ = document.getElementById('iframe_just_me');
-            window.switch_ = function (flag) {
-                switch (flag) {
-                    case 'clusters':
-                        iframe_switch('My Cluster', '>> Cluster list', [
-                            { url: 'parts/clusters', d: {} },
-                        ]);
-                        break;
-                    case 'host-add':
-                        iframe_switch('Add Host', '>> Register your machine to the system', [
-                            { url: 'parts/host-add', d: {} },
-                        ]);
-                        break;
-                    case 'hosts':
-                        iframe_switch('My Hosts', '>> Registered host', [
-                            { url: 'parts/hosts', d: {} },
-                        ]);
-                        break;
-                    case 'dns':
-                        iframe_switch('Domain Name System', '>> Configuration /etc/hosts', [
-                            { url: 'parts/dns', d: {} },
-                        ]);
-                        break;
-                    case 'hs':
-                        iframe_switch('Install Hadoop and Spark Enviroment', '>> include HDFS and YARN cluster', [
-                            { url: 'parts/hs', d: {} },
-                        ]);
-                        break;
+        function get(size, num) {
+            $.get('static/data.json', null, function (d, status, xhr) {
+                var box = $('#icons');
+                box.empty();
+                for (var _ = size * num ; _ < size * (num + 1); _++) {
+                    if (_ < 0 || _ >= d.length) {
+                        continue;
+                    }
+                    var li = $('<li/>');
+                    var img = $('<img/>');
+                    img.attr('src', d[_]['icon']);
+                    li.append(img);
+                    var link = $('<a/>');
+                    link.attr('href', d[_]['url']);
+                    link.text(d[_]['name']);
+                    li.append(link);
+                    box.append(li);
                 }
+            });
+        }
+
+        $(function () {
+            get(24, 0);
+
+            var box = $('#pager');
+            for (var i = 0; i < 2; i++) {
+                var li = $('<li/>');
+                var link = $('<a/>');
+                link.attr('href', 'javascript:void(0);');
+                link.text(i + 1);
+                (function (li, i) {
+                    li.click(function () {
+                        get(24, i);
+                    });
+                })(li, i);
+                li.append(link);
+                box.append(li);
             }
+
         });
     </script>
 </head>
 <body>
-    <div class="row-head">
-        <div class="column-logo">
+    <div class="body">
+        <div class="top">
+            <div class="background-1">
+                <div class="background-2">
+                    <div class="logo">
+                        <a href="javascript:void(0);">
+                            <img src="static/styles/images/logo.png" />
+                        </a>
+                    </div>
+                    <div class="detail">
+                        <div class="menu">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0);">资讯</a>
+                                </li>
+                                <li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">云服务商</a>
+                                </li>
+                                <li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">主机计算器</a>
+                                </li>
+                                <li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">一键部署</a>
+                                </li>
+                                <!--<li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">登录</a>
+                                </li>
+                                <li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">注册</a>
+                                </li>-->
+                            </ul>
+                        </div>
+                        <div class="search-bar">
+                            <input type="text" />
+                            <a href="javascript:void(0);">搜索</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row-navigation">
-        <div class="column-icons">
-        </div>
-        <div class="column-crumbs">
-            <div class="crumbs" id="crumbs"></div>
-        </div>
-    </div>
-    <div class="row-main">
-        <div class="column-list">
-            <ul>
-                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-dashboard icon-large"></i>Dashboard</a></li>
-                <li><a class="_focus_" href="javascript:switch_('dns');"><i class="icon-book icon-large"></i>DNS</a></li>
-                <li>
-                    <a id="_01" focus="1" href="javascript:void(0);"><i class="icon-book icon-large"></i>Hadoop</a>
-                    <ul id="_01_">
-                        <li><a class="_focus_" href="javascript:switch_('hs');">Install Hadoop and Spark</a></li>
-                    </ul>
-                </li>
-                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-tasks icon-large"></i>Tasks</a></li>
-                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
-                <li>
-                    <a id="_02" focus="1" href="javascript:void(0);"><i class="icon-sitemap icon-large"></i>My Cluster</a>
-                    <ul id="_02_">
-                        <li><a class="_focus_" href="javascript:switch_('clusters');">Clusters</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('host-add');">Add Host</a></li>
-                        <li><a class="_focus_" href="javascript:switch_('hosts');">Hosts</a></li>
-                    </ul>
-                </li>
-                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-lightbulb icon-large"></i>Issues</a></li>
-                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-file icon-large"></i>Other Pages</a></li>
+        <div class="webdir">
+            <ul id="icons" class="icons">
+                <!-- insert to here -->
             </ul>
+            <div class="pager">
+                <span>共计 2 页</span>
+                <ul id="pager">
+                    <!-- insert to here -->
+                </ul>
+            </div>
         </div>
-        <div class="column-board" id="board-main" style="display:none;">
-            <div class="title">
-                <span class="maintitle" id="board-main-title"></span>
-                <span class="subtitle" id="board-sub-title"></span>
+        <div class="bottom">
+            <div class="background-1">
+                <div class="background-2">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">关于</a>
+                        </li>
+                        <li class="vertical-line"></li>
+                        <li>
+                            <a href="javascript:void(0);">帮助</a>
+                        </li>
+                        <li class="vertical-line"></li>
+                        <li>
+                            <a href="javascript:void(0);">提交</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="alert">
-                <i class="icon-ok"></i> Welcome to use <b>ClickCloud</b> Deployment Service, the rapid deployment plan
-            </div>
-            <div id="iframe_just_me">
-                <!-- append to here-->
-            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2015 TangramCloud. All Rights Reserved.
         </div>
     </div>
 </body>

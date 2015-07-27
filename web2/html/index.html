@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ClickCloud | Rapid deployment</title>
+    <link rel="stylesheet" type="text/css" href="static/styles/font-awesome.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="static/styles/font-awesome-ie7.min.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/styles/master.css" />
+    <link rel="stylesheet" type="text/css" href="static/styles/index.css" /><!-- Only Hadoop Install -->
+    <script type="text/javascript" src="static/scripts/jquery.js"></script>
+    <script type="text/javascript" src="static/scripts/click.js"></script>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            crumbsContent = crumbs([{ name: 'Home', url: 'index.html' }, { name: 'Hadoop', url: '' }]);
+            var crumbs_ = document.getElementById('crumbs');
+            if (!!crumbs_) {
+                crumbs_.insertAdjacentHTML('afterBegin', crumbsContent);
+            }
+            clickgo(document.getElementsByClassName('alert'));
+            clicktoggle(document.getElementById('_01'),
+                        document.getElementById('_01_'));
+            clicktoggle(document.getElementById('_02'),
+                        document.getElementById('_02_'));
+            clickfocus(document.getElementsByClassName('_focus_'));
+            __IFRAME__ = document.getElementById('iframe_just_me');
+            window.switch_ = function (flag) {
+                switch (flag) {
+                    case 'clusters':
+                        iframe_switch('My Cluster', '>> Cluster list', [
+                            { url: 'parts/clusters', d: {} },
+                        ]);
+                        break;
+                    case 'host-add':
+                        iframe_switch('Add Host', '>> Register your machine to the system', [
+                            { url: 'parts/host-add', d: {} },
+                        ]);
+                        break;
+                    case 'hosts':
+                        iframe_switch('My Hosts', '>> Registered host', [
+                            { url: 'parts/hosts', d: {} },
+                        ]);
+                        break;
+                    case 'dns':
+                        iframe_switch('Domain Name System', '>> Configuration /etc/hosts', [
+                            { url: 'parts/dns', d: {} },
+                        ]);
+                        break;
+                    case 'hs':
+                        iframe_switch('Install Hadoop and Spark Enviroment', '>> include HDFS and YARN cluster', [
+                            { url: 'parts/hs', d: {} },
+                        ]);
+                        break;
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="row-head">
+        <div class="column-logo">
+        </div>
+    </div>
+    <div class="row-navigation">
+        <div class="column-icons">
+        </div>
+        <div class="column-crumbs">
+            <div class="crumbs" id="crumbs"></div>
+        </div>
+    </div>
+    <div class="row-main">
+        <div class="column-list">
+            <ul>
+                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-dashboard icon-large"></i>Dashboard</a></li>
+                <li><a class="_focus_" href="javascript:switch_('dns');"><i class="icon-book icon-large"></i>DNS</a></li>
+                <li>
+                    <a id="_01" focus="1" href="javascript:void(0);"><i class="icon-book icon-large"></i>Hadoop</a>
+                    <ul id="_01_">
+                        <li><a class="_focus_" href="javascript:switch_('hs');">Install Hadoop and Spark</a></li>
+                    </ul>
+                </li>
+                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-tasks icon-large"></i>Tasks</a></li>
+                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-bar-chart icon-large"></i>Monitor</a></li>
+                <li>
+                    <a id="_02" focus="1" href="javascript:void(0);"><i class="icon-sitemap icon-large"></i>My Cluster</a>
+                    <ul id="_02_">
+                        <li><a class="_focus_" href="javascript:switch_('clusters');">Clusters</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('host-add');">Add Host</a></li>
+                        <li><a class="_focus_" href="javascript:switch_('hosts');">Hosts</a></li>
+                    </ul>
+                </li>
+                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-lightbulb icon-large"></i>Issues</a></li>
+                <li><a class="_focus_" href="javascript:void(0);"><i class="icon-file icon-large"></i>Other Pages</a></li>
+            </ul>
+        </div>
+        <div class="column-board" id="board-main" style="display:none;">
+            <div class="title">
+                <span class="maintitle" id="board-main-title"></span>
+                <span class="subtitle" id="board-sub-title"></span>
+            </div>
+            <div class="alert">
+                <i class="icon-ok"></i> Welcome to use <b>ClickCloud</b> Deployment Service, the rapid deployment plan
+            </div>
+            <div id="iframe_just_me">
+                <!-- append to here-->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

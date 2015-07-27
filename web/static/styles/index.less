@@ -1,90 +1,218 @@
-﻿@import "global.less";
+﻿@import "preboot.less";
 
-.table-style-1 {
-    .table-style-1-header {
-        @height: 40px;
-        height: @height;
-        line-height: @height;
-        padding-left: 15px;
-        vertical-align: middle;
-        background: @blue;
-        color: white;
-    }
+@grid-columns: 12;
+@grid-column-padding: 0px;
+@grid-float-breakpoint: 768px;
 
-    .table-style-1-toolbar {
-        @height: 50px;
-        height: @height;
-        line-height: @height;
-        padding-left: 15px;
-        vertical-align: middle;
-        color: @black;
-        background: @gray;
-    }
+@blue: #0057a6;
+@orange: #f67102;
 
-    table {
-        border-collapse: collapse;
-        margin-bottom: 10px;
-        width: 100%;
-
-        & th {
-            background: @gray2;
-            color: @black;
-        }
-
-        & td, & th {
-            border: @border;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 10px;
-            padding-right: 10px;
-            text-align: center;
-        }
-    }
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+    font-family: Arial;
 }
 
-.add-host {
-    .add-host-header {
-        @height: 40px;
+.body {
+    width: 95%;
+    .center-block();
+
+    .top {
+        @height: 82px;
         height: @height;
-        line-height: @height;
-        padding-left: 15px;
-        vertical-align: middle;
-        background: @blue;
-        color: white;
-    }
+        background: url(images/stick.png) left bottom repeat-x;
 
-    .add-host-form {
-        background: @gray;
-        padding: 10px;
+        .background-1 {
+            height: @height;
+            background: url(images/stick-left.png) left bottom no-repeat;
 
+            .background-2 {
+                height: @height;
+                background: url(images/detail.png) right bottom no-repeat;
 
-        fieldset {
-            display: block;
-            color: @blue;
-            border-color: @blue;
-            padding: 10px;
+                .logo {
+                    width: auto;
+                    height: @height;
+                    float: left;
 
-            legend {
-                margin-left: 10px;
-                margin-right: 10px;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
+                    img {
+                        margin-left: 12px;
+                        margin-top: 8px;
+                    }
+                }
 
-            table {
-                border-collapse: collapse;
-                margin-bottom: 10px;
-                width: 100%;
+                .detail {
+                    @width: 300px;
+                    width: @width;
+                    height: @height;
+                    float: right;
 
-                & td, & th {
-                    border: @border;
-                    padding-top: 5px;
-                    padding-bottom: 5px;
-                    padding-left: 10px;
-                    padding-right: 10px;
-                    text-align: center;
+                    .menu {
+                        width: @width;
+                        @height: 28px;
+                        height: @height;
+                        line-height: @height;
+                        vertical-align: middle;
+
+                        ul {
+                            margin-left: 15px;
+                            list-style: none;
+
+                            li {
+                                float: left;
+
+                                &.vertical-line {
+                                    @margin-top: 8px;
+                                    @margin-left: 5px;
+                                    width: 1px;
+                                    height: @height - 2 * @margin-top;
+                                    margin-left: @margin-left;
+                                    margin-right: @margin-left;
+                                    margin-top: @margin-top;
+                                    margin-bottom: @margin-top;
+                                    background: @black-70;
+                                }
+
+                                a {
+                                    text-decoration: none;
+                                    color: @blue;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .search-bar {
+                        @height: 34px;
+                        height: @height;
+                        margin-top: 20px;
+
+                        .input[type=text] {
+                            line-height: @height;
+                            vertical-align: middle;
+                        }
+
+                        a {
+                            color: white;
+                            line-height: @height;
+                            vertical-align: middle;
+                            text-decoration: none;
+                        }
+                    }
                 }
             }
         }
+    }
+
+    .webdir {
+        width: 124px * 6 + 6;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        .center-block();
+        .clearfix();
+
+        .icons {
+            list-style: none;
+                    .clearfix();
+
+            li {
+                float:left;
+                @size: 64px;
+                width: @size;
+                height: @size + 30px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                margin-left: 30px;
+                margin-right: 30px;
+                text-align: center;
+
+                a {
+                    height:50px;
+                    line-height: 20px;
+                    vertical-align: middle;
+                    color: @blue;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .pager{
+            @height:30px;
+            height:@height;
+            line-height:@height;
+            padding-left:30px;
+            margin-top:10px;
+            span{
+                float:left;
+            }
+            ul{
+                                float:left;
+                list-style:none;
+                li{
+                    float:left;
+                    margin-left:10px;
+                }
+            }
+        }
+    }
+
+    .bottom {
+        @height: 20px;
+        height: @height;
+        background: @blue;
+
+        .background-1 {
+            height: @height;
+            background: url(images/stick-2-left.png) left bottom no-repeat;
+
+            .background-2 {
+                height: @height;
+                background: url(images/stick-2-right.png) right bottom no-repeat;
+                ul {
+                    margin-left: 15px;
+                    list-style: none;
+
+                    li {
+                        display:inline-block;
+                        line-height:@height;
+                        vertical-align:middle;
+
+                        &.vertical-line {
+                            @margin-top: 4px;
+                            @margin-left: 5px;
+                            width: 1px;
+                            height: @height - 2 * @margin-top;
+                            margin-left: @margin-left;
+                            margin-right: @margin-left;
+                            margin-top: @margin-top;
+                            margin-bottom: @margin-top;
+                            background: white;
+                        }
+
+                        a {
+                            text-decoration: none;
+                            color: white;
+
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                } 
+            }
+        }
+    }
+    .copyright{
+        line-height:40px;
+        vertical-align:middle;
+        text-align:center;
     }
 }
