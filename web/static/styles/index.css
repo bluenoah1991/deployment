@@ -199,3 +199,42 @@
   vertical-align: middle;
   text-align: center;
 }
+.body .install {
+  width: 90%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  *zoom: 1;
+  padding-left: 10px;
+}
+.body .install:before,
+.body .install:after {
+  content: " ";
+  display: table;
+  line-height: 0;
+}
+.body .install:after {
+  clear: both;
+}
+.body .install h2,
+.body .install h4 {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.body .install table {
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.body .install table td,
+.body .install table th {
+  padding: 5px;
+  text-align: center;
+}
+.body .install table td input[type=text],
+.body .install table th input[type=text] {
+  width: 80px;
+}

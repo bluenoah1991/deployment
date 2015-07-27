@@ -66,7 +66,7 @@ application = tornado.web.Application([
 	(r"/", IndexHandler),
 	(r"/\d+", IndexHandler),
 	(r"/ajax-handler/(\S+)", AjaxHandler),
-	(r"/\S+.html", MainHandler),
+	(r"/\S+", MainHandler),
 ], **settings)
 
 if __name__ == "__main__":

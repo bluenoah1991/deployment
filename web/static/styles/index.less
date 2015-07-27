@@ -222,4 +222,31 @@
         vertical-align:middle;
         text-align:center;
     }
+
+    .install{
+        width: 90%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        .center-block();
+        .clearfix();
+        padding-left:10px;
+        h2, h4{
+            @height:40px;
+            height:@height;
+            line-height:@height;
+            vertical-align:middle;
+        }
+        table{
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+            td, th{
+                padding:5px;
+                text-align:center;
+                input[type=text]{
+                    width:80px;
+                }
+            }
+        }
+    }
 }
