@@ -34,7 +34,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class AjaxHandler(tornado.web.RequestHandler):
 	def post(self, name):
-		if name == 'hs/install':
+		if name == 'modules/hs':
 			body = self.request.body
 			cfg = json.loads(body)
 			modules.hs.install(cfg)
