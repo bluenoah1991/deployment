@@ -171,6 +171,49 @@
         }
     }
 
+    .tooldir {
+        width: 188px * 3 + 3;
+        margin-top: 30px;
+        margin-bottom: 50px;
+        .center-block();
+        .clearfix();
+
+        .icons {
+            list-style: none;
+            .clearfix();
+
+            li {
+                float:left;
+                @size: 128px;
+                width: @size;
+                height: @size + 30px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                margin-left: 30px;
+                margin-right: 30px;
+                text-align: center;
+
+                a.img{
+                    img{
+                    border:none;
+                    }
+                }
+
+                a.text {
+                    height:50px;
+                    line-height: 20px;
+                    vertical-align: middle;
+                    color: @blue;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
     .bottom {
         @height: 20px;
         height: @height;
@@ -247,6 +290,14 @@
                     width:80px;
                 }
             }
+        }
+        .warning{
+            margin-top:20px;
+                padding:10px;
+                background:@black-10;
+                fieldset{
+                    padding:10px;
+                }
         }
     }
 }
