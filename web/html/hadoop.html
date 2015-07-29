@@ -20,7 +20,7 @@
                         <div class="menu">
                             <ul>
                                 <li>
-                                    <a href="/">云服务商</a>
+                                    <a href="/">云主机</a>
                                 </li>
                                 <li class="vertical-line"></li>
                                 <li>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="install">
-            <img src="static/styles/images/hadoop-logo.jpg" />
+            <img src="static/styles/images/platforms/hadoop.png" />
             <h2>Hadoop + Spark 快速部署 Beta1</h2>
             <h4>1.请填写您的主机配置（我们不会保存您的用户名和密码）</h4>
             <table class="hosts">
@@ -103,7 +103,7 @@
                         }
                         d.push(r);
                     });
-                    $.post('ajax-handler/modules/hs', JSON.stringify(d), function () {
+                    $.post('ajax-handler/hadoop', JSON.stringify(d), function () {
                         alert('success');
                     });
                 });

@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import sys, os, json
+import sys, os, json, uuid, thread, urlparse
 import tornado.ioloop
 import tornado.web
-import modules.hs
-from common import Unbuffered
+from modules import *
+from common import Unbuffered, MqttHub
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -17,9 +17,9 @@ def deamon(chdir = False):
 		print 'fork #1 failed: %d (%s)' % (e.errno, e.strerror)
 		os._exit(1)
 
-	fsock = open('/var/log/deploy.log', 'w')
+	fsock = open('/var/log/io.log', 'w')
 	fsock2 = open('/dev/null', 'r')
-	fsock3 = open('/var/log/deploy.err', 'w')
+	fsock3 = open('/var/log/io.err', 'w')
 	sys.stdout = Unbuffered(fsock)
 	sys.stdin = fsock2
 	sys.stderr = Unbuffered(fsock3)
@@ -47,16 +47,26 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
-		fileName = self.request.uri
+		fileName = urlparse.urlparse(self.request.uri).path
 		fileName = fileName[fileName.rfind('/') + 1:]
 		self.render("html/%s.html" % fileName)
 
 class AjaxHandler(tornado.web.RequestHandler):
 	def post(self, name):
-		if name == 'modules/hs':
-			body = self.request.body
-			cfg = json.loads(body)
-			modules.hs.install(cfg)
+		body = self.request.body
+		cfg = json.loads(body)
+		uu = str(uuid.uuid1())
+		if name == 'hadoop':
+			if std:
+				Hadoop.install(cfg, uu)
+			else:
+				thread.start_new_thread(Hadoop.install, (cfg, uu))
+		if name == 'mongodb':
+			if std:
+				Mongodb.install(cfg, uu)
+			else:
+				thread.start_new_thread(Mongodb.install, (cfg, uu))
+		self.write(uu)
 		
 settings = {
 	"static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -73,6 +83,13 @@ if __name__ == "__main__":
 
 	if '-d' in sys.argv:
 		deamon()
+
+	if '-std' in sys.argv:
+		std = True
+	else:
+		std = False	
+
+	MqttHub()
 
 	application.listen(80)
 	tornado.ioloop.IOLoop.instance().start()

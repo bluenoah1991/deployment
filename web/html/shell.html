@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>巧云 | 云主机销售门户</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="static/styles/index.css" />
+    <script type="text/javascript" src="static/scripts/jquery.js"></script>
+    <script type="text/javascript" src="static/scripts/mqttws31.js"></script>
+    <script type="text/javascript">
+
+        function getquerystring() {
+            var url = location.search;
+            var data = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    data[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return data;
+        }
+
+        $(function () {
+            var d = getquerystring();
+            if (!!d['tty']) {
+                var ttyid = d['tty'];
+                var client = new Paho.MQTT.Client(
+                    "192.168.100.145", 9001, '/mqtt', 'webshell/' + ttyid);
+                client.onConnectionLost = function (responseObject) {
+                    if (responseObject.errorCode !== 0) {
+                        alert("onConnectionLost:" + responseObject.errorMessage);
+                    }
+                }
+                client.onMessageArrived = function (message) {
+                    var raw = $('#tty').text();
+                    $('#tty').text(raw + message.payloadString);
+                }
+                client.connect({
+                    onSuccess: function () {
+                        client.subscribe('webshell/' + ttyid);
+                        message = new Paho.MQTT.Message(ttyid);
+                        message.destinationName = "sys/client_ready";
+                        client.send(message);
+                    }
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <textarea id="tty"></textarea>
+</body>
+</html>

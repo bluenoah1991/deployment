@@ -4,9 +4,9 @@ import sys
 sys.path.append('..')
 import common
 
-def install(cfg):
+def install(cfg, ttyid):
 
-	ssh = common.SSH(cfg)
+	ssh = common.SSH(cfg, ttyid)
 	maps = []
 	for _ in cfg:
 		maps.append(_.get('in_ipaddr', ''))
