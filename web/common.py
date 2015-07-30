@@ -71,22 +71,26 @@ class SSH(object):
 		else:
 			sys.stdout.write(msg)
 
-	def cmd(self, cmd, all_ = True, *hosts):
+	def cmd(self, cmd, sudo = False, all_ = True, *hosts):
 		if all_:
 			for (host, channel) in self.channels.items():
 				self.write('[%s][%s] Execute \'%s\'\n' % (datetime.datetime.now(), host, cmd))
-				channel.exec_command(cmd)
+				if sudo:
+					channel.exec_command('sudo -k %s' % cmd)
+					channel.send(self.password + '\n')
+				else:
+					channel.exec_command(cmd)
 				while True:
 					rl, wl, xl = select.select([channel], [], [], 0.0)
 					if len(rl) > 0:
-						e = channel.recv_stderr(1024)
-						self.write(e)
 						d = channel.recv(1024)
 						if d is None or len(d) == 0:
 							break
 						self.write(d)
 				t = channel.get_transport()
 				channel = t.open_session()
+				channel.set_combine_stderr(True)
+				channel.get_pty()
 				self.channels[host] = channel
 		else:
 			for host in hosts:
@@ -94,18 +98,22 @@ class SSH(object):
 					continue
 				channel = self.channels[host]
 				self.write('[%s][%s] Execute \'%s\'\n' % (datetime.datetime.now(), host, cmd))
-				channel.exec_command(cmd)
+				if sudo:
+					channel.exec_command('sudo -k %s' % cmd)
+					channel.send(self.password + '\n')
+				else:
+					channel.exec_command(cmd)
 				while True:
 					rl, wl, xl = select.select([channel], [], [], 0.0)
 					if len(rl) > 0:
-						e = channel.recv_stderr(1024)
-						self.write(e)
 						d = channel.recv(1024)
 						if d is None or len(d) == 0:
 							break
 						self.write(d)
 				t = channel.get_transport()
 				channel = t.open_session()
+				channel.set_combine_stderr(True)
+				channel.get_pty()
 				self.channels[host] = channel
 	
 	def upload(self, localFile, remoteFile, all_ = True, *hosts):
@@ -163,6 +171,7 @@ class SSH(object):
 				ssh_ipaddr = in_ipaddr
 			username = entity.get('username', '')
 			password = entity.get('password', '')
+			self.password = password
 			keys_ = entity.get('keys', '')
 			keys = None
 			if keys_ is not None:
@@ -188,6 +197,8 @@ class SSH(object):
 			t = client.get_transport()
 			self.transports.append(t)
 			channel = t.open_session()
+			channel.set_combine_stderr(True)
+			channel.get_pty()
 			self.channels[hostname] = channel
 			sftp = paramiko.SFTPClient.from_transport(t)
 			self.sftps[hostname] = sftp
