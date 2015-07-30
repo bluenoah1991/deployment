@@ -79,6 +79,8 @@ class SSH(object):
 				while True:
 					rl, wl, xl = select.select([channel], [], [], 0.0)
 					if len(rl) > 0:
+						e = channel.recv_stderr(1024)
+						self.write(e)
 						d = channel.recv(1024)
 						if d is None or len(d) == 0:
 							break
@@ -96,6 +98,8 @@ class SSH(object):
 				while True:
 					rl, wl, xl = select.select([channel], [], [], 0.0)
 					if len(rl) > 0:
+						e = channel.recv_stderr(1024)
+						self.write(e)
 						d = channel.recv(1024)
 						if d is None or len(d) == 0:
 							break
@@ -174,8 +178,8 @@ class SSH(object):
 			except paramiko.BadHostKeyException, e:
 				print 'BadHostKeyException[%s]: %s' % (hostname, e)
 				return None
-			except paramiko.AutenticationException, e:
-				print 'AutenticationException[%s]: %s' % (hostname, e)
+			except paramiko.AuthenticationException, e:
+				print 'AuthenticationException[%s]: %s' % (hostname, e)
 				return None
 			except paramiko.SSHException, e:
 				print 'SSHException[%s]: %s' % (hostname, e)

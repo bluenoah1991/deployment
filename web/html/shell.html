@@ -31,7 +31,7 @@
             if (!!d['tty']) {
                 var ttyid = d['tty'];
                 var client = new Paho.MQTT.Client(
-                    "192.168.100.145", 9001, '/mqtt', 'webshell/' + ttyid);
+                    "tangramcloud.com", 9001, '/mqtt', 'webshell/' + ttyid);
                 client.onConnectionLost = function (responseObject) {
                     if (responseObject.errorCode !== 0) {
                         alert("onConnectionLost:" + responseObject.errorMessage);
