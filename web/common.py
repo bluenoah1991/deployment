@@ -161,7 +161,7 @@ class SSH(object):
 			self.mqttclient = MqttClient(ttyid)
 		for entity in cfg:
 			hostname = entity.get('hostname', '')
-			port = entity.get('port', 22)
+			port = entity.get('port', '22')
 			if port is None or len(port) == 0:
 				port = 22
 			port = int(port)

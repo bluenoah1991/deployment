@@ -71,6 +71,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Redis.install(cfg, uu)
 			else:
 				thread.start_new_thread(Redis.install, (cfg, uu))
+		if name == 'postfix':
+			if std:
+				Postfix.install(cfg, uu)
+			else:
+				thread.start_new_thread(Postfix.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
