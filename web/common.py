@@ -77,7 +77,7 @@ class SSH(object):
 				self.write('[%s][%s] Execute \'%s\'\n' % (datetime.datetime.now(), host, cmd))
 				if sudo:
 					channel.exec_command('sudo -k %s' % cmd)
-					channel.send(self.password + '\n')
+					channel.send(self.password[host] + '\n')
 				else:
 					channel.exec_command(cmd)
 				while True:
@@ -100,7 +100,7 @@ class SSH(object):
 				self.write('[%s][%s] Execute \'%s\'\n' % (datetime.datetime.now(), host, cmd))
 				if sudo:
 					channel.exec_command('sudo -k %s' % cmd)
-					channel.send(self.password + '\n')
+					channel.send(self.password[host] + '\n')
 				else:
 					channel.exec_command(cmd)
 				while True:
@@ -154,6 +154,7 @@ class SSH(object):
 		self.channels = {}
 		self.transports = []
 		self.sftps = {}
+		self.password = {}
 		self.tty = False
 		if ttyid is not None and len(ttyid) > 0:
 			self.tty = True
@@ -161,7 +162,7 @@ class SSH(object):
 		for entity in cfg:
 			hostname = entity.get('hostname', '')
 			port = entity.get('port', 22)
-			if port is None:
+			if port is None or len(port) == 0:
 				port = 22
 			port = int(port)
 			in_ipaddr = entity.get('in_ipaddr', '')
@@ -171,7 +172,7 @@ class SSH(object):
 				ssh_ipaddr = in_ipaddr
 			username = entity.get('username', '')
 			password = entity.get('password', '')
-			self.password = password
+			self.password[hostname] = password
 			keys_ = entity.get('keys', '')
 			keys = None
 			if keys_ is not None:
