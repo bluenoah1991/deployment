@@ -66,6 +66,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Mongodb.install(cfg, uu)
 			else:
 				thread.start_new_thread(Mongodb.install, (cfg, uu))
+		if name == 'redis':
+			if std:
+				Redis.install(cfg, uu)
+			else:
+				thread.start_new_thread(Redis.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
