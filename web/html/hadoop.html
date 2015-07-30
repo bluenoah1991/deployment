@@ -103,8 +103,12 @@
                         }
                         d.push(r);
                     });
-                    $.post('ajax-handler/hadoop', JSON.stringify(d), function () {
-                        alert('success');
+                    $.post('ajax-handler/hadoop', JSON.stringify(d), function (d) {
+                        window.open(
+                            "/shell?tty=" + d,
+                            "newwindow",
+                            "height=400,width=800,top=40,left=60,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no"
+                            );
                     });
                 });
             </script>

@@ -29,6 +29,20 @@ fi
 # done
 # echo ${x[1]}
 
+if [ ! -f /etc/sysctl.conf.x ]; then
+
+	cp /etc/sysctl.conf /etc/sysctl.conf.x
+
+	echo -e "
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+" >> /etc/sysctl.conf
+
+sysctl -p /etc/sysctl.conf
+
+fi
+
 ss=(${s//,/ })
 
 javadir=`ls -l /usr/local | grep jdk[^-] | rev | cut -d ' ' -f1 | rev`

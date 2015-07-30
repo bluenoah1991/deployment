@@ -7,3 +7,9 @@ if [ -f /etc/profile.x ]; then
 
 fi
 
+if [ -f /etc/sysctl.conf.x ]; then
+
+	cp /etc/sysctl.conf.x /etc/sysctl.conf
+	rm /etc/sysctl.conf.x
+
+fi
