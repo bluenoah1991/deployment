@@ -76,6 +76,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Postfix.install(cfg, uu)
 			else:
 				thread.start_new_thread(Postfix.install, (cfg, uu))
+		if name == 'lamp':
+			if std:
+				Lamp.install(cfg, uu)
+			else:
+				thread.start_new_thread(Lamp.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
