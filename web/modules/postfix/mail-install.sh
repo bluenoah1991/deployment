@@ -13,7 +13,7 @@ ADMINNAME=postmaster
 MAILDIR=/var/mail/vhosts/
 MYSQLPWD=123456
 
-while getopts 'd:h:l:m:n:p:a:i:y' OPT; do
+while getopts 'd:h:l:m:n:p:a:i:y:' OPT; do
 	case $OPT in
 		d)
 			DOMAIN=$OPTARG;;
@@ -35,6 +35,18 @@ while getopts 'd:h:l:m:n:p:a:i:y' OPT; do
 			MYSQLPWD=$OPTARG;;
 	esac
 done
+
+echo "************"
+echo "${DOMAIN}"
+echo "${HOST}"
+echo "${DBNAME}"
+echo "${DBUSER}"
+echo "${DBPWD}"
+echo "${UPWD}"
+echo "${ADMINNAME}"
+echo "${MAILDIR}"
+echo "${MYSQLPWD}"
+echo "************"
 
 hostname ${HOST}
 echo ${HOST} > /etc/hostname

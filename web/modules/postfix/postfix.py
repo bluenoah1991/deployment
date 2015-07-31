@@ -40,9 +40,9 @@ def install(cfg, ttyid):
 	ssh.cmd('chmod u+x /tmp/mail-install.sh', True)
 	ssh.cmd(('/tmp/mail-install.sh -d %s '
 	'-h %s -l %s -m %s -n %s '
-	'-p %s -a %s -i %s -y %s') % \
+	'-p %s -a %s -y %s -i %s') % \
 	(domain, hostname, dbname, dbuser, dbpwd, \
-	upwd, master, maildir, mysqlpwd), True)
+	upwd, master, mysqlpwd, maildir), True)
 	ssh.close()
 
 
