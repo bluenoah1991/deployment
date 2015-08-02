@@ -81,6 +81,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Lamp.install(cfg, uu)
 			else:
 				thread.start_new_thread(Lamp.install, (cfg, uu))
+		if name == 'riak':
+			if std:
+				Riak.install(cfg, uu)
+			else:
+				thread.start_new_thread(Riak.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
