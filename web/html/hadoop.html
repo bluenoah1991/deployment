@@ -103,7 +103,7 @@
                         }
                         d.push(r);
                     });
-                    $.post('ajax-handler/hadoop', JSON.stringify(d), function (d) {
+                    $.post('/ajax-handler/hadoop', JSON.stringify(d), function (d) {
                         window.open(
                             "/shell?tty=" + d,
                             "newwindow",

@@ -81,7 +81,7 @@
                         r.password = $(this).find('.password').val();
                         d.push(r);
                     });
-                    $.post('ajax-handler/riak', JSON.stringify(d), function (d) {
+                    $.post('/ajax-handler/riak', JSON.stringify(d), function (d) {
                         window.open(
                             "/shell?tty=" + d,
                             "newwindow",

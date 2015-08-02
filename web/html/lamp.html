@@ -89,7 +89,7 @@
                     r.password = $('.row').find('.password').val();
                     r.mysqlpwd = $('.row').find('.mysqlpwd').val();
                     d.push(r);
-                    $.post('ajax-handler/lamp', JSON.stringify(d), function (d) {
+                    $.post('/ajax-handler/lamp', JSON.stringify(d), function (d) {
                         window.open(
                             "/shell?tty=" + d,
                             "newwindow",
