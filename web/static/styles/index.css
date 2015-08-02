@@ -211,6 +211,23 @@
 .body .tooldir .icons li a.text:hover {
   text-decoration: underline;
 }
+.body .tooldir .pager {
+  height: 30px;
+  line-height: 30px;
+  padding-right: 50px;
+  margin-top: 10px;
+}
+.body .tooldir .pager span {
+  float: right;
+}
+.body .tooldir .pager ul {
+  float: right;
+  list-style: none;
+}
+.body .tooldir .pager ul li {
+  float: left;
+  margin-left: 10px;
+}
 .body .bottom {
   height: 20px;
   background: #0057a6;
