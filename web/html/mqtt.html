@@ -45,8 +45,8 @@
             </div>
         </div>
         <div class="install">
-            <img src="/static/styles/images/platforms/hadoop.png" />
-            <h2>Hadoop + Spark 快速部署 Beta1</h2>
+            <img src="/static/styles/images/platforms/mqtt.png" />
+            <h2>Mosquitto 消息代理安装 Beta1</h2>
             <h4>1.请填写您的主机配置（我们不会保存您的用户名和密码）</h4>
             <table class="hosts">
                 <tr>
@@ -56,9 +56,6 @@
                     <th>端口号</th>
                     <th>用户名</th>
                     <th>密码</th>
-                    <th>Master</th>
-                    <th>Slave</th>
-                    <th>Spark Client</th>
                 </tr>
                 <tr class="row">
                     <td><input class="hostname" type="text" /></td>
@@ -67,18 +64,8 @@
                     <td><input class="port" type="text" /></td>
                     <td><input class="username" type="text" /></td>
                     <td><input class="password" type="text" /></td>
-                    <td><input class="hadoop_master" type="checkbox" /></td>
-                    <td><input class="hadoop_slave" type="checkbox" /></td>
-                    <td><input class="spark_client" type="checkbox" /></td>
                 </tr>
             </table>
-            <a id="add_host" href="javascript:void(0);">添加主机</a>
-            <script type="text/javascript">
-                var template = $('.row').clone();
-                $('#add_host').click(function () {
-                    $('.hosts').append(template.clone());
-                });
-            </script>
             <h4>2.提交部署计划</h4>
             <a id="commit_plain" href="javascript:void(0);">提交任务</a>
             <script type="text/javascript">
@@ -92,18 +79,9 @@
                         r.port = $(this).find('.port').val();
                         r.username = $(this).find('.username').val();
                         r.password = $(this).find('.password').val();
-                        if ($(this).find('.hadoop_master')[0].checked) {
-                            r.keys = 'hadoop_master';
-                        }
-                        if ($(this).find('.hadoop_slave')[0].checked) {
-                            r.keys = 'hadoop_slave';
-                        }
-                        if ($(this).find('.spark_client')[0].checked) {
-                            r.keys += ',spark_client';
-                        }
                         d.push(r);
                     });
-                    $.post('ajax-handler/hadoop', JSON.stringify(d), function (d) {
+                    $.post('ajax-handler/mqtt', JSON.stringify(d), function (d) {
                         window.open(
                             "/shell?tty=" + d,
                             "newwindow",

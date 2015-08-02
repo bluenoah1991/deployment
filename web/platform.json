@@ -1,52 +1,52 @@
 [
     {
-        "icon": "static/styles/images/platforms/hadoop-logo.png",
-        "url": "/hadoop",
+        "icon": "/static/styles/images/platforms/hadoop-logo.png",
+        "url": "/tool//hadoop",
         "name": "Hadoop分布式集群"
     },
     {
-        "icon": "static/styles/images/platforms/lamp-logo.png",
-        "url": "/lamp",
+        "icon": "/static/styles/images/platforms/lamp-logo.png",
+        "url": "/tool/lamp",
         "name": "LAMP套件"
     },
     {
-        "icon": "static/styles/images/platforms/mongodb-logo.png",
-        "url": "/mongodb",
+        "icon": "/static/styles/images/platforms/mongodb-logo.png",
+        "url": "/tool/mongodb",
         "name": "Mongodb数据库"
     },
     {
-        "icon": "static/styles/images/platforms/redis-logo.png",
-        "url": "/redis",
+        "icon": "/static/styles/images/platforms/redis-logo.png",
+        "url": "/tool/redis",
         "name": "Redis缓存数据库"
     },
     {
-        "icon": "static/styles/images/platforms/postfix-logo.png",
-        "url": "/postfix",
+        "icon": "/static/styles/images/platforms/postfix-logo.png",
+        "url": "/tool/postfix",
         "name": "Postfix + Dovecot邮件系统"
     },
     {
-        "icon": "static/styles/images/platforms/riak-logo.png",
-        "url": "/riak",
+        "icon": "/static/styles/images/platforms/riak-logo.png",
+        "url": "/tool/riak",
         "name": "Riak数据库"
     },
     {
-        "icon": "static/styles/images/platforms/mqtt-logo.png",
-        "url": "/mqtt",
+        "icon": "/static/styles/images/platforms/mqtt-logo.png",
+        "url": "/tool/mqtt",
         "name": "Mosquitto消息代理"
     },
     {
-        "icon": "static/styles/images/platforms/mysql-logo.png",
-        "url": "/mysql",
+        "icon": "/static/styles/images/platforms/mysql-logo.png",
+        "url": "javascript:void(0);",
         "name": "Mysql数据库"
     },
     {
-        "icon": "static/styles/images/platforms/kafka-logo.png",
-        "url": "/kafka",
+        "icon": "/static/styles/images/platforms/kafka-logo.png",
+        "url": "javascript:void(0);",
         "name": "Kafka发布订阅系统"
     },
     {
-        "icon": "static/styles/images/platforms/tomcat-logo.png",
-        "url": "/tomcat",
+        "icon": "/static/styles/images/platforms/tomcat-logo.png",
+        "url": "javascript:void(0);",
         "name": "Tomcat应用服务器"
     }
 ]

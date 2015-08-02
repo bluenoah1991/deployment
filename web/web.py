@@ -56,7 +56,7 @@ class ToolHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.load()
 		index = self.request.uri
-		index = index[index.rfind('/tool') + 5:]
+		index = index[index.rfind('/tool/') + 6:]
 		if index is None or len(index) == 0:
 			index = 1
 		index = int(index)

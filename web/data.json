@@ -1,251 +1,251 @@
 [
     {
-        "icon": "static/styles/images/icons/aliyun.png",
+        "icon": "/static/styles/images/icons/aliyun.png",
         "url": "http://www.aliyun.com",
         "name": "阿里云"
     },
     {
-        "icon": "static/styles/images/icons/qcloud.png",
+        "icon": "/static/styles/images/icons/qcloud.png",
         "url": "http://www.qcloud.com",
         "name": "腾讯云"
     },
     {
-        "icon": "static/styles/images/icons/bce.png",
+        "icon": "/static/styles/images/icons/bce.png",
         "url": "http://bce.baidu.com",
         "name": "百度开放云"
     },
     {
-        "icon": "static/styles/images/icons/ksyun.png",
+        "icon": "/static/styles/images/icons/ksyun.png",
         "url": "http://www.ksyun.com",
         "name": "金山云"
     },
     {
-        "icon": "static/styles/images/icons/grandcloud.png",
+        "icon": "/static/styles/images/icons/grandcloud.png",
         "url": "http://www.grandcloud.cn",
         "name": "盛大云"
     },
     {
-        "icon": "static/styles/images/icons/360.png",
+        "icon": "/static/styles/images/icons/360.png",
         "url": "http://cloud.360.cn",
         "name": "360云"
     },
     {
-        "icon": "static/styles/images/icons/jae.png",
+        "icon": "/static/styles/images/icons/jae.png",
         "url": "http://www.jcloud.com",
         "name": "京东云"
     },
     {
-        "icon": "static/styles/images/icons/aws.png",
+        "icon": "/static/styles/images/icons/aws.png",
         "url": "http://aws.amazon.com",
         "name": "亚马逊AWS"
     },
     {
-        "icon": "static/styles/images/icons/wocloud.png",
+        "icon": "/static/styles/images/icons/wocloud.png",
         "url": "http://www.wocloud.cn",
         "name": "沃云"
     },
     {
-        "icon": "static/styles/images/icons/ucloud.png",
+        "icon": "/static/styles/images/icons/ucloud.png",
         "url": "http://www.ucloud.cn",
         "name": "UCloud"
     },
     {
-        "icon": "static/styles/images/icons/cndns.png",
+        "icon": "/static/styles/images/icons/cndns.png",
         "url": "http://www.cndns.com",
         "name": "美橙云主机"
     },
     {
-        "icon": "static/styles/images/icons/yunip.png",
+        "icon": "/static/styles/images/icons/yunip.png",
         "url": "http://www.yunip.com",
         "name": "银湃云计算"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.enkj.com",
         "name": "亿恩科技"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.netnic.com.cn/",
         "name": "企商在线"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.80host.com/",
         "name": "80主机"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.173net.net/",
         "name": "173网络"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.aaayun.com/",
         "name": "AAA云"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.dns2003.com/",
         "name": "E网时代"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.yundoog.com/",
         "name": "云狗互联"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.iispa.cn/",
         "name": "POG数据中心"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.yun01.com/",
         "name": "壹号云"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://idc.etuan.com/",
         "name": "一团网"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://idc.wanpat.com/",
         "name": "万派云数据"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.39wa.com/",
         "name": "三九空间"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.viacloud.com.cn/",
         "name": "VIACLOUD"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.kuaiwang.com/",
         "name": "快网"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.pumo.com.cn/",
         "name": "捕梦网"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.51web.com/",
         "name": "世纪东方"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.cloudmind.cn/",
         "name": "中云"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.znyun.net/",
         "name": "中南云科技"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.63ns.com.cn/cloudserver/",
         "name": "中国名创"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.ccop.cn/",
         "name": "港联科技"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.6hl.cn/",
         "name": "中电华联"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.china125.com/",
         "name": "中电网通"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.clouds800.com/",
         "name": "云800"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.cloudchinese.com/",
         "name": "云中网"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.ynnic.com/yun/",
         "name": "天成科技"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.proxvm.com/",
         "name": "云洛科技"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.linktom.com/",
         "name": "互联互通"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.53dns.com/",
         "name": "互易中国"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://sys.hudongidc.com/",
         "name": "互动云计算中心"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.rwen.com/",
         "name": "人文网"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.cloud86.cn/home.html",
         "name": "今科云"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.juncool.cn/",
         "name": "俊逸网络"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://yun.52codes.net/",
         "name": "吾爱源码云主机"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.24sh.net/",
         "name": "北电快云"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.yunhosting.com/index.asp",
         "name": "时代宏远"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.qianxunsky.com/",
         "name": "千寻网络"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.sudu.cn/",
         "name": "华夏名网"
     },
     {
-        "icon": "static/styles/images/icons/default.png",
+        "icon": "/static/styles/images/icons/default.png",
         "url": "http://www.hscloud.com/",
         "name": "华数云"
     }
