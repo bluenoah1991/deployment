@@ -46,43 +46,22 @@
         </div>
         <div class="tooldir">
             <ul class="icons">
+		{% for _ in icons %}
                 <li>
-                    <a class="img" href="/hadoop" target="_blank">
-                        <img src="static/styles/images/platforms/hadoop-logo.png" />
+                    <a class="img" href="{{ escape(_.get('url')) }}" target="_blank">
+                        <img src="{{ escape(_.get('icon')) }}" />
                     </a>
-                    <a class="text" href="/hadoop" target="_blank">Hadoop分布式集群</a>
+                    <a class="text" href="{{ escape(_.get('url')) }}" target="_blank">{{ escape(_.get('name')) }}</a>
                 </li>
-                <li>
-                    <a class="img" href="/lamp" target="_blank">
-                        <img src="static/styles/images/platforms/lamp-logo.png" />
-                    </a>
-                    <a class="text" href="/lamp" target="_blank">LAMP套件</a>
-                </li>
-                <li>
-                    <a class="img" href="/mongodb" target="_blank">
-                        <img src="static/styles/images/platforms/mongodb-logo.png" />
-                    </a>
-                    <a class="text" href="/mongodb" target="_blank">Mongodb数据库</a>
-                </li>
-                <li>
-                    <a class="img" href="/redis" target="_blank">
-                        <img src="static/styles/images/platforms/redis-logo.png" />
-                    </a>
-                    <a class="text" href="/redis" target="_blank">Redis缓存数据库</a>
-                </li>
-                <li>
-                    <a class="img" href="/postfix" target="_blank">
-                        <img src="static/styles/images/platforms/postfix-logo.png" />
-                    </a>
-                    <a class="text" href="/postfix" target="_blank">Postfix + Dovecot邮件系统</a>
-                </li>
-                <li>
-                    <a class="img" href="/riak" target="_blank">
-                        <img src="static/styles/images/platforms/riak-logo.png" />
-                    </a>
-                    <a class="text" href="/riak" target="_blank">Riak数据库</a>
-                </li>
+		{% end %}
             </ul>
+        </div>
+        <div class="pager">
+            <ul id="pager">
+                <li><a href="/tool/1">1</a></li>
+                <li><a href="/tool/2">2</a></li>
+            </ul>
+            <span>共计 3 页</span>
         </div>
         <div class="bottom">
             <div class="background-1">

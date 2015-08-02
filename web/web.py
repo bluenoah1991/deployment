@@ -45,6 +45,23 @@ class IndexHandler(tornado.web.RequestHandler):
 		index = int(index)
 		self.render("html/index.html", icons = self.data[(index - 1) * 24: index * 24])
 
+class ToolHandler(tornado.web.RequestHandler):
+	def load(self):
+		if not 'platform' in dir(self):
+			f = open('platform.json', 'r')
+			jsonstr = f.read()
+			self.platform = json.loads(jsonstr)
+			f.close()
+
+	def get(self):
+		self.load()
+		index = self.request.uri
+		index = index[index.rfind('/tool/') + 1:]
+		if index is None or len(index) == 0:
+			index = 1
+		index = int(index)
+		self.render("html/tool.html", icons = self.platform[(index - 1) * 6: index * 6])
+
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		fileName = urlparse.urlparse(self.request.uri).path
@@ -86,6 +103,21 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Riak.install(cfg, uu)
 			else:
 				thread.start_new_thread(Riak.install, (cfg, uu))
+		if name == 'mqtt':
+			if std:
+				Mqtt.install(cfg, uu)
+			else:
+				thread.start_new_thread(Mqtt.install, (cfg, uu))
+		if name == 'mysql':
+			if std:
+				Mysql.install(cfg, uu)
+			else:
+				thread.start_new_thread(Mysql.install, (cfg, uu))
+		if name == 'tomcat':
+			if std:
+				Tomcat.install(cfg, uu)
+			else:
+				thread.start_new_thread(Tomcat.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
@@ -95,6 +127,8 @@ settings = {
 application = tornado.web.Application([
 	(r"/", IndexHandler),
 	(r"/\d+", IndexHandler),
+	(r"/tool", ToolHandler),
+	(r"/tool/\d+", ToolHandler),
 	(r"/ajax-handler/(\S+)", AjaxHandler),
 	(r"/\S+", MainHandler),
 ], **settings)

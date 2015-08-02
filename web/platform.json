@@ -1,0 +1,52 @@
+[
+    {
+        "icon": "static/styles/images/platforms/hadoop-logo.png",
+        "url": "/hadoop",
+        "name": "Hadoop分布式集群"
+    },
+    {
+        "icon": "static/styles/images/platforms/lamp-logo.png",
+        "url": "/lamp",
+        "name": "LAMP套件"
+    },
+    {
+        "icon": "static/styles/images/platforms/mongodb-logo.png",
+        "url": "/mongodb",
+        "name": "Mongodb数据库"
+    },
+    {
+        "icon": "static/styles/images/platforms/redis-logo.png",
+        "url": "/redis",
+        "name": "Redis缓存数据库"
+    },
+    {
+        "icon": "static/styles/images/platforms/postfix-logo.png",
+        "url": "/postfix",
+        "name": "Postfix + Dovecot邮件系统"
+    },
+    {
+        "icon": "static/styles/images/platforms/riak-logo.png",
+        "url": "/riak",
+        "name": "Riak数据库"
+    },
+    {
+        "icon": "static/styles/images/platforms/mqtt-logo.png",
+        "url": "/mqtt",
+        "name": "Mosquitto消息代理"
+    },
+    {
+        "icon": "static/styles/images/platforms/mysql-logo.png",
+        "url": "/mysql",
+        "name": "Mysql数据库"
+    },
+    {
+        "icon": "static/styles/images/platforms/kafka-logo.png",
+        "url": "/kafka",
+        "name": "Kafka发布订阅系统"
+    },
+    {
+        "icon": "static/styles/images/platforms/tomcat-logo.png",
+        "url": "/tomcat",
+        "name": "Tomcat应用服务器"
+    }
+]
