@@ -20,7 +20,7 @@ sudo apt-get install mysql-server mysql-client -y
 service mysql restart
 
 
-LINE1="GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'  IDENTIFIED BY '$(MYSQLPWD)'  WITH GRANT OPTION;"
+LINE1="GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'  IDENTIFIED BY '${MYSQLPWD}'  WITH GRANT OPTION;"
 
 mysql -uroot -p${MYSQLPWD} ${DBNAME} << EOF
 
