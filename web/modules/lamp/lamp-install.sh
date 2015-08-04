@@ -2,7 +2,7 @@
 
 MYSQLPWD=123456
 
-while getopts 'y:' OPT; do
+while getopts 'p:' OPT; do
         case $OPT in
                 p)
                         MYSQLPWD=$OPTARG;;
