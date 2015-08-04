@@ -2,7 +2,7 @@
 
 MYSQLPWD=123456
 
-while getopts 'y:' OPT; do
+while getopts 'p:' OPT; do
         case $OPT in
                 p)
                         MYSQLPWD=$OPTARG;;
@@ -26,7 +26,9 @@ mysql -uroot -p${MYSQLPWD} ${DBNAME} << EOF
 
   ${LINE1}
   FLUSH PRIVILEGES;
-  
+
 EOF
+
+sed -i "/^bind-address/cbind-address 0.0.0.0" /etc/mysql/my.cnf
 
 service mysql restart
