@@ -46,7 +46,7 @@
     },
     {
         "icon": "/static/styles/images/platforms/tomcat-logo.png",
-        "url": "javascript:void(0);",
+        "url": "/tool/tomcat",
         "name": "Tomcat应用服务器"
     }
 ]
