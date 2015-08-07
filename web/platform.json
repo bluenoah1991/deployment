@@ -48,5 +48,10 @@
         "icon": "/static/styles/images/platforms/tomcat-logo.png",
         "url": "/tool/tomcat",
         "name": "Tomcat应用服务器"
+    },
+    {
+        "icon": "/static/styles/images/platforms/zookeeper-logo.png",
+        "url": "/tool/zookeeper",
+        "name": "Zookeeper分布式集群"
     }
 ]

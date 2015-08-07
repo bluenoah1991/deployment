@@ -1,0 +1,134 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>巧云 | 云主机销售门户</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="/static/styles/index.css" />
+    <script type="text/javascript" src="/static/scripts/jquery.js"></script>
+</head>
+<body>
+    <div class="body">
+        <div class="top">
+            <div class="background-1">
+                <div class="background-2">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="/static/styles/images/logo.png" />
+                        </a>
+                    </div>
+                    <div class="detail">
+                        <div class="menu">
+                            <ul>
+                                <li>
+                                    <a href="/">云主机</a>
+                                </li>
+                                <li class="vertical-line"></li>
+                                <li>
+                                    <a href="/tool">云工具</a>
+                                </li>
+                                <!--<li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">登录</a>
+                                </li>
+                                <li class="vertical-line"></li>
+                                <li>
+                                    <a href="javascript:void(0);">注册</a>
+                                </li>-->
+                            </ul>
+                        </div>
+                        <div class="search-bar">
+                            <input type="text" />
+                            <a href="javascript:void(0);">搜索</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="install">
+            <img src="/static/styles/images/platforms/zookeeper.png" />
+            <h2>ZooKeeper 集群快速部署 Beta1</h2>
+            <h4>1.请填写您的主机配置（我们不会保存您的用户名和密码）</h4>
+            <table class="hosts">
+                <tr>
+                    <th>主机名</th>
+                    <th>私有IP地址</th>
+                    <th>公有IP地址</th>
+                    <th>端口号</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                </tr>
+                <tr class="row">
+                    <td><input class="hostname" type="text" /></td>
+                    <td><input class="in_ipaddr" type="text" /></td>
+                    <td><input class="ex_ipaddr" type="text" /></td>
+                    <td><input class="port" type="text" /></td>
+                    <td><input class="username" type="text" /></td>
+                    <td><input class="password" type="text" /></td>
+                </tr>
+            </table>
+            <a id="add_host" href="javascript:void(0);">添加主机</a>
+            <script type="text/javascript">
+                var template = $('.row').clone();
+                $('#add_host').click(function () {
+                    $('.hosts').append(template.clone());
+                });
+            </script>
+            <h4>2.提交部署计划</h4>
+            <a id="commit_plain" href="javascript:void(0);">提交任务</a>
+            <script type="text/javascript">
+                $('#commit_plain').click(function () {
+                    var d = [];
+                    $('.hosts').find('.row').each(function () {
+                        var r = {};
+                        r.hostname = $(this).find('.hostname').val();
+                        r.in_ipaddr = $(this).find('.in_ipaddr').val();
+                        r.ex_ipaddr = $(this).find('.ex_ipaddr').val();
+                        r.port = $(this).find('.port').val();
+                        r.username = $(this).find('.username').val();
+                        r.password = $(this).find('.password').val();
+                        d.push(r);
+                    });
+                    $.post('/ajax-handler/zookeeper', JSON.stringify(d), function (d) {
+                        window.open(
+                            "/shell?tty=" + d,
+                            "newwindow",
+                            "height=400,width=800,top=40,left=60,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no"
+                            );
+                    });
+                });
+            </script>
+            <div class="warning">
+                <fieldset>
+                    <legend>注意</legend>
+                    <p>
+                        1. 本部署方案支持Ubuntu 14.04 Server TLS操作系统<br />
+                        2. 本部署需提供主机的SSH登录凭证，请在安装完毕后修改密码<br />
+                    </p>
+                </fieldset>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="background-1">
+                <div class="background-2">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">关于</a>
+                        </li>
+                        <li class="vertical-line"></li>
+                        <li>
+                            <a href="javascript:void(0);">帮助</a>
+                        </li>
+                        <li class="vertical-line"></li>
+                        <li>
+                            <a href="javascript:void(0);">提交</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2015 TangramCloud. All Rights Reserved.
+        </div>
+    </div>
+</body>
+</html>

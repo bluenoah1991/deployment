@@ -118,6 +118,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Tomcat.install(cfg, uu)
 			else:
 				thread.start_new_thread(Tomcat.install, (cfg, uu))
+		if name == 'zookeeper':
+			if std:
+				Zookeeper.install(cfg, uu)
+			else:
+				thread.start_new_thread(Zookeeper.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
