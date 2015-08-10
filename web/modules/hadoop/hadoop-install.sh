@@ -112,6 +112,10 @@ sed -i "${l}a\\
 \\t<property>\\
 \\t\\t<name>yarn.nodemanager.vmem-check-enabled</name>\\
 \\t\\t<value>false</value>\\
+\\t</property>\\
+\\t<property>\\
+\\t\\t<name>yarn.nodemanager.aux-services</name>\\
+\\t\\t<value>mapreduce_shuffle</value>\\
 \\t</property>" ${cfg}/yarn-site.xml
 
 if [[ $t == '0' ]]; then
@@ -130,6 +134,14 @@ if [[ $t == '0' ]]; then
 
 fi
 
+cp ${cfg}/mapred-site.xml.template ${cfg}/mapred-site.xml
+
+l=`grep -n '<configuration>' ${cfg}/mapred-site.xml | head -1 | cut -d : -f1`
+sed -i "${l}a\\
+\\t<property>\\
+\\t\\t<name>mapreduce.framework.name</name>\\
+\\t\\t<value>yarn</value>\\
+\\t</property>" ${cfg}/mapred-site.xml
 
 
 
