@@ -123,6 +123,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Zookeeper.install(cfg, uu)
 			else:
 				thread.start_new_thread(Zookeeper.install, (cfg, uu))
+		if name == 'kafka':
+			if std:
+				Kafka.install(cfg, uu)
+			else:
+				thread.start_new_thread(Kafka.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
