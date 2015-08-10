@@ -41,7 +41,7 @@
     },
     {
         "icon": "/static/styles/images/platforms/kafka-logo.png",
-        "url": "javascript:void(0);",
+        "url": "/tool/kafka",
         "name": "Kafka发布订阅系统"
     },
     {

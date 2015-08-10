@@ -69,7 +69,7 @@ len=${#ss[@]}
 
 for((I=0; I<${len}; ++I))
 do
-	echo "server=$((I + 1)).${ss[I]}:2888:3888" >> /usr/local/zookeeper/conf/zoo.cfg
+	echo "server.$((I + 1))=${ss[I]}:2888:3888" >> /usr/local/zookeeper/conf/zoo.cfg
 done
 
 echo $i > ${dataDir}/myid
