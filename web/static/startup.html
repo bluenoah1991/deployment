@@ -1,0 +1,28 @@
+﻿<html>
+
+<script>
+    function Tangram_OnPageLoaded(SourceWindow, URL) {
+        if (SourceWindow == window) {
+            Tangram.ExtendCtrl(0, "", Tangram.xtml("xtmlStartupDoc"));
+        }
+    } 
+</script>
+
+<body>
+    <xml id="xtmlStartupDoc">
+        <tangram>
+            <window>
+                <node id="splitter" name="Start" style="0" rows="1" cols="2" hmin="150" hmax="350" height="483," width="200,377,">
+                    <node name="Start_S0000" id="CLRCtrl" cnnid="TangramDotNetLib.about,TangramDotNetLib" />
+                    <node name="Start_S0001" id="TangramTabCtrl" style="1" cnnid="TangramTabCtrl.Connector.1" location="1">
+                        <node name="x" caption="MDI WorkSpace" id="hostview" mdiclient="true" url="TangramBK.html" />
+                        <node name="Page2" id="TestView" cnnid="TangramView.Connector.1" caption="MFC View" />
+                        <node name="Page3" caption="TangramPage3" id="CLRCtrl" cnnid="TangramDotNetLib.DotNetPage,TangramDotNetLib" />
+                    </node>
+                </node>
+            </window>
+            <data><xx><yy>FFFFF水水</yy></xx></data>
+        </tangram>
+    </xml>
+</body>
+</html>

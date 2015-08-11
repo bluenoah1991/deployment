@@ -128,6 +128,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Kafka.install(cfg, uu)
 			else:
 				thread.start_new_thread(Kafka.install, (cfg, uu))
+		if name == 'hbase':
+			if std:
+				Hbase.install(cfg, uu)
+			else:
+				thread.start_new_thread(Hbase.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {

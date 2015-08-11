@@ -53,5 +53,10 @@
         "icon": "/static/styles/images/platforms/zookeeper-logo.png",
         "url": "/tool/zookeeper",
         "name": "Zookeeper分布式集群"
+    },
+    {
+        "icon": "/static/styles/images/platforms/hbase-logo.png",
+        "url": "/tool/hbase",
+        "name": "HBase分布式数据库"
     }
 ]
