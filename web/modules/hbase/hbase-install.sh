@@ -19,7 +19,7 @@ while getopts 'b:s:z:h:' OPT; do
 	esac
 done
 
-if [ ! $r ] || [ ! $m ] || [ ! $s ] || [ ! $z ] || [ ! $h ]; then
+if [ ! $s ] || [ ! $z ] || [ ! $h ]; then
 	echo 'parameters not found'
 	exit -1
 fi

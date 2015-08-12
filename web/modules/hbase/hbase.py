@@ -11,6 +11,7 @@ def install(cfg, ttyid):
 
 	cfg = cfg.get('hosts', None)
 	ssh = common.SSH(cfg, ttyid)
+
 	#maps = []
 	#for _ in cfg:
 	#	maps.append(_.get('in_ipaddr', ''))
@@ -37,8 +38,8 @@ def install(cfg, ttyid):
 	#ssh.upload(jdk_local_path, jdk_tmp_path)
 	#ssh.cmd('tar zxvf %s -C /usr/local' % jdk_tmp_path, True)
 	ssh.upload(common.join(__file__, 'hbase-install.sh'), '/tmp/hbase-install.sh')
-	ssh.cmd('chmod u+x /tmp/hadoop-install.sh', True)
-	ssh.cmd('/tmp/hadoop-install.sh -b %s -s %s -z %s -h %s' % (backup_, slave_, zks, hdfs), True)
+	ssh.cmd('chmod u+x /tmp/hbase-install.sh', True)
+	ssh.cmd('/tmp/hbase-install.sh -b %s -s %s -z %s -h %s' % (backup_, slave_, zks, hdfs), True)
 
 	ssh.cmd('/usr/local/hbase/bin/start-hbase.sh', True, False, *master)
 
