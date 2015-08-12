@@ -72,6 +72,13 @@
                     <td><input class="hbase_backup" type="checkbox" /></td>
                 </tr>
             </table>
+            <a id="add_host" href="javascript:void(0);">添加主机</a>
+            <script type="text/javascript">
+                var template = $('.row').clone();
+                $('#add_host').click(function () {
+                    $('.hosts.repeater').append(template.clone());
+                });
+            </script>
             <h4>2.请填写其它相关配置</h4>
             <table class="hosts">
                 <tr>
@@ -83,13 +90,6 @@
                     <td><input class="hdfs" type="text" /></td>
                 </tr>
             </table>
-            <a id="add_host" href="javascript:void(0);">添加主机</a>
-            <script type="text/javascript">
-                var template = $('.row').clone();
-                $('#add_host').click(function () {
-                    $('.hosts.repeater').append(template.clone());
-                });
-            </script>
             <h4>2.提交部署计划</h4>
             <a id="commit_plain" href="javascript:void(0);">提交任务</a>
             <script type="text/javascript">
@@ -133,6 +133,7 @@
                     <p>
                         1. 本部署方案支持Ubuntu 14.04 Server TLS操作系统<br />
                         2. 本部署需提供主机的SSH登录凭证，请在安装完毕后修改密码<br />
+                        3. 请确保集群间已配置好SSH免密码登录，RegionServer的指纹信息已添加到主节点的known_hosts文件中<br />
                     </p>
                 </fieldset>
             </div>
