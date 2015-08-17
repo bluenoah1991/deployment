@@ -58,5 +58,10 @@
         "icon": "/static/styles/images/platforms/hbase-logo.png",
         "url": "/tool/hbase",
         "name": "HBase分布式数据库"
+    },
+    {
+        "icon": "/static/styles/images/platforms/mesos-logo.png",
+        "url": "/tool/mesos",
+        "name": "Mesos集群"
     }
 ]

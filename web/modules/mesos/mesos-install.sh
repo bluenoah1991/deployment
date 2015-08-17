@@ -59,15 +59,15 @@ apt-get install make g++ -y
 MESOS_URL=http://www.apache.org/dist/mesos/0.23.0/mesos-0.23.0.tar.gz
 MESOS_NAME=mesos-0.23.0.tar.gz
 wget ${MESOS_URL} --output-document=/tmp/${MESOS_NAME}
-tar -zxvf /tmp/${MESOS_NAME}
+tar -zxvf /tmp/${MESOS_NAME} -C /tmp
 
 apt-get -y install build-essential python-dev python-boto 
 apt-get -y install libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev
 
 mkdir /usr/local/mesos
 cd /usr/local/mesos
-srcdir=`ls -l /tmp | grep mesos- | rev | cut -d ' ' -f1 | rev`
-ln -s /tmp/$srcdir /tmp/mesos
+# srcdir=`ls -l /tmp | grep mesos- | rev | cut -d ' ' -f1 | rev`
+ln -s /tmp/mesos-0.23.0 /tmp/mesos
 /tmp/mesos/configure
 make
 make install

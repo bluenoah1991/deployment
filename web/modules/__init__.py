@@ -12,6 +12,7 @@ import modules.tomcat.tomcat as Tomcat
 import modules.zookeeper.zookeeper as Zookeeper
 import modules.kafka.kafka as Kafka
 import modules.hbase.hbase as Hbase
+import modules.mesos.mesos as Mesos
 
-__all__ = ['Hadoop', 'Mongodb', 'Redis', 'Postfix', 'Lamp', 'Riak', 'Mqtt', 'Mysql', 'Tomcat', 'Zookeeper', 'Kafka', 'Hbase']
+__all__ = ['Hadoop', 'Mongodb', 'Redis', 'Postfix', 'Lamp', 'Riak', 'Mqtt', 'Mysql', 'Tomcat', 'Zookeeper', 'Kafka', 'Hbase', 'Mesos']
 

@@ -133,6 +133,11 @@ class AjaxHandler(tornado.web.RequestHandler):
 				Hbase.install(cfg, uu)
 			else:
 				thread.start_new_thread(Hbase.install, (cfg, uu))
+		if name == 'mesos':
+			if std:
+				Mesos.install(cfg, uu)
+			else:
+				thread.start_new_thread(Mesos.install, (cfg, uu))
 		self.write(uu)
 		
 settings = {
