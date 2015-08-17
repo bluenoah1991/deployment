@@ -76,7 +76,7 @@ if [[ $t == '0' ]]; then
 	mkdir /usr/local/mesos/workdir
 	setsid ./bin/mesos-master.sh --ip=0.0.0.0 --work_dir=/usr/local/mesos/workdir &
 else
-	setsid ./bin/mesos-slave.sh --master=${m}:5050
+	setsid ./bin/mesos-slave.sh --master=${m}:5050 &
 fi
 
 echo "success!"
